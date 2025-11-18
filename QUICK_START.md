@@ -1,6 +1,6 @@
 # Quick Start - New Kiro Session
 
-## 🚀 Starting a New Session (2 Steps)
+## 🚀 Starting a New Session (3 Steps)
 
 ### Step 1: Terminal
 ```bash
@@ -12,17 +12,35 @@ bash .kiro/hooks/session-start.sh
 Please read .kiro/SESSION_INIT.md to load the full project context
 ```
 
-**That's it!** Kiro will now have full context from all previous sessions.
+### Step 3: Open temporary.md
+Keep `temporary.md` open in your editor. Every 10-15 minutes:
+1. Copy the Kiro conversation
+2. Paste into `temporary.md`
+3. Save the file
+
+**This prevents losing work if the session ends unexpectedly!**
 
 ---
 
 ## 📋 During Your Session
 
+### ⚠️ CRITICAL: Save Conversation to temporary.md
+**Every 10-15 minutes:**
+1. Copy Kiro conversation (Cmd+A, Cmd+C)
+2. Paste into `temporary.md` (Cmd+A, Cmd+V)
+3. Save file (Cmd+S)
+
 ### Save Progress Regularly
 ```bash
 bash .kiro/hooks/session-checkpoint.sh
 ```
-Run this every 30-60 minutes or after completing a task.
+Run this every 30 minutes or after completing a task.
+
+### Save Conversation from temporary.md
+```bash
+bash .kiro/hooks/save-conversation.sh
+```
+Run this when session ends or every hour.
 
 ### Mark Task Complete
 ```bash

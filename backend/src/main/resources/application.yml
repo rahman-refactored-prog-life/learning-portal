@@ -1,6 +1,9 @@
 spring:
   application:
     name: learning-portal
+  
+  main:
+    allow-bean-definition-overriding: true
 
   datasource:
     url: jdbc:postgresql://localhost:5432/learning-portal

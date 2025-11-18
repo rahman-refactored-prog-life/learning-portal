@@ -11,30 +11,38 @@ This file tells Kiro to load all the context from previous sessions.
 
 When you see this file, you MUST immediately read these files in order:
 
-1. **Resume Context** (Quick overview):
-   - File: `.kiro/session-state/resume-context.md`
-   - Contains: Last session summary, next actions, current phase
+1. **🔥 CRITICAL: temporary.md** (Most recent conversation):
+   - File: `temporary.md`
+   - Contains: The ACTUAL conversation from the last session
+   - **READ THIS FIRST** - This has the real context!
+   - If this file is empty or doesn't exist, proceed to other files
 
 2. **Context Summary** (Detailed state):
    - File: `.kiro/session-state/context-summary.md`
    - Contains: Complete project state, decisions, technical environment
+   - **IMPORTANT**: Check the "Session Update" sections at the bottom for latest changes
 
-3. **Current Phase** (Progress tracking):
+3. **Resume Context** (Quick overview):
+   - File: `.kiro/session-state/resume-context.md`
+   - Contains: Last session summary, next actions, current phase
+
+4. **Current Phase** (Progress tracking):
    - File: `.kiro/session-state/current-phase.json`
    - Contains: Phase number, status, completed tasks
 
-4. **Recent Conversation** (Last 200 lines):
+5. **Recent Conversation** (Last 200 lines):
    - File: `.kiro/session-logs/conversation-history.md`
    - Contains: Recent conversation history
 
-5. **Tasks** (Current work):
+6. **Tasks** (Current work):
    - File: `.kiro/specs/comprehensive-learning-portal/tasks.md`
    - Contains: All tasks with completion status
 
 After reading these files, you should:
 - Acknowledge what phase we're in
 - State how many tasks are complete
-- Mention the last thing that was accomplished
+- **Mention the SPECIFIC last thing that was accomplished** (from temporary.md or context-summary.md)
+- **Mention any CURRENT ISSUES or BLOCKERS** that need to be addressed
 - Ask what the user wants to work on next
 
 ---

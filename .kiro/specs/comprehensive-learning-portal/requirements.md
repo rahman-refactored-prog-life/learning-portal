@@ -191,6 +191,16 @@ This specification defines the requirements for building the world's most compre
 8. THE Learning_Portal_System SHALL provide user avatar/profile system (navatar pattern) with personalized dashboard
 9. THE Learning_Portal_System SHALL comply with WCAG 2.1 AA accessibility standards with keyboard navigation and screen reader support
 10. THE Learning_Portal_System SHALL incorporate design inspirations from GitHub (code display), MDN Web Docs (technical documentation), Stripe (API docs), Linear (modern UI), Notion (content organization), and VS Code (editor integration)
+11. THE Learning_Portal_System SHALL provide comprehensive reusable UI component library including Badge, ProgressBar, Tooltip, Modal/Dialog, Tabs, Accordion, Toast Notifications, CodeBlock, Search, Pagination, Filter/Sort controls, QuestionCard, and TopicCard components
+12. THE Learning_Portal_System SHALL implement Badge component with difficulty level indicators (Easy/Medium/Hard) using color coding (success/warning/danger)
+13. THE Learning_Portal_System SHALL provide Toast notification system with auto-dismiss, manual dismiss, and queue management (max 3 visible)
+14. THE Learning_Portal_System SHALL implement Modal/Dialog component with multiple sizes and keyboard support (ESC to close)
+15. THE Learning_Portal_System SHALL provide Tooltip component with multiple positioning options and accessibility support
+16. THE Learning_Portal_System SHALL implement Tabs component for language switching with keyboard navigation
+17. THE Learning_Portal_System SHALL provide CodeBlock component with syntax highlighting for Java, JavaScript, Python, C, C++, and SQL
+18. THE Learning_Portal_System SHALL implement Search component with autocomplete, debounce (300ms), and keyboard navigation
+19. THE Learning_Portal_System SHALL provide Pagination component with page size selector and item count display
+20. THE Learning_Portal_System SHALL implement Filter/Sort controls with multi-select filters and responsive drawer on mobile
 
 ### Requirement 11: Multi-Language Code Execution Engine
 

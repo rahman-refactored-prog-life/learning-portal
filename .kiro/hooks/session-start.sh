@@ -73,5 +73,8 @@ fi
 
 echo "✅ Session Started!"
 echo ""
+echo "⚠️  IMPORTANT: If starting a NEW Kiro conversation, tell Kiro:"
+echo "   'Please read .kiro/SESSION_INIT.md to load the full project context'"
+echo ""
 echo "💡 Remember to run 'bash .kiro/hooks/session-checkpoint.sh' regularly!"
 echo ""

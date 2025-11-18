@@ -94,6 +94,203 @@ The Comprehensive Learning Portal is a full-stack web application designed to pr
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+## UI Components Library
+
+### Core Reusable Components
+
+The application uses a comprehensive library of reusable UI components following AWS design principles for consistency, accessibility, and maintainability.
+
+#### 1. **Foundational Components** (Phase 1)
+
+**Button**
+- Variants: primary, secondary, tertiary, danger
+- Sizes: small, medium, large
+- States: default, hover, active, disabled, loading
+
+**Input**
+- Types: text, email, password, number, search
+- States: default, focus, error, disabled
+- Features: label, helper text, error message, icons
+
+**Card**
+- Variants: default, elevated, outlined
+- Features: header, body, footer sections
+- Use cases: content containers, question cards, topic cards
+
+**Loading**
+- Types: spinner, skeleton, progress bar
+- Sizes: small, medium, large
+- Use cases: page loading, component loading, inline loading
+
+**ErrorMessage**
+- Types: inline, banner, toast
+- Severity: error, warning, info, success
+- Features: dismissible, auto-dismiss, action buttons
+
+#### 2. **Navigation Components** (Phase 1)
+
+**GlobalHeader**
+- Features: logo, search, user menu (navatar), notifications
+- Responsive: hamburger menu on mobile
+- Sticky positioning
+
+**Sidebar**
+- Features: collapsible sections, progress indicators, active state
+- Responsive: drawer on mobile, collapsible on desktop
+- Sections: Java, Data Structures, Algorithms, System Design, Databases
+
+**Breadcrumbs** (Phase 2)
+- Features: hierarchical navigation, current page indicator
+- Max depth: 4 levels
+- Responsive: collapse on mobile
+
+#### 3. **Data Display Components** (Phase 2+)
+
+**Badge**
+- Use cases: difficulty levels (Easy, Medium, Hard), status indicators, counts
+- Variants: filled, outlined, dot
+- Colors: success (Easy), warning (Medium), danger (Hard), info, neutral
+
+**ProgressBar**
+- Types: linear, circular
+- Features: percentage display, label, color coding
+- Use cases: topic completion, overall progress, loading states
+
+**Tooltip**
+- Positions: top, bottom, left, right, auto
+- Triggers: hover, focus, click
+- Use cases: hints, explanations, additional info
+- Max width: 300px
+
+**Tabs**
+- Variants: line, enclosed, pills
+- Features: active state, disabled state, icons
+- Use cases: language switching (Java/Python/C++/C/Node.js), content sections
+
+**Accordion**
+- Features: single/multiple expand, default expanded, icons
+- Use cases: FAQ, collapsible content sections, topic details
+
+**CodeBlock**
+- Features: syntax highlighting (Prism.js), line numbers, copy button
+- Languages: Java, JavaScript, Python, C, C++, SQL
+- Themes: light, dark
+- Use cases: code examples, solutions display
+
+#### 4. **Interactive Components** (Phase 2+)
+
+**Modal/Dialog**
+- Sizes: small (400px), medium (600px), large (800px), fullscreen
+- Features: header, body, footer, close button, backdrop
+- Types: confirmation, form, content display
+- Use cases: code execution results, delete confirmation, detailed explanations
+
+**Toast Notifications**
+- Positions: top-right, top-center, bottom-right, bottom-center
+- Types: success, error, warning, info
+- Features: auto-dismiss (3-5s), manual dismiss, action button
+- Queue: max 3 visible at once
+- Use cases: save success, error messages, system notifications
+
+**Search Component** (Phase 5)
+- Features: autocomplete, recent searches, filters, keyboard navigation
+- Debounce: 300ms
+- Results: instant preview, highlight matches
+- Use cases: topic search, question search, global search
+
+#### 5. **List & Table Components** (Phase 5+)
+
+**QuestionCard**
+- Features: title, difficulty badge, company tags, completion status, bookmark
+- Actions: view, solve, bookmark
+- Responsive: stack on mobile
+
+**TopicCard**
+- Features: icon, title, progress bar, completion count, locked state
+- States: locked, in-progress, completed
+- Actions: navigate to topic
+
+**Filter/Sort Controls**
+- Filters: difficulty, company, topic, status, language
+- Sort: newest, oldest, difficulty, popularity, completion rate
+- Features: multi-select, clear all, save filters
+- Responsive: drawer on mobile
+
+**Pagination**
+- Types: numbered, load more, infinite scroll
+- Features: page size selector (10, 25, 50, 100), jump to page
+- Info: showing X-Y of Z items
+- Use cases: question lists, search results
+
+#### 6. **Specialized Components** (Phase 3-4)
+
+**Visualization Controls**
+- Features: play/pause, step forward/back, speed control, reset
+- Use cases: data structure visualizations, algorithm animations
+
+**Comparison View**
+- Features: side-by-side display, synchronized scrolling
+- Use cases: solution comparison, approach comparison (brute force vs optimal)
+
+**Code Editor** (Monaco)
+- Features: syntax highlighting, autocomplete, error detection, themes
+- Languages: Java, JavaScript, Python, C, C++
+- Actions: execute, reset, save, share
+
+### Component Design Principles
+
+**Consistency**
+- All components follow AWS design system patterns
+- Consistent spacing (8px grid system)
+- Consistent colors (CSS variables)
+- Consistent typography
+
+**Accessibility**
+- WCAG 2.1 AA compliant
+- Keyboard navigation support
+- Screen reader friendly (ARIA labels)
+- Focus indicators
+- Color contrast ratios (4.5:1 minimum)
+
+**Responsiveness**
+- Mobile-first approach
+- Breakpoints: 320px, 768px, 1024px, 1440px
+- Touch-friendly (min 44x44px tap targets)
+- Adaptive layouts
+
+**Performance**
+- Lazy loading for heavy components
+- Code splitting
+- Memoization for expensive renders
+- Virtual scrolling for long lists
+
+### Component Implementation Strategy
+
+**Phase 1** (Foundation):
+- Button, Input, Card, Loading, ErrorMessage ✅
+- GlobalHeader, Sidebar, Layout ✅
+
+**Phase 2** (Java Content):
+- Badge, ProgressBar, Tooltip, Tabs, Accordion
+- CodeBlock, Breadcrumbs, Toast Notifications
+- TopicCard, QuestionCard (basic)
+
+**Phase 3-4** (Data Structures & Algorithms):
+- Visualization Controls
+- Enhanced CodeBlock with execution
+- Comparison View
+
+**Phase 5** (Question Hub):
+- Search Component
+- Filter/Sort Controls
+- Pagination
+- Enhanced QuestionCard with all features
+
+**Phase 6-9** (Advanced Features):
+- Advanced Modal variants
+- Complex data tables
+- Advanced analytics components
+
 
 ## Components and Interfaces
 

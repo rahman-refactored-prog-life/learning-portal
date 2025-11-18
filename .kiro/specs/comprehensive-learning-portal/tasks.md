@@ -279,6 +279,110 @@ This implementation plan converts the comprehensive learning portal design into 
   - Configure CI/CD integration
   - _Requirements: 16.8_
 
+### 1.8.4 Create Additional Reusable UI Components
+
+- [ ] 1.8.4.1 Implement Badge component
+  - Create Badge component with variants (filled, outlined, dot)
+  - Add color variants (success, warning, danger, info, neutral)
+  - Add size variants (small, medium, large)
+  - Style for difficulty levels (Easy/Medium/Hard)
+  - _Requirements: 10.2, 10.5_
+
+- [ ] 1.8.4.2 Implement standalone ProgressBar component
+  - Create linear and circular progress bar variants
+  - Add percentage display and labels
+  - Add color coding support
+  - Make it reusable across the application
+  - _Requirements: 10.2, 10.5_
+
+- [ ] 1.8.4.3 Implement Tooltip component
+  - Create Tooltip with position variants (top, bottom, left, right, auto)
+  - Add trigger options (hover, focus, click)
+  - Implement max-width constraint (300px)
+  - Ensure accessibility (ARIA labels)
+  - _Requirements: 10.2, 10.5, 10.9_
+
+- [ ] 1.8.4.4 Implement Modal/Dialog component
+  - Create Modal with size variants (small, medium, large, fullscreen)
+  - Add header, body, footer sections
+  - Implement backdrop and close functionality
+  - Add keyboard support (ESC to close)
+  - _Requirements: 10.2, 10.5, 10.9_
+
+- [ ] 1.8.4.5 Implement Tabs component
+  - Create Tabs with variants (line, enclosed, pills)
+  - Add active and disabled states
+  - Support icons in tabs
+  - Implement keyboard navigation
+  - _Requirements: 10.2, 10.5, 10.9_
+
+- [ ] 1.8.4.6 Implement Accordion component
+  - Create Accordion with single/multiple expand modes
+  - Add default expanded state support
+  - Include expand/collapse icons
+  - Ensure smooth animations
+  - _Requirements: 10.2, 10.5_
+
+- [ ] 1.8.4.7 Implement Toast Notification system
+  - Create Toast component with types (success, error, warning, info)
+  - Add position variants (top-right, top-center, bottom-right, bottom-center)
+  - Implement auto-dismiss (3-5s) and manual dismiss
+  - Create toast queue system (max 3 visible)
+  - Add ToastProvider context
+  - _Requirements: 10.2, 10.5_
+
+- [ ] 1.8.4.8 Implement Breadcrumbs component
+  - Create Breadcrumbs with hierarchical navigation
+  - Add current page indicator
+  - Support max depth of 4 levels
+  - Make responsive (collapse on mobile)
+  - _Requirements: 10.2, 10.5, 10.6_
+
+- [ ] 1.8.4.9 Implement CodeBlock component
+  - Install Prism.js for syntax highlighting
+  - Create CodeBlock with language support (Java, JavaScript, Python, C, C++, SQL)
+  - Add line numbers and copy button
+  - Support light/dark themes
+  - _Requirements: 10.2, 10.5, 11.1_
+
+- [ ] 1.8.4.10 Implement Search component
+  - Create Search input with autocomplete
+  - Add recent searches feature
+  - Implement debounce (300ms)
+  - Add keyboard navigation
+  - Style for global search use case
+  - _Requirements: 10.2, 10.5, 10.9_
+
+- [ ] 1.8.4.11 Implement Pagination component
+  - Create Pagination with numbered pages
+  - Add page size selector (10, 25, 50, 100)
+  - Implement jump to page feature
+  - Add "showing X-Y of Z items" info
+  - Support load more and infinite scroll variants
+  - _Requirements: 10.2, 10.5_
+
+- [ ] 1.8.4.12 Implement Filter/Sort Controls
+  - Create Filter component with multi-select support
+  - Add common filters (difficulty, company, topic, status, language)
+  - Implement Sort dropdown
+  - Add clear all and save filters features
+  - Make responsive (drawer on mobile)
+  - _Requirements: 10.2, 10.5, 10.6_
+
+- [ ] 1.8.4.13 Create specialized card components
+  - Implement QuestionCard (title, difficulty badge, company tags, completion status)
+  - Implement TopicCard (icon, title, progress bar, locked state)
+  - Add responsive layouts
+  - Include action buttons
+  - _Requirements: 10.2, 10.5_
+
+- [ ] 1.8.4.14 Update component exports and documentation
+  - Export all new components from index.ts
+  - Create component documentation with examples
+  - Add Storybook stories for each component (optional)
+  - Update design system documentation
+  - _Requirements: 10.2, 16.9_
+
 ### 1.9 Phase 1 Completion and Validation
 
 - [ ] 1.9.1 Validate all Phase 1 components

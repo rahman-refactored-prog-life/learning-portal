@@ -61,7 +61,7 @@ export const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <div className="dashboard-page" style={{ padding: 'var(--space-6)', maxWidth: '1400px', margin: '0 auto' }}>
+    <div className="dashboard-page" style={{ padding: 'var(--space-8)' }}>
       {/* Welcome Section */}
       <div style={{ marginBottom: 'var(--space-8)' }}>
         <h1 style={{ marginBottom: 'var(--space-2)' }}>Welcome back, {user?.username}! 👋</h1>

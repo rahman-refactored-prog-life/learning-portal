@@ -3,19 +3,22 @@
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  background-color: var(--bg-secondary);
 }
 
 .layout-container {
   display: flex;
   flex: 1;
   overflow: hidden;
+  position: relative;
 }
 
 .main-content {
   flex: 1;
   overflow-y: auto;
-  background-color: var(--background);
-  transition: margin-left 0.3s ease;
+  background-color: var(--bg-secondary);
+  transition: margin-left var(--transition-base);
+  /* NO max-width restriction - full width! */
 }
 
 .main-content.sidebar-collapsed {

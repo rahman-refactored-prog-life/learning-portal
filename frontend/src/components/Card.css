@@ -1,9 +1,15 @@
 .card {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-secondary);
+  background-color: var(--color-white);
+  border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-base);
   transition: all var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
 }
 
 .card-padding-none {
@@ -23,14 +29,20 @@
 }
 
 .card-hoverable:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-6px);
 }
 
 .card-clickable {
   cursor: pointer;
 }
 
+.card-clickable:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+}
+
 .card-clickable:active {
-  transform: translateY(0);
+  transform: translateY(-2px);
 }

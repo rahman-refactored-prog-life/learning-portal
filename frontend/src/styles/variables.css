@@ -1,56 +1,56 @@
-/* AWS-Inspired Design System Variables */
+/* Modern, Bright Design System Variables */
 
 :root {
-  /* Colors - AWS Palette */
-  --color-primary: #232F3E;
-  --color-primary-light: #37475A;
-  --color-primary-dark: #161E2D;
+  /* Primary Colors - Bright and Modern */
+  --color-primary: #2563EB;        /* Bright Blue */
+  --color-primary-light: #3B82F6;
+  --color-primary-dark: #1E40AF;
   
-  --color-secondary: #FF9900;
-  --color-secondary-light: #FFAC31;
-  --color-secondary-dark: #EC7211;
+  --color-secondary: #10B981;      /* Emerald Green */
+  --color-secondary-light: #34D399;
+  --color-secondary-dark: #059669;
   
-  --color-accent: #146EB4;
-  --color-accent-light: #1F8DD6;
-  --color-accent-dark: #0F5B94;
+  --color-accent: #8B5CF6;         /* Purple */
+  --color-accent-light: #A78BFA;
+  --color-accent-dark: #7C3AED;
   
-  --color-success: #1D8102;
-  --color-warning: #F89406;
-  --color-error: #D13212;
-  --color-info: #0073BB;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
   
-  /* Neutral Colors */
+  /* Neutral Colors - Lighter and Brighter */
   --color-white: #FFFFFF;
-  --color-gray-50: #FAFAFA;
-  --color-gray-100: #F2F3F3;
-  --color-gray-200: #EAEDED;
-  --color-gray-300: #D5DBDB;
-  --color-gray-400: #AAB7B8;
-  --color-gray-500: #879596;
-  --color-gray-600: #687078;
-  --color-gray-700: #545B64;
-  --color-gray-800: #37475A;
-  --color-gray-900: #232F3E;
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1F2937;
+  --color-gray-900: #111827;
   --color-black: #000000;
   
-  /* Background Colors */
-  --bg-primary: var(--color-white);
-  --bg-secondary: var(--color-gray-50);
-  --bg-tertiary: var(--color-gray-100);
+  /* Background Colors - Bright and Clean */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F9FAFB;
+  --bg-tertiary: #F3F4F6;
   --bg-dark: var(--color-gray-900);
   --bg-overlay: rgba(0, 0, 0, 0.5);
   
   /* Text Colors */
   --text-primary: var(--color-gray-900);
-  --text-secondary: var(--color-gray-700);
+  --text-secondary: var(--color-gray-600);
   --text-tertiary: var(--color-gray-500);
   --text-inverse: var(--color-white);
-  --text-link: var(--color-accent);
+  --text-link: var(--color-primary);
   
   /* Border Colors */
-  --border-primary: var(--color-gray-300);
-  --border-secondary: var(--color-gray-200);
-  --border-focus: var(--color-accent);
+  --border-primary: var(--color-gray-200);
+  --border-secondary: var(--color-gray-100);
+  --border-focus: var(--color-primary);
   
   /* Typography */
   --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -88,24 +88,24 @@
   --space-20: 5rem;     /* 80px */
   
   /* Border Radius */
-  --radius-sm: 2px;
-  --radius-base: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-sm: 4px;
+  --radius-base: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  /* Shadows - More Prominent */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-base: 200ms ease-in-out;
-  --transition-slow: 300ms ease-in-out;
+  /* Transitions - Smoother */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
   
   /* Z-Index */
   --z-dropdown: 1000;
@@ -116,11 +116,11 @@
   --z-popover: 1060;
   --z-tooltip: 1070;
   
-  /* Layout */
-  --header-height: 60px;
-  --sidebar-width: 280px;
-  --sidebar-collapsed-width: 60px;
-  --max-content-width: 1440px;
+  /* Layout - Full Width */
+  --header-height: 64px;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 64px;
+  --max-content-width: none;  /* Full width! */
   
   /* Breakpoints (for reference in JS) */
   --breakpoint-sm: 640px;
@@ -128,21 +128,4 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
-}
-
-/* Dark Mode Variables */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: var(--color-gray-900);
-    --bg-secondary: var(--color-gray-800);
-    --bg-tertiary: var(--color-gray-700);
-    --bg-dark: var(--color-black);
-    
-    --text-primary: var(--color-white);
-    --text-secondary: var(--color-gray-300);
-    --text-tertiary: var(--color-gray-400);
-    
-    --border-primary: var(--color-gray-700);
-    --border-secondary: var(--color-gray-800);
-  }
 }

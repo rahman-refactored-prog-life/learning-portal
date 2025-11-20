@@ -5,7 +5,6 @@ import { Layout } from './components/Layout'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { DashboardPage } from './pages/DashboardPage'
-import { ComponentDemoPage } from './pages/ComponentDemoPage'
 import './App.css'
 
 function App() {
@@ -21,16 +20,6 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <DashboardPage />
-                </Layout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/demo"
-            element={
-              <ProtectedRoute>
-                <Layout>
-                  <ComponentDemoPage />
                 </Layout>
               </ProtectedRoute>
             }

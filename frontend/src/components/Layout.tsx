@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { GlobalHeader } from './GlobalHeader';
+import { useAuth } from '../contexts/AuthContext';
 import './Layout.css';
 
 interface LayoutProps {
@@ -9,14 +11,21 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="app-layout">
-      <GlobalHeader />
+      <GlobalHeader user={user || undefined} onLogout={handleLogout} />
       <div className="layout-container">
         <Sidebar isCollapsed={isSidebarCollapsed} onToggle={toggleSidebar} />
         <main className={`main-content ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>

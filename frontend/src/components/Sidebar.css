@@ -1,6 +1,6 @@
 .sidebar {
   width: 280px;
-  height: 100%;
+  height: calc(100vh - 64px); /* Full height minus header */
   background-color: var(--color-white);
   border-right: 1px solid var(--border-primary);
   display: flex;
@@ -8,12 +8,9 @@
   transition: transform var(--transition-base);
   position: fixed;
   left: 0;
-  top: 64px;
-  bottom: 0;
+  top: 64px; /* Header height */
   z-index: 100;
   overflow-y: auto;
-  margin: 0;
-  padding: 0;
 }
 
 .sidebar.collapsed {

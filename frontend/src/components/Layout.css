@@ -5,8 +5,6 @@
   width: 100%;
   overflow: hidden;
   background-color: var(--bg-secondary);
-  margin: 0;
-  padding: 0;
 }
 
 .layout-container {
@@ -15,8 +13,6 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .main-content {
@@ -25,9 +21,7 @@
   overflow-x: hidden;
   background-color: var(--bg-secondary);
   transition: margin-left var(--transition-base);
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  margin-left: 280px; /* Sidebar width */
 }
 
 .main-content.sidebar-collapsed {
@@ -36,6 +30,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
   .layout-container {
     flex-direction: column;
   }

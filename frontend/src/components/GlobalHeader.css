@@ -13,7 +13,8 @@
   justify-content: space-between;
   height: var(--header-height);
   padding: 0 var(--space-6);
-  /* REMOVED max-width for full-width design */
+  width: 100%;
+  margin: 0;
 }
 
 /* Left Section */

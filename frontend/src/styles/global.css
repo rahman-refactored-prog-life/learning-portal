@@ -7,6 +7,14 @@
   box-sizing: border-box;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -18,14 +26,17 @@ body {
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   color: var(--text-primary);
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
   min-height: 100vh;
 }
 
 #root {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
 /* Typography */
@@ -70,7 +81,7 @@ a {
 }
 
 a:hover {
-  color: var(--color-accent-dark);
+  color: var(--color-primary-dark);
 }
 
 code {
@@ -91,8 +102,8 @@ pre {
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -100,12 +111,12 @@ pre {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-gray-400);
+  background: var(--color-gray-300);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gray-500);
+  background: var(--color-gray-400);
 }
 
 /* Focus Styles */
@@ -116,16 +127,8 @@ pre {
 
 /* Selection */
 ::selection {
-  background-color: var(--color-accent-light);
+  background-color: var(--color-primary);
   color: var(--color-white);
-}
-
-/* Utility Classes */
-.container {
-  width: 100%;
-  max-width: var(--max-content-width);
-  margin: 0 auto;
-  padding: 0 var(--space-4);
 }
 
 .sr-only {
@@ -138,17 +141,4 @@ pre {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
-
-/* Responsive Breakpoints */
-@media (min-width: 640px) {
-  .container {
-    padding: 0 var(--space-6);
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    padding: 0 var(--space-8);
-  }
 }

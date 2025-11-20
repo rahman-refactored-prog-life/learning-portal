@@ -145,22 +145,3 @@ class UserRepositoryIntegrationTest {
         assertFalse(exists);
     }
 }
-        // Given
-        userRepository.save(testUser);
-
-        // When
-        boolean exists = userRepository.existsByEmail("test@example.com");
-
-        // Then
-        assertTrue(exists);
-    }
-
-    @Test
-    void existsByEmail_UserNotExists() {
-        // When
-        boolean exists = userRepository.existsByEmail("nonexistent@example.com");
-
-        // Then
-        assertFalse(exists);
-    }
-}

@@ -62,8 +62,8 @@ class UserRepositoryIntegrationTest {
         assertNotNull(savedUser.getId());
         assertEquals("testuser", savedUser.getUsername());
         assertEquals("test@example.com", savedUser.getEmail());
-        assertTrue(savedUser.isEnabled());
-        assertTrue(savedUser.isAccountNonLocked());
+        assertTrue(savedUser.getEnabled());
+        assertTrue(savedUser.getAccountNonLocked());
     }
 
     @Test

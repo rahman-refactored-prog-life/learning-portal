@@ -61,9 +61,9 @@ export const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <div className="dashboard-page" style={{ padding: 0, margin: 0, width: '100%' }}>
+    <div className="dashboard-page" style={{ padding: 'var(--space-8)', maxWidth: '1600px', margin: '0 auto' }}>
       {/* Welcome Section */}
-      <div style={{ marginBottom: 'var(--space-8)', padding: 'var(--space-8) var(--space-8) 0 var(--space-8)' }}>
+      <div style={{ marginBottom: 'var(--space-8)' }}>
         <h1 style={{ marginBottom: 'var(--space-2)' }}>Welcome back, {user?.username}! 👋</h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-lg)' }}>
           Continue your learning journey
@@ -75,8 +75,7 @@ export const DashboardPage: React.FC = () => {
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
         gap: 'var(--space-4)',
-        marginBottom: 'var(--space-8)',
-        padding: '0 var(--space-8)'
+        marginBottom: 'var(--space-8)'
       }}>
         <Card>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 'var(--space-4)' }}>
@@ -138,7 +137,7 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* Recent Topics */}
-      <div style={{ marginBottom: 'var(--space-8)', padding: '0 var(--space-8)' }}>
+      <div style={{ marginBottom: 'var(--space-8)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
           <h2>Continue Learning</h2>
           <Button variant="outline" onClick={() => navigate('/demo')}>
@@ -161,7 +160,7 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* Recent Questions */}
-      <div style={{ padding: '0 var(--space-8) var(--space-8) var(--space-8)' }}>
+      <div>
         <h2 style={{ marginBottom: 'var(--space-4)' }}>Recent Questions</h2>
         <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
           {recentQuestions.map(question => (

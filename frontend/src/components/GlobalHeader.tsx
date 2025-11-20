@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiSearch, FiMenu, FiUser, FiSettings, FiBarChart2, FiLogOut, FiBook } from 'react-icons/fi';
 import './GlobalHeader.css';
 
 interface GlobalHeaderProps {
@@ -22,14 +23,10 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout }) =>
         {/* Logo and Brand */}
         <div className="header-left">
           <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
-            <span className="hamburger-icon">
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
+            <FiMenu size={24} color="white" />
           </button>
           <div className="header-logo">
-            <span className="logo-icon">📚</span>
+            <FiBook className="logo-icon" size={28} />
             <span className="logo-text">Learning Portal</span>
           </div>
         </div>
@@ -37,7 +34,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout }) =>
         {/* Search Bar */}
         <div className="header-center">
           <div className="search-bar">
-            <span className="search-icon">🔍</span>
+            <FiSearch className="search-icon" size={20} />
             <input
               type="text"
               placeholder="Search topics, questions, or concepts..."
@@ -63,16 +60,20 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout }) =>
                   </div>
                   <div className="dropdown-divider"></div>
                   <button className="dropdown-item" onClick={() => {}}>
+                    <FiUser size={16} style={{ marginRight: '8px' }} />
                     Profile
                   </button>
                   <button className="dropdown-item" onClick={() => {}}>
+                    <FiSettings size={16} style={{ marginRight: '8px' }} />
                     Settings
                   </button>
                   <button className="dropdown-item" onClick={() => {}}>
+                    <FiBarChart2 size={16} style={{ marginRight: '8px' }} />
                     Progress
                   </button>
                   <div className="dropdown-divider"></div>
                   <button className="dropdown-item logout" onClick={onLogout}>
+                    <FiLogOut size={16} style={{ marginRight: '8px' }} />
                     Logout
                   </button>
                 </div>

@@ -25,7 +25,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="app-layout">
-      <GlobalHeader user={user || undefined} onLogout={handleLogout} />
+      <GlobalHeader user={user || undefined} onLogout={handleLogout} onToggleSidebar={toggleSidebar} />
       <div className="layout-container">
         <Sidebar isCollapsed={isSidebarCollapsed} onToggle={toggleSidebar} />
         <main className={`main-content ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>

@@ -1,26 +1,26 @@
-# Resume Context - Session 2025-11-19-22-22-52
+# Resume Context - Session 2025-11-19-22-42-26
 
 ## Quick Status
 
-**Last Session**: 2025-11-19 22:22:52
+**Last Session**: 2025-11-19 22:42:26
 **Current Phase**: Phase 1: Foundation and Infrastructure (Phase 1/9)
-**Git Commit**: 02a5af6b03d624d48ec5560473a9d86c8ff9a18f
+**Git Commit**: 02b2ca7a4ecccc2189bde6dc06411c013a70984a
 **Tasks Completed**: 31 / 243
 
 ## What Was Done Last Session
 
 ### Recent Commits
+- Session checkpoint: 2025-11-19-22-42-26 - Phase 1 - Phase 1: Foundation and Infrastructure
+- fix: remove max-width constraint from dashboard to allow full-width content
+- fix: sidebar starts closed by default, content uses full width until sidebar opens
+- fix: proper layout with sidebar at left edge and content with margin-left
 - Session checkpoint: 2025-11-19-22-22-52 - Phase 1 - Phase 1: Foundation and Infrastructure
-- Session checkpoint: 2025-11-19-22-22-10 - Phase 1 - Phase 1: Foundation and Infrastructure
-- Session checkpoint: 2025-11-19-22-21-44 - Phase 1 - Phase 1: Foundation and Infrastructure
-- Auto-update context: 2025-11-19 22:21:42
-- Auto-update context: 2025-11-19 22:17:26
 
 ### Files Modified
 - .kiro/session-logs/conversation-history.md
-- .kiro/session-logs/session-2025-11-19-22-22-10.md
 - .kiro/session-state/context-summary.md
 - .kiro/session-state/resume-context.md
+- frontend/src/App.css
 
 ## Where You Left Off
 
@@ -69,7 +69,7 @@ To resume work:
 ## Technical Environment
 
 ### Current State
-- Git commit: 02a5af6b03d624d48ec5560473a9d86c8ff9a18f
+- Git commit: 02b2ca7a4ecccc2189bde6dc06411c013a70984a
 - Branch: main
 - Uncommitted changes: 3 files
 

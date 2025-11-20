@@ -8,13 +8,12 @@ interface GlobalHeaderProps {
     email: string;
   };
   onLogout?: () => void;
+  onToggleSidebar?: () => void;
 }
 
-export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout, onToggleSidebar }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
 
   return (
@@ -22,7 +21,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout }) =>
       <div className="header-container">
         {/* Logo and Brand */}
         <div className="header-left">
-          <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+          <button className="menu-toggle" onClick={onToggleSidebar} aria-label="Toggle sidebar">
             <FiMenu size={24} color="white" />
           </button>
           <div className="header-logo">
@@ -88,19 +87,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout }) =>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="mobile-menu">
-          <nav className="mobile-nav">
-            <a href="#" className="mobile-nav-item">Dashboard</a>
-            <a href="#" className="mobile-nav-item">Java</a>
-            <a href="#" className="mobile-nav-item">Data Structures</a>
-            <a href="#" className="mobile-nav-item">Algorithms</a>
-            <a href="#" className="mobile-nav-item">System Design</a>
-            <a href="#" className="mobile-nav-item">Databases</a>
-          </nav>
-        </div>
-      )}
+
     </header>
   );
 };

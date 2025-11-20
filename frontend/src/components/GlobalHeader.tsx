@@ -22,7 +22,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({ user, onLogout, onTo
         {/* Logo and Brand */}
         <div className="header-left">
           <button className="menu-toggle" onClick={onToggleSidebar} aria-label="Toggle sidebar">
-            <FiMenu size={24} color="white" />
+            <FiMenu size={24} />
           </button>
           <div className="header-logo">
             <FiBook className="logo-icon" size={28} />

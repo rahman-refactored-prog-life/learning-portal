@@ -96,6 +96,133 @@ The Comprehensive Learning Portal is a full-stack web application designed to pr
 
 ## UI Components Library
 
+### Design Token System
+
+The application uses a comprehensive design token system for consistent styling:
+
+**Color Palette:**
+```css
+/* Primary Colors */
+--color-primary: #3b82f6;
+--color-primary-hover: #2563eb;
+--color-primary-light: #60a5fa;
+
+/* Success Colors */
+--color-success: #10b981;
+--color-success-hover: #059669;
+
+/* Warning Colors */
+--color-warning: #f59e0b;
+--color-warning-hover: #d97706;
+
+/* Error Colors */
+--color-error: #ef4444;
+--color-error-hover: #dc2626;
+
+/* Neutral Colors */
+--color-neutral-0: #ffffff;
+--color-neutral-50: #f9fafb;
+--color-neutral-100: #f3f4f6;
+--color-neutral-900: #111827;
+```
+
+**Spacing Scale (4px base unit):**
+```css
+--space-1: 0.25rem;   /* 4px */
+--space-2: 0.5rem;    /* 8px */
+--space-3: 0.75rem;   /* 12px */
+--space-4: 1rem;      /* 16px */
+--space-6: 1.5rem;    /* 24px */
+--space-8: 2rem;      /* 32px */
+```
+
+**Animation Timing:**
+```css
+--duration-150: 150ms;
+--duration-200: 200ms;
+--duration-300: 300ms;
+--duration-500: 500ms;
+--ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+```
+
+### Enhanced UI Components
+
+#### 1. Enhanced Card System
+
+**ModuleCard** - For displaying learning modules:
+- Icon with gradient background
+- Difficulty badge
+- Progress bar with shimmer animation
+- Topic count and estimated hours
+- Smooth hover lift effect (translateY + scale)
+- Enhanced shadow on hover
+
+**StatCard** - For dashboard statistics:
+- Large value display
+- Icon with custom color
+- Trend indicator (up/down/neutral)
+- Change percentage
+- Animated counter
+
+**QuickActionCard** - For common user actions:
+- Large icon with color
+- Title and description
+- Interactive hover state
+- Navigation link
+
+**ProgressCard** - For milestone tracking:
+- Priority indicator (high/medium/low)
+- Progress bar with percentage
+- Due date display
+- Enhanced visual feedback
+
+**AchievementCard** - For user achievements:
+- Achievement icon
+- Title and description
+- Date earned
+- Type-based styling
+
+#### 2. Enhanced Button System
+
+**Button Variants:**
+- **Primary**: Main call-to-action with gradient background
+- **Secondary**: Secondary actions with neutral styling
+- **Ghost**: Subtle actions with transparent background
+- **Success**: Positive actions (green)
+- **Warning**: Caution actions (yellow)
+- **Danger**: Destructive actions (red)
+
+**Button Features:**
+- Icon support (left/right positioning)
+- Loading states with spinner animation
+- Size options (sm, md, lg)
+- Full-width option
+- Disabled state
+- Hover lift effect
+
+**Specialized Buttons:**
+- **IconButton**: Icon-only with tooltip
+- **FloatingActionButton**: Fixed position circular button
+- **ButtonGroup**: Horizontal/vertical button grouping
+
+#### 3. Animation System
+
+**Hover Effects:**
+- Smooth lift: `transform: translateY(-4px) scale(1.01)`
+- Enhanced shadows on hover
+- Gradient border animations
+- Icon rotation and scale
+
+**Loading States:**
+- Shimmer effects on progress bars
+- Spinner animations
+- Skeleton loaders
+
+**Page Transitions:**
+- Staggered fade-in animations
+- Sequential element reveals
+- Smooth state transitions
+
 ### Core Reusable Components
 
 The application uses a comprehensive library of reusable UI components following AWS design principles for consistency, accessibility, and maintainability.

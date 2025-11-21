@@ -63,11 +63,24 @@
 
 .showcase__animation-demo {
   padding: var(--space-6);
-  background: var(--color-background);
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: white;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   text-align: center;
   font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-md);
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stagger-children {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
 }
 
 @media (max-width: 768px) {

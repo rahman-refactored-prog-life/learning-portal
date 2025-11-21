@@ -49,3 +49,13 @@ export { Pagination } from './Pagination';
 // Specialized Components
 export { CodeEditor } from './CodeEditor';
 export { Layout } from './Layout';
+
+// Enhanced Components (New - Non-Breaking Addition)
+export {
+  EnhancedCard,
+  ModuleCard,
+  StatCard,
+  QuickActionCard,
+  ProgressCard,
+  AchievementCard,
+} from './EnhancedCard';

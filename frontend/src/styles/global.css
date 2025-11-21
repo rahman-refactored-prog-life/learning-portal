@@ -1,5 +1,6 @@
 /* Global Styles */
 @import './design-tokens.css';
+@import './animations.css';
 @import './variables.css';
 
 * {

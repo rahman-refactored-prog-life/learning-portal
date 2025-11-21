@@ -190,10 +190,13 @@
 /* ===== UTILITY CLASSES ===== */
 
 /* Fade In */
+.fade-in,
 .animate-fade-in {
   animation: fadeIn var(--duration-300) var(--ease-out);
 }
 
+.fade-in-up,
+.slide-in-up,
 .animate-fade-in-up {
   animation: fadeInUp var(--duration-300) var(--ease-out);
 }
@@ -272,16 +275,25 @@
   animation-fill-mode: both;
 }
 
-.stagger-children > *:nth-child(1) {
+.stagger-children > *:nth-child(1),
+.stagger-1 {
+  animation: fadeInUp var(--duration-300) var(--ease-out);
   animation-delay: 0ms;
+  animation-fill-mode: both;
 }
 
-.stagger-children > *:nth-child(2) {
+.stagger-children > *:nth-child(2),
+.stagger-2 {
+  animation: fadeInUp var(--duration-300) var(--ease-out);
   animation-delay: 50ms;
+  animation-fill-mode: both;
 }
 
-.stagger-children > *:nth-child(3) {
+.stagger-children > *:nth-child(3),
+.stagger-3 {
+  animation: fadeInUp var(--duration-300) var(--ease-out);
   animation-delay: 100ms;
+  animation-fill-mode: both;
 }
 
 .stagger-children > *:nth-child(4) {

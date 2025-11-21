@@ -59,3 +59,17 @@ export {
   ProgressCard,
   AchievementCard,
 } from './EnhancedCard';
+
+export {
+  EnhancedButton,
+  PrimaryButton,
+  SecondaryButton,
+  GhostButton,
+  SuccessButton,
+  WarningButton,
+  DangerButton,
+  IconButton,
+  FloatingActionButton,
+  ButtonGroup,
+} from './EnhancedButton';
+export type { ButtonVariant, ButtonSize, IconPosition } from './EnhancedButton';

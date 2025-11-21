@@ -228,6 +228,22 @@ const ComponentShowcase: React.FC = () => {
       {/* Animations */}
       <section className="showcase__section">
         <h2>Animations</h2>
+        <p style={{ marginBottom: 'var(--space-4)', color: 'var(--color-text-secondary)' }}>
+          Click "Replay Animations" to see the staggered fade-in effect
+        </p>
+        <div style={{ marginBottom: 'var(--space-6)' }}>
+          <PrimaryButton 
+            onClick={() => {
+              const container = document.querySelector('.stagger-children');
+              if (container) {
+                container.classList.remove('stagger-children');
+                setTimeout(() => container.classList.add('stagger-children'), 10);
+              }
+            }}
+          >
+            🔄 Replay Animations
+          </PrimaryButton>
+        </div>
         <div className="stagger-children">
           <div className="showcase__animation-demo">Staggered Animation 1</div>
           <div className="showcase__animation-demo">Staggered Animation 2</div>

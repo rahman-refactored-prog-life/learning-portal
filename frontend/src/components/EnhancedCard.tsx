@@ -126,7 +126,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   className = '',
 }) => {
   return (
-    <EnhancedCard className={`stat-card ${className}`} hover={false}>
+    <EnhancedCard className={`stat-card ${className}`} hover={true}>
       <div className="stat-card__header">
         {icon && (
           <div className="stat-card__icon" style={{ color }}>
@@ -205,7 +205,7 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
   const progressPercentage = (progress / target) * 100;
 
   return (
-    <EnhancedCard className={`progress-card ${className}`} hover={false}>
+    <EnhancedCard className={`progress-card ${className}`} hover={true}>
       <div className="progress-card__header">
         <h4 className="progress-card__title">{title}</h4>
         <span className={`progress-card__priority progress-card__priority--${priority}`}>
@@ -252,7 +252,7 @@ export const AchievementCard: React.FC<AchievementCardProps> = ({
   className = '',
 }) => {
   return (
-    <EnhancedCard className={`achievement-card ${className}`} hover={false}>
+    <EnhancedCard className={`achievement-card ${className}`} hover={true}>
       {icon && <div className="achievement-card__icon">{icon}</div>}
       <div className="achievement-card__content">
         <h4 className="achievement-card__title">{title}</h4>

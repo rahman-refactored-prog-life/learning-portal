@@ -249,7 +249,6 @@ export const AchievementCard: React.FC<AchievementCardProps> = ({
   description,
   icon,
   date,
-  type,
   className = '',
 }) => {
   return (

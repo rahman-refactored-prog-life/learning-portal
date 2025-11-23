@@ -496,7 +496,30 @@ Your workspace is now clean and organized! All progress tracking happens in the 
 
 
 
-```
+
+# Session Management
+kiro-start      # Start a new session
+kiro-end        # End current session
+kiro-resume     # Resume/load context
+save            # Run checkpoint (git + logs + context)
+save-conv       # Save conversation from temporary.md
+auto-update     # Quick auto-update context ⭐ NEW
+update-context  # Interactive context update ⭐ NEW
+
+
+
+# Quick auto-update (non-interactive)
+auto-update
+
+# Full interactive update (asks 4 questions)
+update-context
+
+# Typical workflow
+save-conv       # Save conversation
+update-context  # Add semantic meaning
+save            # Checkpoint everything
+
+
 source ~/.zshrc
 
 source ~/.zshrc    # Reload aliases

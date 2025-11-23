@@ -1281,6 +1281,159 @@ interface ProgressDashboardProps {
 └────────────────────────────────────────────────────────────┘
 ```
 
+## Correctness Properties
+
+*A property is a characteristic or behavior that should hold true across all valid executions of a system—essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+
+This section defines testable correctness properties derived from the acceptance criteria in the requirements document. These properties will be validated using Property-Based Testing (PBT) to ensure system correctness across a wide range of inputs.
+
+### Property-Based Testing Framework
+
+**Backend (Java)**: [jqwik](https://jqwik.net/) - Property-based testing for Java
+**Frontend (TypeScript)**: [fast-check](https://github.com/dubzzz/fast-check) - Property-based testing for JavaScript/TypeScript
+
+### Authentication & Authorization Properties
+
+**Property 1: JWT Token Round-Trip**
+*For any* valid user credentials, generating a JWT token and then validating it should return the same user information.
+**Validates: Requirements 1.6, 20.1**
+
+**Property 2: Password Hashing Consistency**
+*For any* password string, hashing it twice with the same salt should produce identical hashes.
+**Validates: Requirements 20.6**
+
+**Property 3: Invalid Token Rejection**
+*For any* malformed or expired JWT token, the authentication system should reject it and return an unauthorized error.
+**Validates: Requirements 1.6, 20.1**
+
+### Learning Content Properties
+
+**Property 4: Topic Completion Idempotence**
+*For any* user and topic, marking a topic as complete multiple times should result in the same state as marking it complete once.
+**Validates: Requirements 2.6, 13.1**
+
+**Property 5: Progress Tracking Monotonicity**
+*For any* user, the total number of completed topics should never decrease over time.
+**Validates: Requirements 13.1, 13.2**
+
+**Property 6: Module-Topic Relationship Integrity**
+*For any* topic, it should always belong to exactly one learning module, and deleting a module should cascade to its topics.
+**Validates: Requirements 2.1**
+
+### Code Execution Properties
+
+**Property 7: Execution Timeout Enforcement**
+*For any* code that runs longer than the specified timeout, the execution engine should terminate it and return a timeout error.
+**Validates: Requirements 11.3, 11.8**
+
+**Property 8: Resource Limit Enforcement**
+*For any* code execution request, memory usage should never exceed the specified limit.
+**Validates: Requirements 11.8, 20.10**
+
+**Property 9: Sandbox Isolation**
+*For any* executed code, it should not be able to access the network or file system outside its container.
+**Validates: Requirements 11.2, 20.10**
+
+**Property 10: Language-Specific Execution**
+*For any* valid code in a supported language (Java, Python, JavaScript, C, C++), the execution engine should correctly compile/interpret and execute it.
+**Validates: Requirements 11.1, 11.4**
+
+### Question Management Properties
+
+**Property 11: Question Deduplication**
+*For any* two questions with identical titles and descriptions from different sources, the deduplication system should merge them into a single question.
+**Validates: Requirements 5.3**
+
+**Property 12: Company Tag Extraction**
+*For any* question containing company names in its description or metadata, the NLP system should correctly extract and tag those companies.
+**Validates: Requirements 5.4**
+
+**Property 13: Multi-Language Solution Completeness**
+*For any* interview question, it should have solutions in all 5 supported languages (Java, Python, JavaScript, C, C++).
+**Validates: Requirements 5.9, 2.7**
+
+**Property 14: Difficulty Classification Consistency**
+*For any* question, if it's classified as difficulty level X, questions with similar characteristics should also be classified as difficulty level X.
+**Validates: Requirements 5.5, 18.5**
+
+### Progress Tracking Properties
+
+**Property 15: Question Attempt Recording**
+*For any* user attempting a question, the system should record the attempt with timestamp, language used, and whether it was solved.
+**Validates: Requirements 13.4**
+
+**Property 16: Mastery Level Progression**
+*For any* user, mastery level for a topic should only increase or stay the same, never decrease, as more questions are solved correctly.
+**Validates: Requirements 13.2, 13.6**
+
+**Property 17: Time Tracking Accuracy**
+*For any* user session, the sum of time spent on individual topics should equal or be less than the total session time.
+**Validates: Requirements 13.4**
+
+### Session Continuity Properties
+
+**Property 18: Session State Persistence**
+*For any* session state saved, loading it should restore the exact same state including current phase, completed tasks, and active files.
+**Validates: Requirements 14.3, 14.4, 14.6**
+
+**Property 19: Conversation Log Completeness**
+*For any* development session, all conversation exchanges, file modifications, and task completions should be logged.
+**Validates: Requirements 14.1, 14.2**
+
+**Property 20: Context Recovery Accuracy**
+*For any* session checkpoint, the generated context summary should accurately reflect the git commit hash, completed tasks, and next actions.
+**Validates: Requirements 14.9, 14.10**
+
+### Data Integrity Properties
+
+**Property 21: User Progress Consistency**
+*For any* user, the total_topics_completed field should equal the count of TopicProgress records where completed=true.
+**Validates: Requirements 13.1**
+
+**Property 22: Question Attempt Validity**
+*For any* question attempt, the question_id should reference an existing question, and user_progress_id should reference an existing user progress record.
+**Validates: Requirements 13.4**
+
+**Property 23: Solution Code Validity**
+*For any* solution, the code should compile/execute successfully in the specified language.
+**Validates: Requirements 5.9, 18.4**
+
+### UI Component Properties
+
+**Property 24: Accessibility Compliance**
+*For any* interactive UI component, it should be keyboard navigable and have appropriate ARIA labels.
+**Validates: Requirements 10.9, 1.13**
+
+**Property 25: Responsive Layout Integrity**
+*For any* page, content should remain accessible and properly formatted across all supported breakpoints (320px to 1920px).
+**Validates: Requirements 10.7**
+
+### Web Scraping Properties
+
+**Property 26: Rate Limiting Compliance**
+*For any* scraping operation, requests to the same source should be spaced at least 2 seconds apart.
+**Validates: Requirements 5.10**
+
+**Property 27: Source Attribution**
+*For any* scraped question, it should include the source URL and attribution to the original platform.
+**Validates: Requirements 5.10, 18.3**
+
+### Performance Properties
+
+**Property 28: API Response Time**
+*For any* API endpoint under normal load, 95% of requests should complete in under 200ms.
+**Validates: Requirements 19.2**
+
+**Property 29: Page Load Time**
+*For any* page, initial load time should be under 2 seconds on a standard broadband connection.
+**Validates: Requirements 19.1**
+
+**Property 30: Database Query Efficiency**
+*For any* database query, execution time should be under 100ms when proper indexes are used.
+**Validates: Requirements 19.8**
+
+---
+
 ## Error Handling Strategy
 
 ### Error Categories
@@ -1363,6 +1516,20 @@ public class GlobalExceptionHandler {
 
 ## Testing Strategy
 
+### Dual Testing Approach
+
+The application uses a **complementary dual testing strategy** combining traditional unit/integration tests with property-based tests:
+
+- **Unit Tests**: Verify specific examples, edge cases, and error conditions
+- **Property-Based Tests**: Verify universal properties that should hold across all inputs
+- **Integration Tests**: Verify component interactions and API contracts
+- **E2E Tests**: Verify complete user workflows
+
+**Why Both?**
+- Unit tests catch concrete bugs with specific inputs
+- Property tests verify general correctness across thousands of generated inputs
+- Together they provide comprehensive coverage: unit tests for known cases, property tests for unknown cases
+
 ### Testing Pyramid
 
 ```
@@ -1371,16 +1538,53 @@ public class GlobalExceptionHandler {
                     │   Cypress   │
                     └─────────────┘
                   ┌─────────────────┐
-                  │Integration Tests│  (30%)
+                  │Integration Tests│  (20%)
                   │  Spring Boot    │
                   └─────────────────┘
               ┌───────────────────────┐
-              │     Unit Tests        │  (60%)
-              │  JUnit + Mockito      │
+              │  Property-Based Tests │  (30%)
+              │  jqwik / fast-check   │
               └───────────────────────┘
+          ┌───────────────────────────────┐
+          │       Unit Tests              │  (40%)
+          │    JUnit + Mockito            │
+          └───────────────────────────────┘
 ```
 
+### Property-Based Testing Configuration
+
+**Backend (Java) - jqwik**
+
+```xml
+<!-- pom.xml -->
+<dependency>
+    <groupId>net.jqwik</groupId>
+    <artifactId>jqwik</artifactId>
+    <version>1.8.2</version>
+    <scope>test</scope>
+</dependency>
+```
+
+**Frontend (TypeScript) - fast-check**
+
+```json
+// package.json
+{
+  "devDependencies": {
+    "fast-check": "^3.15.0"
+  }
+}
+```
+
+**Configuration Requirements**:
+- Each property-based test MUST run a minimum of 100 iterations
+- Each property-based test MUST be tagged with a comment referencing the correctness property
+- Each correctness property MUST be implemented by a SINGLE property-based test
+- Property tests MUST use smart generators that constrain to valid input spaces
+
 ### Unit Testing
+
+**Purpose**: Test specific examples and known edge cases
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -1411,8 +1615,246 @@ class LearningServiceTest {
         assertThat(result).hasSize(2);
         assertThat(result.get(0).getName()).isEqualTo("Java");
     }
+    
+    @Test
+    void shouldThrowExceptionWhenModuleNotFound() {
+        // Given
+        Long nonExistentId = 999L;
+        when(moduleRepository.findById(nonExistentId))
+            .thenReturn(Optional.empty());
+        
+        // When & Then
+        assertThatThrownBy(() -> learningService.getModuleById(nonExistentId))
+            .isInstanceOf(ResourceNotFoundException.class)
+            .hasMessageContaining("Module not found");
+    }
 }
 ```
+
+### Property-Based Testing
+
+**Purpose**: Verify universal properties across thousands of generated inputs
+
+**Example 1: JWT Token Round-Trip (Backend)**
+
+```java
+/**
+ * Feature: comprehensive-learning-portal, Property 1: JWT Token Round-Trip
+ * Validates: Requirements 1.6, 20.1
+ */
+@Property(tries = 100)
+void jwtTokenRoundTrip(@ForAll @AlphaChars @StringLength(min = 3, max = 50) String username,
+                       @ForAll @Email String email) {
+    // Given: Create user with generated credentials
+    User user = User.builder()
+        .username(username)
+        .email(email)
+        .build();
+    
+    // When: Generate token and validate it
+    String token = jwtUtil.generateToken(user);
+    User extractedUser = jwtUtil.validateTokenAndGetUser(token);
+    
+    // Then: Extracted user should match original
+    assertThat(extractedUser.getUsername()).isEqualTo(username);
+    assertThat(extractedUser.getEmail()).isEqualTo(email);
+}
+```
+
+**Example 2: Topic Completion Idempotence (Backend)**
+
+```java
+/**
+ * Feature: comprehensive-learning-portal, Property 4: Topic Completion Idempotence
+ * Validates: Requirements 2.6, 13.1
+ */
+@Property(tries = 100)
+void topicCompletionIsIdempotent(@ForAll @LongRange(min = 1, max = 1000) Long userId,
+                                 @ForAll @LongRange(min = 1, max = 1000) Long topicId) {
+    // Given: User and topic exist
+    User user = createUser(userId);
+    Topic topic = createTopic(topicId);
+    
+    // When: Mark topic complete multiple times
+    learningService.trackTopicCompletion(userId, topicId);
+    learningService.trackTopicCompletion(userId, topicId);
+    learningService.trackTopicCompletion(userId, topicId);
+    
+    // Then: Should be marked complete exactly once
+    TopicProgress progress = progressRepository.findByUserIdAndTopicId(userId, topicId);
+    assertThat(progress.isCompleted()).isTrue();
+    
+    // And: Completion count should be 1
+    long completionCount = progressRepository.countCompletionsByUserAndTopic(userId, topicId);
+    assertThat(completionCount).isEqualTo(1);
+}
+```
+
+**Example 3: Code Execution Timeout (Backend)**
+
+```java
+/**
+ * Feature: comprehensive-learning-portal, Property 7: Execution Timeout Enforcement
+ * Validates: Requirements 11.3, 11.8
+ */
+@Property(tries = 100)
+void executionTimeoutIsEnforced(@ForAll("infiniteLoopCode") String code,
+                                @ForAll ProgrammingLanguage language) {
+    // Given: Code that runs infinitely
+    CodeExecutionRequest request = CodeExecutionRequest.builder()
+        .code(code)
+        .language(language)
+        .timeoutSeconds(2)
+        .build();
+    
+    // When: Execute the code
+    long startTime = System.currentTimeMillis();
+    ExecutionResult result = codeExecutionEngine.executeCode(request);
+    long duration = System.currentTimeMillis() - startTime;
+    
+    // Then: Should timeout within reasonable time (timeout + 1 second grace)
+    assertThat(duration).isLessThan(3000);
+    assertThat(result.getStatus()).isEqualTo(ExecutionStatus.TIMEOUT);
+}
+
+@Provide
+Arbitrary<String> infiniteLoopCode() {
+    return Arbitraries.of(
+        "while(true) {}",  // Java
+        "while True: pass",  // Python
+        "while(true) {}",  // JavaScript
+        "while(1) {}",  // C
+        "while(1) {}"  // C++
+    );
+}
+```
+
+**Example 4: Question Deduplication (Backend)**
+
+```java
+/**
+ * Feature: comprehensive-learning-portal, Property 11: Question Deduplication
+ * Validates: Requirements 5.3
+ */
+@Property(tries = 100)
+void duplicateQuestionsAreMerged(@ForAll @AlphaChars @StringLength(min = 10, max = 100) String title,
+                                 @ForAll @AlphaChars @StringLength(min = 50, max = 500) String description) {
+    // Given: Two questions with identical content from different sources
+    InterviewQuestion q1 = InterviewQuestion.builder()
+        .title(title)
+        .description(description)
+        .sourceUrl("https://leetcode.com/problems/test")
+        .build();
+    
+    InterviewQuestion q2 = InterviewQuestion.builder()
+        .title(title)
+        .description(description)
+        .sourceUrl("https://geeksforgeeks.org/test")
+        .build();
+    
+    // When: Process both questions
+    questionService.addQuestion(q1);
+    questionService.addQuestion(q2);
+    questionAcquisitionEngine.deduplicateQuestions();
+    
+    // Then: Should have only one question
+    List<InterviewQuestion> questions = questionRepository.findByTitle(title);
+    assertThat(questions).hasSize(1);
+    
+    // And: Should have both source URLs
+    InterviewQuestion merged = questions.get(0);
+    assertThat(merged.getSourceUrls()).containsExactlyInAnyOrder(
+        "https://leetcode.com/problems/test",
+        "https://geeksforgeeks.org/test"
+    );
+}
+```
+
+**Example 5: Responsive Layout (Frontend)**
+
+```typescript
+/**
+ * Feature: comprehensive-learning-portal, Property 25: Responsive Layout Integrity
+ * Validates: Requirements 10.7
+ */
+import fc from 'fast-check';
+
+describe('Responsive Layout Properties', () => {
+  it('should maintain content accessibility across all viewport widths', () => {
+    fc.assert(
+      fc.property(
+        fc.integer({ min: 320, max: 1920 }), // viewport width
+        (viewportWidth) => {
+          // Given: Set viewport width
+          cy.viewport(viewportWidth, 1080);
+          
+          // When: Visit any page
+          cy.visit('/modules/java');
+          
+          // Then: All essential content should be visible
+          cy.get('[data-testid="main-content"]').should('be.visible');
+          cy.get('[data-testid="navigation"]').should('exist');
+          
+          // And: No horizontal scrolling should be required
+          cy.window().then((win) => {
+            expect(win.document.body.scrollWidth).to.be.lte(viewportWidth);
+          });
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
+```
+
+**Example 6: Progress Tracking Monotonicity (Frontend)**
+
+```typescript
+/**
+ * Feature: comprehensive-learning-portal, Property 5: Progress Tracking Monotonicity
+ * Validates: Requirements 13.1, 13.2
+ */
+import fc from 'fast-check';
+
+describe('Progress Tracking Properties', () => {
+  it('should never decrease total completed topics', () => {
+    fc.assert(
+      fc.property(
+        fc.array(fc.integer({ min: 1, max: 100 }), { minLength: 1, maxLength: 20 }), // topic IDs
+        async (topicIds) => {
+          // Given: User starts with 0 completed topics
+          const userId = await createTestUser();
+          let previousCount = 0;
+          
+          // When: Complete topics one by one
+          for (const topicId of topicIds) {
+            await completeTopicForUser(userId, topicId);
+            
+            // Then: Completed count should never decrease
+            const currentCount = await getCompletedTopicsCount(userId);
+            expect(currentCount).toBeGreaterThanOrEqual(previousCount);
+            previousCount = currentCount;
+          }
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
+```
+
+### Property Test Tagging Convention
+
+**CRITICAL**: Every property-based test MUST include a comment tag in this exact format:
+
+```java
+/**
+ * Feature: {feature_name}, Property {number}: {property_text}
+ * Validates: Requirements {requirement_numbers}
+ */
+```
+
+This allows traceability from requirements → properties → tests.
 
 ### Integration Testing
 

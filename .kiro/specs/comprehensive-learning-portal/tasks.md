@@ -364,14 +364,14 @@ This implementation plan converts the comprehensive learning portal design into 
   - Configure test coverage reporting
   - _Requirements: 16.6, 16.7_
 
-- [ ] 1.8.2 Set up property-based testing framework (Backend)
+- [x] 1.8.2 Set up property-based testing framework (Backend)
   - Add jqwik dependency to pom.xml (version 1.8.2+)
   - Configure jqwik to run minimum 100 iterations per property
   - Create property test base classes and custom generators
   - Document property test tagging convention
   - _Requirements: 16.6, Design: Testing Strategy_
 
-- [ ] 1.8.3 Set up property-based testing framework (Frontend)
+- [x] 1.8.3 Set up property-based testing framework (Frontend)
   - Add fast-check dependency to package.json (version 3.15.0+)
   - Configure fast-check with numRuns: 100
   - Create property test utilities and custom arbitraries

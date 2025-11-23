@@ -42,10 +42,7 @@ export const arbitraries = {
    * Generate valid usernames (5-50 alphanumeric characters).
    */
   username: () =>
-    fc.stringOf(
-      fc.constantFrom(...'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('')),
-      { minLength: 5, maxLength: 50 }
-    ),
+    fc.string({ minLength: 5, maxLength: 50 }).filter(s => /^[a-zA-Z0-9_]+$/.test(s)),
 
   /**
    * Generate valid emails.

@@ -538,6 +538,50 @@ This implementation plan converts the comprehensive learning portal design into 
 
 ## PHASE 2: JAVA COMPLETE ECOSYSTEM (12-14 weeks)
 
+**IMPORTANT**: All content in Phase 2 and beyond MUST follow Content_Methodology_v3_Framework (10 layers, 5 languages, 15+ practice problems, 10+ interview questions per topic). See `.kiro/steering/CONTENT_CREATION_METHODOLOGY.md` for complete framework.
+
+### 2.0 Content Methodology Setup (1 week)
+
+- [ ] 2.0.1 Review and internalize Content_Methodology_v3_Framework
+  - Read `CONTENT_METHODOLOGY_V3_FINAL.md` completely
+  - Review all 10 layers and their templates
+  - Understand the 4-5 hour per topic workflow
+  - Review quality checklist (40+ items)
+  - _Requirements: 1.16.1, 1.16.2_
+
+- [ ] 2.0.2 Create content creation templates and tools
+  - Create Markdown templates for all 10 layers
+  - Set up code snippet templates for all 5 languages
+  - Create cheatsheet template
+  - Set up interview question template
+  - Create quality checklist automation
+  - _Requirements: 1.16.3, 1.16.4, 1.16.9_
+
+- [ ] 2.0.3 Create sample topic using full methodology
+  - Choose one Java topic (e.g., "Variables")
+  - Implement all 10 layers following the framework
+  - Include simple AND comprehensive definitions
+  - Implement code in all 5 languages
+  - Create 15+ practice problems
+  - Add 10+ interview questions
+  - Verify against quality checklist
+  - Use as reference for all future topics
+  - _Requirements: 1.16.1-1.16.15_
+
+- [ ] 2.0.4 Set up content review and validation process
+  - Create automated tests for code examples (all 5 languages)
+  - Set up link validation
+  - Create complexity analysis validator
+  - Set up content completeness checker
+  - _Requirements: 1.16.14_
+
+- [ ] 2.0.5 Document content creation workflow
+  - Create step-by-step guide for content creators
+  - Document time estimates for each phase
+  - Create troubleshooting guide
+  - Set up content creation tracking
+  - _Requirements: 1.16.14, 1.16.15_
+
 ### 2.1 Java Content Infrastructure
 
 - [ ] 2.1.1 Create Java learning module and topic entities
@@ -575,28 +619,57 @@ This implementation plan converts the comprehensive learning portal design into 
   - Create progress dashboard
   - _Requirements: 2.10, 13.1, 13.2_
 
-### 2.2 Java Fundamentals Content (3 weeks)
+### 2.2 Java Fundamentals Content (6 weeks - following Content_Methodology_v3_Framework)
 
-- [ ] 2.2.1 Implement Variables and Data Types topic
-  - Write comprehensive content covering all primitive types
-  - Add 25 practice questions
-  - Create code examples in Java
-  - Add interactive code editor
-  - _Requirements: 2.1, 2.2_
+**Note**: Each topic requires 4-5 hours following the 10-layer framework with all 5 languages
 
-- [ ] 2.2.2 Implement Operators and Control Structures topic
-  - Write content for all operators (arithmetic, logical, bitwise)
-  - Cover if-else, switch, ternary operator
-  - Add 25 practice questions
-  - Create interactive examples
-  - _Requirements: 2.1, 2.2_
+- [ ] 2.2.1 Implement Variables and Data Types topic (Content_Methodology_v3_Framework)
+  - **Layer 1**: Motivation + Concept Overview (concept map, 3+ analogies, misconceptions, industry use cases)
+  - **Layer 2**: Simple + Comprehensive Definition (formal definition, properties, invariants, specifications)
+  - **Layer 3**: Progressive Learning Path (Levels 0-5, visualizations, state transitions)
+  - **Layer 4**: Code in all 5 languages (Java, Python, JS, C++, Go) with unit tests and edge cases
+  - **Layer 5**: 15+ Practice Problems (3 core + 5 drills + 3 challenges + 1 project + 10 quiz)
+  - **Layer 6**: Gotchas + Pitfalls + Anti-Patterns (with psychological reasons and debugging)
+  - **Layer 7**: Deep Dive + System Design (complexity, scaling, distributed systems, observability)
+  - **Layer 8**: 10+ FAANG Interview Questions (all 5 languages, progressive hints, patterns)
+  - **Layer 9**: Cheatsheet (formulas, snippets, complexity table, decision tree)
+  - **Layer 10**: References (books, papers, courses, tutorials, learning path)
+  - Verify against 40+ item quality checklist
+  - _Requirements: 1.16.1-1.16.15, 2.1, 2.6, 2.7_
 
-- [ ] 2.2.3 Implement Loops and Iteration topic
-  - Cover for, while, do-while, enhanced for loops
-  - Add 25 practice questions
-  - Create visualization for loop execution
-  - Add code examples
-  - _Requirements: 2.1, 2.2_
+- [ ] 2.2.2 Implement Operators and Control Structures topic (Content_Methodology_v3_Framework)
+  - Follow all 10 layers of Content_Methodology_v3_Framework
+  - Include simple + comprehensive definitions
+  - Code in all 5 languages with unit tests
+  - 15+ practice problems (3 core + 5 drills + 3 challenges + 1 project + 10 quiz)
+  - 10+ FAANG interview questions with full solutions
+  - System design integration
+  - Complete cheatsheet and references
+  - _Requirements: 1.16.1-1.16.15, 2.1, 2.6, 2.7_
+
+- [ ] 2.2.3 Implement Loops and Iteration topic (Content_Methodology_v3_Framework)
+  - Follow all 10 layers of Content_Methodology_v3_Framework
+  - Include simple + comprehensive definitions
+  - Code in all 5 languages with unit tests
+  - 15+ practice problems with visualizations
+  - 10+ FAANG interview questions
+  - System design integration
+  - Complete cheatsheet and references
+  - _Requirements: 1.16.1-1.16.15, 2.1, 2.6, 2.7_
+
+- [ ] 2.2.4 Implement Methods and Functions topic (Content_Methodology_v3_Framework)
+  - Follow all 10 layers of Content_Methodology_v3_Framework
+  - _Requirements: 1.16.1-1.16.15, 2.1, 2.6, 2.7_
+
+- [ ] 2.2.5 Implement Arrays topic (Content_Methodology_v3_Framework)
+  - Follow all 10 layers of Content_Methodology_v3_Framework
+  - _Requirements: 1.16.1-1.16.15, 2.1, 2.6, 2.7_
+
+- [ ] 2.2.6 Implement Strings topic (Content_Methodology_v3_Framework)
+  - Follow all 10 layers of Content_Methodology_v3_Framework
+  - _Requirements: 1.16.1-1.16.15, 2.1, 2.6, 2.7_
+
+**Note**: Continue this pattern for all remaining Java topics (OOP, Collections, Advanced Java, Concurrency, JVM, Design Patterns). Each topic = 4-5 hours following the complete 10-layer framework.
 
 - [ ] 2.2.4 Implement Methods and Scope topic
   - Cover method declaration, parameters, return types

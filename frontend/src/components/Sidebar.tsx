@@ -110,27 +110,45 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle 
         {sections.map((section) => (
           <div key={section.id} className="sidebar-section">
             {/* Section Header */}
-            <button
-              className={`section-header ${expandedSections.includes(section.id) ? 'expanded' : ''}`}
-              onClick={() => {
-                // Navigate to module page if it's Java
-                if (section.id === 'java') {
-                  navigate('/modules/java');
-                }
-                toggleSection(section.id);
-              }}
-            >
-              <span className="section-icon">{section.icon}</span>
-              {!isCollapsed && (
-                <>
-                  <span className="section-title">{section.title}</span>
-                  <span className="section-progress">{section.progress}%</span>
-                  <span className="section-arrow">
-                    {expandedSections.includes(section.id) ? '▼' : '▶'}
-                  </span>
-                </>
+            <div className={`section-header ${expandedSections.includes(section.id) ? 'expanded' : ''}`}>
+              <button
+                style={{ 
+                  background: 'none', 
+                  border: 'none', 
+                  padding: 0, 
+                  flex: 1, 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  color: 'inherit'
+                }}
+                onClick={() => {
+                  // Navigate to module page if it's Java
+                  if (section.id === 'java') {
+                    navigate('/modules/java');
+                  } else {
+                    toggleSection(section.id);
+                  }
+                }}
+              >
+                <span className="section-icon">{section.icon}</span>
+                {!isCollapsed && (
+                  <>
+                    <span className="section-title">{section.title}</span>
+                    <span className="section-progress">{section.progress}%</span>
+                  </>
+                )}
+              </button>
+              {!isCollapsed && section.id !== 'java' && (
+                <span 
+                  className="section-arrow"
+                  onClick={() => toggleSection(section.id)}
+                  style={{ cursor: 'pointer', padding: '0 8px' }}
+                >
+                  {expandedSections.includes(section.id) ? '▼' : '▶'}
+                </span>
               )}
-            </button>
+            </div>
 
             {/* Progress Bar */}
             {!isCollapsed && (

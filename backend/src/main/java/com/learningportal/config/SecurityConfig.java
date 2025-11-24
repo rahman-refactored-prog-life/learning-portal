@@ -41,7 +41,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/", "/login", "/register", "/dashboard", "/index.html", "/assets/**", "/vite.svg", "/*.js", "/*.css").permitAll()
+                .requestMatchers("/", "/login", "/register", "/dashboard", "/modules/**", "/topics/**", "/index.html", "/assets/**", "/vite.svg", "/*.js", "/*.css").permitAll()
+                .requestMatchers("/api/learning/**").authenticated()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

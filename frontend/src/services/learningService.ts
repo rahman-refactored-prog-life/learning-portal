@@ -2,6 +2,25 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:2025/api';
 
+// Create axios instance with auth interceptor
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+// Add JWT token to all requests
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export interface LearningModule {
   id: number;
   name: string;
@@ -36,12 +55,12 @@ export interface PaginatedResponse<T> {
 const learningService = {
   // Module operations
   getAllModules: async (): Promise<LearningModule[]> => {
-    const response = await axios.get(`${API_BASE_URL}/learning/modules`);
+    const response = await apiClient.get('/learning/modules');
     return response.data;
   },
 
   getModuleById: async (id: number): Promise<LearningModule> => {
-    const response = await axios.get(`${API_BASE_URL}/learning/modules/${id}`);
+    const response = await apiClient.get(`/learning/modules/${id}`);
     return response.data;
   },
 
@@ -53,8 +72,8 @@ const learningService = {
     sortBy: string = 'orderIndex',
     sortDir: string = 'ASC'
   ): Promise<PaginatedResponse<Topic>> => {
-    const response = await axios.get(
-      `${API_BASE_URL}/learning/modules/${moduleId}/topics`,
+    const response = await apiClient.get(
+      `/learning/modules/${moduleId}/topics`,
       {
         params: { page, size, sortBy, sortDir }
       }
@@ -68,8 +87,8 @@ const learningService = {
     page: number = 0,
     size: number = 20
   ): Promise<PaginatedResponse<Topic>> => {
-    const response = await axios.get(
-      `${API_BASE_URL}/learning/modules/${moduleId}/topics/search`,
+    const response = await apiClient.get(
+      `/learning/modules/${moduleId}/topics/search`,
       {
         params: { q: searchTerm, page, size }
       }
@@ -78,7 +97,7 @@ const learningService = {
   },
 
   getTopicById: async (id: number): Promise<Topic> => {
-    const response = await axios.get(`${API_BASE_URL}/learning/topics/${id}`);
+    const response = await apiClient.get(`/learning/topics/${id}`);
     return response.data;
   },
 };

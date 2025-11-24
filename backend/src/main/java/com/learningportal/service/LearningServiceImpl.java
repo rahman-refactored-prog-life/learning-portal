@@ -59,7 +59,7 @@ public class LearningServiceImpl implements LearningService {
     @Override
     @Transactional(readOnly = true)
     public List<LearningModule> getAllModules() {
-        return moduleRepository.findByOrderIndexOrderByOrderIndexAsc();
+        return moduleRepository.findAllByOrderByOrderIndexAsc();
     }
     
     @Override

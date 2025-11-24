@@ -15,7 +15,7 @@ public interface LearningModuleRepository extends JpaRepository<LearningModule, 
     
     List<LearningModule> findByType(ModuleType type);
     
-    List<LearningModule> findByOrderIndexOrderByOrderIndexAsc();
+    List<LearningModule> findAllByOrderByOrderIndexAsc();
     
     boolean existsByName(String name);
 }

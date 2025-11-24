@@ -37,10 +37,6 @@ public class LearningModule extends BaseEntity {
     @Column(name = "icon_url", length = 255)
     private String iconUrl;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private DifficultyLevel difficulty;
-
     @Column(nullable = false)
     private Boolean published = false;
 

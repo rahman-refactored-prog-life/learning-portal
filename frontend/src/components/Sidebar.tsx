@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 
 interface SidebarSection {
@@ -22,6 +23,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle }) => {
+  const navigate = useNavigate();
   const [expandedSections, setExpandedSections] = useState<string[]>(['java']);
 
   const sections: SidebarSection[] = [
@@ -110,7 +112,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle 
             {/* Section Header */}
             <button
               className={`section-header ${expandedSections.includes(section.id) ? 'expanded' : ''}`}
-              onClick={() => toggleSection(section.id)}
+              onClick={() => {
+                // Navigate to module page if it's Java
+                if (section.id === 'java') {
+                  navigate('/modules/java');
+                }
+                toggleSection(section.id);
+              }}
             >
               <span className="section-icon">{section.icon}</span>
               {!isCollapsed && (

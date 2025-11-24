@@ -83,8 +83,8 @@ export const DashboardPage: React.FC = () => {
       <div style={{ marginBottom: 'var(--space-8)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
           <h2>Continue Learning</h2>
-          <EnhancedButton variant="secondary" onClick={() => navigate('/demo')}>
-            View Component Demo →
+          <EnhancedButton variant="primary" onClick={() => navigate('/modules/java')}>
+            View All Available Learnings →
           </EnhancedButton>
         </div>
         <div style={{ 
@@ -92,6 +92,14 @@ export const DashboardPage: React.FC = () => {
           gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
           gap: 'var(--space-4)' 
         }}>
+          <ModuleCard
+            title="Java Programming"
+            description="Master Java from fundamentals to advanced concepts"
+            icon="☕"
+            difficulty="Beginner"
+            progress={5}
+            onClick={() => navigate('/modules/java')}
+          />
           <ModuleCard
             title="Arrays & Strings"
             description="Master fundamental data structures"

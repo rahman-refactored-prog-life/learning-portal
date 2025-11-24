@@ -120,14 +120,6 @@ public class LearningModule extends BaseEntity {
         this.iconUrl = iconUrl;
     }
 
-    public DifficultyLevel getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(DifficultyLevel difficulty) {
-        this.difficulty = difficulty;
-    }
-
     public Boolean getPublished() {
         return published;
     }

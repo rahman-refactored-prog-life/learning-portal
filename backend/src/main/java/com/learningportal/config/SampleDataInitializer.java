@@ -195,6 +195,8 @@ int myInt = (int) myDouble;  // Manual casting
         CodeExample javaExample = new CodeExample();
         javaExample.setTopic(topic);
         javaExample.setLanguage(ProgrammingLanguage.JAVA);
+        javaExample.setTitle("Variables in Java");
+        javaExample.setOrderIndex(1);
         javaExample.setCode("""
 public class VariablesDemo {
     public static void main(String[] args) {
@@ -222,6 +224,8 @@ public class VariablesDemo {
         CodeExample pythonExample = new CodeExample();
         pythonExample.setTopic(topic);
         pythonExample.setLanguage(ProgrammingLanguage.PYTHON);
+        pythonExample.setTitle("Variables in Python");
+        pythonExample.setOrderIndex(2);
         pythonExample.setCode("""
 # Python variables (dynamically typed)
 age = 25
@@ -245,6 +249,8 @@ print(f"Employed: {is_employed}")
         CodeExample jsExample = new CodeExample();
         jsExample.setTopic(topic);
         jsExample.setLanguage(ProgrammingLanguage.JAVASCRIPT);
+        jsExample.setTitle("Variables in JavaScript");
+        jsExample.setOrderIndex(3);
         jsExample.setCode("""
 // JavaScript variables
 let age = 25;
@@ -268,6 +274,8 @@ console.log(`Employed: ${isEmployed}`);
         CodeExample cppExample = new CodeExample();
         cppExample.setTopic(topic);
         cppExample.setLanguage(ProgrammingLanguage.CPP);
+        cppExample.setTitle("Variables in C++");
+        cppExample.setOrderIndex(4);
         cppExample.setCode("""
 #include <iostream>
 using namespace std;
@@ -298,6 +306,8 @@ int main() {
         CodeExample goExample = new CodeExample();
         goExample.setTopic(topic);
         goExample.setLanguage(ProgrammingLanguage.GO);
+        goExample.setTitle("Variables in Go");
+        goExample.setOrderIndex(5);
         goExample.setCode("""
 package main
 

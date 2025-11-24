@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import learningService, { Topic } from '../services/learningService';
+import learningService, { type Topic } from '../services/learningService';
 import { Button } from '../components/Button';
 import { Loading } from '../components/Loading';
 import { ErrorMessage } from '../components/ErrorMessage';
@@ -51,7 +51,7 @@ export const TopicDetailPage: React.FC = () => {
   };
 
   if (loading) {
-    return <Loading message="Loading topic..." />;
+    return <Loading text="Loading topic..." />;
   }
 
   if (error) {

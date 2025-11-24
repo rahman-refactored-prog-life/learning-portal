@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import learningService, { LearningModule, Topic } from '../services/learningService';
+import learningService, { type LearningModule, type Topic } from '../services/learningService';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Loading } from '../components/Loading';
@@ -71,7 +71,7 @@ export const JavaModulePage: React.FC = () => {
   };
 
   if (loading) {
-    return <Loading message="Loading Java module..." />;
+    return <Loading text="Loading Java module..." />;
   }
 
   if (error) {

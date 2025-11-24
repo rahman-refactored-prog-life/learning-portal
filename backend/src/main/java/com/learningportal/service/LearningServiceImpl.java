@@ -155,7 +155,7 @@ public class LearningServiceImpl implements LearningService {
         existing.setOrderIndex(question.getOrderIndex());
         existing.setHints(question.getHints());
         existing.setSolution(question.getSolution());
-        existing.setCompanyTags(question.getCompanyTags());
+        existing.setTestCases(question.getTestCases());
         return questionRepository.save(existing);
     }
     

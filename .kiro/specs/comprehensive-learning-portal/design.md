@@ -420,15 +420,27 @@ The application uses a comprehensive library of reusable UI components following
 
 ---
 
-## Content Creation Methodology (Gold Standard v3.0)
+## Content Creation Methodology (Gold Standard v3.0) - UNIVERSAL FOR ALL PHASES
 
 ### Overview
 
-All educational content across all phases follows the **Content_Methodology_v3_Framework** - a comprehensive 10-layer teaching framework that combines zero prior knowledge assumption with Harvard Gold Standard principles to take learners from absolute beginners to FAANG-ready engineers.
+**CRITICAL - UNIVERSAL REQUIREMENT**: ALL educational content across ALL 9 phases MUST follow the **Content_Methodology_v3_Framework** without exception. This is a comprehensive 10-layer teaching framework that combines zero prior knowledge assumption with Harvard Gold Standard principles to take learners from absolute beginners to FAANG-ready engineers.
+
+**Applies To**:
+- ✅ Phase 2: Java (100+ topics)
+- ✅ Phase 3: Data Structures (30+ topics)
+- ✅ Phase 4: Algorithms (50+ topics)
+- ✅ Phase 6: Databases (40+ topics)
+- ✅ Phase 7: System Design (35+ topics)
+- ✅ Phase 8: Spring Boot, Hibernate, React, Node.js (80+ topics)
+- ✅ Phase 9: Advanced Features (all conceptual content)
+- ✅ ALL future phases and content
 
 **Framework Location**: `.kiro/steering/CONTENT_CREATION_METHODOLOGY.md` and `CONTENT_METHODOLOGY_V3_FINAL.md`
 
 **Philosophy**: "Explain like I'm 5, but make me an expert"
+
+**Non-Negotiable**: Every single topic, concept, or educational content piece MUST implement all 10 layers, include both simple and comprehensive definitions, provide code in all 5 languages, and meet all quality standards.
 
 ### The 10-Layer Framework
 

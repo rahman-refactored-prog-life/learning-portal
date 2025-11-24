@@ -6,6 +6,36 @@ This implementation plan converts the comprehensive learning portal design into 
 
 **Total Estimated Timeline: 66-86 weeks (16-20 months)**
 
+---
+
+## 🔴 CRITICAL - UNIVERSAL CONTENT METHODOLOGY REQUIREMENT
+
+**ALL CONTENT CREATION ACROSS ALL PHASES MUST FOLLOW Content_Methodology_v3_Framework**
+
+This applies to:
+- ✅ Phase 2: Java (100+ topics)
+- ✅ Phase 3: Data Structures (30+ topics)  
+- ✅ Phase 4: Algorithms (50+ topics)
+- ✅ Phase 6: Databases (40+ topics)
+- ✅ Phase 7: System Design (35+ topics)
+- ✅ Phase 8: Spring Boot, Hibernate, React, Node.js (80+ topics)
+- ✅ Phase 9: Advanced Features (all conceptual content)
+- ✅ ALL future phases
+
+**Every topic MUST include**:
+- All 10 layers (Motivation, Simple+Comprehensive Definition, Mechanism, Code, Practice, Gotchas, Deep Dive, Interview Bank, Cheatsheet, References)
+- Code in all 5 languages (Java, Python, JavaScript, C++, Go)
+- 15+ practice problems (3 core + 5 drills + 3 challenges + 1 project + 10 quiz)
+- 10+ FAANG interview questions with full solutions
+- System design integration
+- Formal specifications and theoretical foundations
+
+**Framework Location**: `.kiro/steering/CONTENT_CREATION_METHODOLOGY.md`
+
+**Non-Negotiable**: No exceptions. Every single piece of educational content follows this framework.
+
+---
+
 ## Task Execution Guidelines
 
 1. **Sequential Execution**: Complete tasks in order within each phase
@@ -14,6 +44,7 @@ This implementation plan converts the comprehensive learning portal design into 
 4. **Documentation**: Update documentation as you implement
 5. **Git Commits**: Commit after each major task completion
 6. **Session Continuity**: Use session-checkpoint hook regularly
+7. **Content Methodology**: ALL content creation follows Content_Methodology_v3_Framework (see above)
 
 ## PHASE 1: FOUNDATION AND INFRASTRUCTURE (3-4 weeks)
 

@@ -5,6 +5,8 @@ import { Layout } from './components/Layout'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { JavaModulePage } from './pages/JavaModulePage'
+import { TopicDetailPage } from './pages/TopicDetailPage'
 import ComponentShowcase from './pages/ComponentShowcase'
 import './App.css'
 
@@ -21,6 +23,26 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <DashboardPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/modules/java"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <JavaModulePage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/topics/:topicId"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <TopicDetailPage />
                 </Layout>
               </ProtectedRoute>
             }

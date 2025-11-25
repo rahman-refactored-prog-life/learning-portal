@@ -1,10 +1,24 @@
 # [TOPIC NAME] - Complete Learning Guide
 
-**Topic**: [FILL: Topic name, e.g., "Variables and Data Types"]  
-**Category**: [FILL: e.g., "Java Fundamentals"]  
+**🌍 UNIVERSAL TEMPLATE - Works for ALL Phases (2-9)**
+
+**Topic**: [FILL: Topic name, e.g., "Variables and Data Types", "Binary Search Tree", "Load Balancing"]  
+**Phase**: [FILL: Phase 2-9, e.g., "Phase 2: Java", "Phase 3: Data Structures", "Phase 7: System Design"]  
+**Category**: [FILL: e.g., "Java Fundamentals", "Tree Data Structures", "System Design Patterns"]  
 **Difficulty**: [FILL: Beginner/Intermediate/Advanced]  
 **Estimated Time**: [FILL: e.g., "2-3 hours to master"]  
 **Prerequisites**: [FILL: List prerequisite topics]
+
+---
+
+**Template Applicability**:
+- ✅ Phase 2: Java (100+ topics)
+- ✅ Phase 3: Data Structures (30+ topics)
+- ✅ Phase 4: Algorithms (50+ topics)
+- ✅ Phase 6: Databases (40+ topics)
+- ✅ Phase 7: System Design (35+ topics)
+- ✅ Phase 8: Frameworks (80+ topics)
+- ✅ Phase 9: Advanced Features (all conceptual content)
 
 ---
 

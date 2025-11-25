@@ -42,7 +42,8 @@ public class SecurityConfig {
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/", "/login", "/register", "/dashboard", "/modules/**", "/topics/**", "/index.html", "/assets/**", "/vite.svg", "/*.js", "/*.css").permitAll()
-                .requestMatchers("/api/learning/**").authenticated()
+                .requestMatchers("/api/modules/**", "/api/topics/**", "/api/questions/**", "/api/examples/**").permitAll() // Allow public access to learning content
+                .requestMatchers("/api/learning/**").authenticated() // Require auth for user progress tracking
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/", "/login", "/register", "/dashboard", "/modules/**", "/topics/**", "/index.html", "/assets/**", "/vite.svg", "/*.js", "/*.css").permitAll()
                 .requestMatchers("/api/modules/**", "/api/topics/**", "/api/questions/**", "/api/examples/**").permitAll() // Allow public access to learning content
+                .requestMatchers("/api/progress/**").authenticated() // Require auth for progress tracking
                 .requestMatchers("/api/learning/**").authenticated() // Require auth for user progress tracking
                 .anyRequest().authenticated()
             )

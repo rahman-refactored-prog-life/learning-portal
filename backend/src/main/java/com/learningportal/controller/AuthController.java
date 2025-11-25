@@ -30,7 +30,7 @@ public class AuthController {
     @Operation(summary = "Register a new user")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
         User user = userService.registerUser(request);
-        String token = jwtUtil.generateToken(user.getUsername());
+        String token = jwtUtil.generateToken(user.getUsername(), user.getId());
 
         AuthResponse response = new AuthResponse(
                 token,
@@ -53,7 +53,7 @@ public class AuthController {
         }
 
         userService.updateLastLogin(user.getId());
-        String token = jwtUtil.generateToken(user.getUsername());
+        String token = jwtUtil.generateToken(user.getUsername(), user.getId());
 
         AuthResponse response = new AuthResponse(
                 token,

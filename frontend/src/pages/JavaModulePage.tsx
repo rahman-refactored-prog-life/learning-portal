@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import learningService, { type LearningModule, type Topic } from '../services/learningService';
+import progressService, { type UserProgress, type TopicProgress } from '../services/progressService';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Loading } from '../components/Loading';
@@ -11,6 +12,8 @@ export const JavaModulePage: React.FC = () => {
   const navigate = useNavigate();
   const [module, setModule] = useState<LearningModule | null>(null);
   const [topics, setTopics] = useState<Topic[]>([]);
+  const [moduleProgress, setModuleProgress] = useState<UserProgress | null>(null);
+  const [topicsProgress, setTopicsProgress] = useState<Map<number, TopicProgress>>(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -46,6 +49,23 @@ export const JavaModulePage: React.FC = () => {
 
       setTopics(topicsResponse.content);
       setTotalPages(topicsResponse.totalPages);
+
+      // Load progress data if user is logged in
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const progress = await progressService.getModuleProgress(javaModule.id);
+          setModuleProgress(progress);
+
+          const topicProgressList = await progressService.getModuleTopicsProgress(javaModule.id);
+          const progressMap = new Map<number, TopicProgress>();
+          topicProgressList.forEach(tp => progressMap.set(tp.topicId, tp));
+          setTopicsProgress(progressMap);
+        } catch (err) {
+          console.log('Progress not available:', err);
+        }
+      }
+
       setLoading(false);
     } catch (err: any) {
       setError(err.message || 'Failed to load Java module');
@@ -92,37 +112,74 @@ export const JavaModulePage: React.FC = () => {
           <span className="stat">
             <strong>{module.topicCount || 0}</strong> Topics
           </span>
+          {moduleProgress && (
+            <>
+              <span className="stat">
+                <strong>{moduleProgress.completedTopics}</strong> / {moduleProgress.totalTopics} Completed
+              </span>
+              <span className="stat">
+                <strong>{Math.round(moduleProgress.completionPercentage)}%</strong> Progress
+              </span>
+            </>
+          )}
         </div>
+        {moduleProgress && (
+          <div className="progress-bar-container">
+            <div 
+              className="progress-bar-fill" 
+              style={{ width: `${moduleProgress.completionPercentage}%` }}
+            />
+          </div>
+        )}
       </div>
 
       {/* Topics List */}
       <div className="topics-section">
         <h2>Topics</h2>
         <div className="topics-grid">
-          {topics.map((topic) => (
-            <Card
-              key={topic.id}
-              className="topic-card"
-              onClick={() => handleTopicClick(topic.id)}
-            >
-              <div className="topic-card-header">
-                <h3>{topic.title}</h3>
-                <span
-                  className="difficulty-badge"
-                  style={{ backgroundColor: getDifficultyColor(topic.difficulty) }}
-                >
-                  {topic.difficulty}
-                </span>
-              </div>
-              <p className="topic-description">{topic.description}</p>
-              <div className="topic-meta">
-                <span>⏱️ {topic.estimatedMinutes} min</span>
-                {topic.questionCount !== undefined && (
-                  <span>📝 {topic.questionCount} questions</span>
+          {topics.map((topic) => {
+            const progress = topicsProgress.get(topic.id);
+            return (
+              <Card
+                key={topic.id}
+                className={`topic-card ${progress?.isCompleted ? 'completed' : ''}`}
+                onClick={() => handleTopicClick(topic.id)}
+              >
+                <div className="topic-card-header">
+                  <h3>
+                    {progress?.isCompleted && <span className="check-icon">✓ </span>}
+                    {topic.title}
+                  </h3>
+                  <span
+                    className="difficulty-badge"
+                    style={{ backgroundColor: getDifficultyColor(topic.difficulty) }}
+                  >
+                    {topic.difficulty}
+                  </span>
+                </div>
+                <p className="topic-description">{topic.description}</p>
+                <div className="topic-meta">
+                  <span>⏱️ {topic.estimatedMinutes} min</span>
+                  {topic.questionCount !== undefined && (
+                    <span>📝 {topic.questionCount} questions</span>
+                  )}
+                  {progress && (
+                    <span className="progress-indicator">
+                      {Math.round(progress.completionPercentage)}% complete
+                    </span>
+                  )}
+                </div>
+                {progress && progress.completionPercentage > 0 && (
+                  <div className="topic-progress-bar">
+                    <div 
+                      className="topic-progress-fill" 
+                      style={{ width: `${progress.completionPercentage}%` }}
+                    />
+                  </div>
                 )}
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
 
         {/* Pagination */}

@@ -210,3 +210,29 @@
     flex-direction: column;
   }
 }
+
+/* Progress status */
+.progress-status {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.completed-badge {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-success-light, #d4edda);
+  color: var(--color-success-dark, #155724);
+  border-radius: 8px;
+  font-weight: 600;
+  border: 2px solid var(--color-success);
+}
+
+.in-progress-badge {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary-light, #e3f2fd);
+  color: var(--color-primary-dark, #1565c0);
+  border-radius: 8px;
+  font-weight: 600;
+  border: 2px solid var(--color-primary);
+}

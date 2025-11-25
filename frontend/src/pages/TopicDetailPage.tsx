@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import learningService, { type Topic } from '../services/learningService';
+import progressService, { type TopicProgress } from '../services/progressService';
 import { Button } from '../components/Button';
 import { Loading } from '../components/Loading';
 import { ErrorMessage } from '../components/ErrorMessage';
@@ -11,8 +12,10 @@ export const TopicDetailPage: React.FC = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
   const [topic, setTopic] = useState<Topic | null>(null);
+  const [progress, setProgress] = useState<TopicProgress | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [markingComplete, setMarkingComplete] = useState(false);
 
   useEffect(() => {
     if (topicId) {
@@ -26,10 +29,37 @@ export const TopicDetailPage: React.FC = () => {
       setError(null);
       const topicData = await learningService.getTopicById(id);
       setTopic(topicData);
+
+      // Load progress if user is logged in
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          await progressService.startTopic(id);
+          const progressData = await progressService.getTopicProgress(id);
+          setProgress(progressData);
+        } catch (err) {
+          console.log('Progress not available:', err);
+        }
+      }
+
       setLoading(false);
     } catch (err: any) {
       setError(err.message || 'Failed to load topic');
       setLoading(false);
+    }
+  };
+
+  const handleMarkComplete = async () => {
+    if (!topic || !topicId) return;
+
+    try {
+      setMarkingComplete(true);
+      const updatedProgress = await progressService.completeTopic(parseInt(topicId));
+      setProgress(updatedProgress);
+    } catch (err: any) {
+      console.error('Failed to mark complete:', err);
+    } finally {
+      setMarkingComplete(false);
     }
   };
 
@@ -120,14 +150,35 @@ export const TopicDetailPage: React.FC = () => {
         )}
       </div>
 
+      {/* Progress Status */}
+      {progress && (
+        <div className="progress-status">
+          {progress.isCompleted ? (
+            <div className="completed-badge">
+              ✓ Completed on {new Date(progress.completedAt!).toLocaleDateString()}
+            </div>
+          ) : (
+            <div className="in-progress-badge">
+              {Math.round(progress.completionPercentage)}% Complete
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Action Buttons */}
       <div className="topic-actions">
         <Button onClick={handleBack} variant="secondary">
           ← Back to Topics
         </Button>
-        <Button variant="primary">
-          Mark as Complete
-        </Button>
+        {progress && !progress.isCompleted && (
+          <Button 
+            variant="primary" 
+            onClick={handleMarkComplete}
+            disabled={markingComplete}
+          >
+            {markingComplete ? 'Marking...' : 'Mark as Complete'}
+          </Button>
+        )}
       </div>
     </div>
   );

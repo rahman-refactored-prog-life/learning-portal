@@ -34,6 +34,19 @@ public class JwtUtil {
                 .signWith(getSigningKey())
                 .compact();
     }
+    
+    public String generateToken(String username, Long userId) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpiration);
+
+        return Jwts.builder()
+                .subject(username)
+                .claim("userId", userId)
+                .issuedAt(now)
+                .expiration(expiryDate)
+                .signWith(getSigningKey())
+                .compact();
+    }
 
     public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parser()
@@ -43,6 +56,16 @@ public class JwtUtil {
                 .getPayload();
 
         return claims.getSubject();
+    }
+    
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.get("userId", Long.class);
     }
 
     public boolean validateToken(String token) {

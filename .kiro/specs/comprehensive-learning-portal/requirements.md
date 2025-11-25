@@ -68,6 +68,23 @@ This specification defines the requirements for building the world's most compre
 14. THE Learning_Portal_System SHALL allocate 4-5 hours per topic for content creation following the standardized workflow (60min research, 30min outline, 120-150min writing, 45min review, 25min polish)
 15. THE Learning_Portal_System SHALL maintain Content_Methodology_v3_Framework documentation in project specs and steering files to ensure zero context loss across development sessions
 
+### Requirement 1.17: Universal Content Template System
+
+**User Story:** As a content creator, I want a comprehensive pre-structured template that implements the complete 10-layer Content Methodology v3 Framework, so that I can create consistent, high-quality content efficiently without missing any sections.
+
+#### Acceptance Criteria
+
+1. THE Learning_Portal_System SHALL provide a universal content template system consisting of 3 template files (TOPIC_CONTENT_TEMPLATE.md, TOPIC_CONTENT_TEMPLATE_PART2.md, TOPIC_CONTENT_TEMPLATE_PART3.md) totaling ~2000 lines
+2. THE content template SHALL implement all 10 layers of Content_Methodology_v3_Framework with structured [FILL] markers for content insertion
+3. THE content template SHALL be universal and applicable to ALL phases (Phase 2: Java, Phase 3: Data Structures, Phase 4: Algorithms, Phase 6: Databases, Phase 7: System Design, Phase 8: Frameworks, Phase 9: Advanced)
+4. THE content template SHALL maintain 100% depth from Content_Methodology_v3_Framework with zero simplification or shortcuts
+5. THE content template SHALL include all subsections: Plain-Language Definition, Comprehensive Definition, Progressive Learning Path (Levels 0-5), Code in 5 Languages, 15+ Practice Problems, 10+ Interview Questions, System Design Integration, Cheatsheet, and References
+6. THE Learning_Portal_System SHALL provide template documentation including TEMPLATE_COMPLETION_GUIDE.md, TEMPLATE_READY_SUMMARY.md, UNIVERSAL_TEMPLATE_EXAMPLES.md, and TEMPLATE_UNIVERSAL_CONFIRMATION.md
+7. WHEN creating new topic content, THE content creator SHALL copy all 3 template parts, replace [TOPIC] placeholders, and fill in all [FILL: description] markers
+8. THE content template SHALL ensure consistency across all 335+ topics through structured checklist effect
+9. THE content template SHALL accelerate content creation while maintaining quality by providing complete structure upfront
+10. THE Learning_Portal_System SHALL version control all template files in git repository to ensure zero context loss across development sessions
+
 ### Requirement 2: Java Complete Ecosystem Mastery (Phase 2)
 
 **User Story:** As a learner preparing for FAANG interviews, I want comprehensive Java coverage from fundamentals to expert level with 1050+ questions following the Content_Methodology_v3_Framework, so that I can master Java for senior developer roles.

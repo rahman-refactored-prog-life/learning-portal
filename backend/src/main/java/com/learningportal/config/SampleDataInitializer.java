@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Sample data initializer for testing Phase 2 infrastructure.
  * Creates one Java module with one sample topic to test the UI.
+ * 
+ * DISABLED: Use ContentDataInitializer instead for loading real content from markdown files.
  */
-@Component
+// @Component  // Disabled - using ContentDataInitializer instead
 public class SampleDataInitializer implements CommandLineRunner {
     
     private static final Logger logger = LoggerFactory.getLogger(SampleDataInitializer.class);

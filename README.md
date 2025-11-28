@@ -187,3 +187,101 @@ This is a personal learning project. For questions or suggestions, please open a
 ## License
 
 Private project - All rights reserved.
+
+
+---
+
+## 📚 Content Management (Phase 2+)
+
+### Adding New Learning Content
+
+The application automatically loads learning content from markdown files in the `content/` directory.
+
+#### Content Structure
+```
+content/
+└── java/
+    ├── 01-variables-and-data-types.md  ✅ Complete (5,183 lines)
+    ├── 02-operators.md                  (next topic)
+    ├── 03-control-flow.md
+    └── ... (100+ topics total)
+```
+
+#### Adding a New Topic
+
+1. **Create markdown file** in `content/java/`:
+   ```bash
+   # Use the template
+   cp TOPIC_CONTENT_TEMPLATE.md content/java/02-operators.md
+   ```
+
+2. **Follow the template structure** (see `CONTENT_METHODOLOGY_V3_FINAL.md`):
+   - 10 layers of content
+   - Code examples in 5 languages
+   - Practice questions
+   - Interview questions
+   - Cheatsheet
+
+3. **Reload content**:
+   ```bash
+   # Clear existing content
+   curl -X POST http://localhost:2025/api/admin/clear-content
+   
+   # Restart application
+   cd backend && java -jar target/learning-portal-backend-1.0.0-SNAPSHOT.jar
+   ```
+
+4. **Verify**: Visit http://localhost:2025 and check the new topic appears
+
+#### Content Loader
+
+- **File**: `backend/src/main/java/com/learningportal/config/ContentDataInitializer.java`
+- **Behavior**: Automatically loads all `.md` files from `content/java/` on startup
+- **Metadata extraction**: Reads title, difficulty, estimated time from markdown
+- **Order**: Files are loaded in alphabetical order (use `01-`, `02-` prefixes)
+
+#### Admin Endpoints
+
+```bash
+# View database statistics
+curl http://localhost:2025/api/admin/stats
+
+# Clear all learning content
+curl -X POST http://localhost:2025/api/admin/clear-content
+```
+
+---
+
+## 🗂️ Project Structure
+
+```
+interview-prep-attempt-100/
+├── backend/                    # Spring Boot backend
+│   ├── src/main/java/
+│   │   └── com/learningportal/
+│   │       ├── config/
+│   │       │   ├── ContentDataInitializer.java  ✅ Loads markdown files
+│   │       │   └── SampleDataInitializer.java   ❌ Disabled
+│   │       ├── controller/
+│   │       │   └── AdminController.java         ✅ Content management
+│   │       └── ...
+│   └── target/                 # Build output
+├── frontend/                   # React frontend
+├── content/                    # Learning content (markdown)
+│   └── java/                   # Java topics
+├── database-scripts/           # SQL scripts
+├── .kiro/                      # Session & spec files
+│   ├── specs/                  # Requirements, design, tasks
+│   ├── session-state/          # Context preservation
+│   └── steering/               # Project guidelines
+├── .archive/                   # Archived old docs
+├── CONTENT_METHODOLOGY_V3_FINAL.md  # Content creation guide
+├── TOPIC_CONTENT_TEMPLATE.md        # Template for topics
+└── README.md                   # This file
+```
+
+---
+
+**Last Updated**: 2025-11-27
+**Phase**: Phase 2 - Java Complete Ecosystem
+**Status**: Content loading system operational ✅

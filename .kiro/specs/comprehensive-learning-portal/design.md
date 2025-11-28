@@ -426,6 +426,8 @@ The application uses a comprehensive library of reusable UI components following
 
 **CRITICAL - UNIVERSAL REQUIREMENT**: ALL educational content across ALL 9 phases MUST follow the **Content_Methodology_v3_Framework** without exception. This is a comprehensive 10-layer teaching framework that combines zero prior knowledge assumption with Harvard Gold Standard principles to take learners from absolute beginners to FAANG-ready engineers.
 
+**NO PLACEHOLDERS ALLOWED**: All content MUST contain REAL, COMPLETE material. Every [FILL] marker in templates must be replaced with actual FAANG interview questions, real working code examples in all 5 languages, complete solutions with explanations, genuine constraints and trade-offs, and authentic educational content. Placeholder text is NOT acceptable in production content.
+
 **Applies To**:
 - ✅ Phase 2: Java (100+ topics)
 - ✅ Phase 3: Data Structures (30+ topics)

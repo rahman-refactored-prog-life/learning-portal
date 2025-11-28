@@ -506,6 +506,11 @@ save-conv       # Save conversation from temporary.md
 auto-update     # Quick auto-update context ⭐ NEW
 update-context  # Interactive context update ⭐ NEW
 
+# Close Kiro first, then:
+rm -rf .kiro/.cache 2>/dev/null
+rm -rf .vscode/.kiro-cache 2>/dev/null
+
+
 
 
 # Quick auto-update (non-interactive)

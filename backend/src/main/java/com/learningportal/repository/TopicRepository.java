@@ -21,6 +21,10 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
     
     Optional<Topic> findByModuleIdAndTitle(Long moduleId, String title);
     
+    @Query("SELECT t FROM Topic t WHERE t.module = :module AND t.title = :title")
+    Optional<Topic> findByModuleAndTitle(@Param("module") com.learningportal.entity.LearningModule module, 
+                                         @Param("title") String title);
+    
     List<Topic> findByDifficulty(DifficultyLevel difficulty);
     
     @Query("SELECT t FROM Topic t WHERE t.module.id = :moduleId AND " +

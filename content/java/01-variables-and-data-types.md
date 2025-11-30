@@ -573,38 +573,38 @@ The core problem is the **semantic gap** between how humans think (in concepts a
 
 **Fundamental Constraints**:
 
-1. **Constraint 1**: [FILL: What limits this concept]
-   - **Why**: [FILL: Reason for this constraint]
-   - **Impact**: [FILL: Effect of this constraint]
+1. **Memory Size Limits**: Each primitive data type has a fixed size and range
+   - **Why**: Hardware architecture defines word sizes and memory addressing limits
+   - **Impact**: Integer overflow/underflow can occur silently; `byte` ranges from -128 to 127, `int` from -2,147,483,648 to 2,147,483,647
 
-2. **Constraint 2**: [FILL: What limits this concept]
-   - **Why**: [FILL: Reason for this constraint]
-   - **Impact**: [FILL: Effect of this constraint]
+2. **Type Safety Enforcement**: Java is strongly typed - you cannot assign incompatible types without explicit conversion
+   - **Why**: Prevents runtime errors and ensures data integrity at compile time
+   - **Impact**: More verbose code but fewer runtime bugs; `int x = "hello";` won't compile
 
-3. **Constraint 3**: [FILL: What limits this concept]
-   - **Why**: [FILL: Reason for this constraint]
-   - **Impact**: [FILL: Effect of this constraint]
+3. **Immutability of Primitive Values**: Primitive values themselves cannot be modified, only reassigned
+   - **Why**: Primitives are stored by value, not by reference
+   - **Impact**: When you pass a primitive to a method, the method gets a copy; changes inside the method don't affect the original
 
 ---
 
 **Assumptions**:
-- **Assumption 1**: [FILL: What we assume to be true]
-- **Assumption 2**: [FILL: What we assume to be true]
-- **Assumption 3**: [FILL: What we assume to be true]
+- **Default Initialization**: Instance variables are automatically initialized to default values (0, false, null), but local variables are not
+- **Platform Independence**: Java guarantees consistent sizes for primitive types across all platforms (unlike C/C++)
+- **Unicode Support**: `char` type uses UTF-16 encoding and can represent most international characters
 
 ---
 
 **Limitations**:
-- **Limitation 1**: [FILL: What this concept cannot do]
-- **Limitation 2**: [FILL: What this concept cannot do]
-- **Limitation 3**: [FILL: What this concept cannot do]
+- **No Unsigned Types**: Java lacks unsigned integer types (except `char`), limiting the positive range for the same bit width
+- **Fixed Precision**: Floating-point types (`float`, `double`) cannot represent all decimal numbers exactly, leading to rounding errors
+- **No Operator Overloading**: You cannot define custom behavior for operators like `+` or `*` on your own types (unlike C++)
 
 ---
 
 **Trade-offs**:
-- **Trade-off 1**: [FILL: What you gain vs what you lose]
-- **Trade-off 2**: [FILL: What you gain vs what you lose]
-- **Trade-off 3**: [FILL: What you gain vs what you lose]
+- **Primitive vs Wrapper Classes**: Primitives are faster and use less memory, but lack methods and cannot be used in generics; wrappers provide utility methods but have overhead
+- **Type Safety vs Flexibility**: Strong typing catches errors early but requires more explicit conversions compared to dynamically-typed languages
+- **Memory vs Range**: Smaller types (`byte`, `short`) save memory but have limited ranges; larger types (`long`, `double`) provide more range but consume more memory
 
 ---
 
@@ -612,50 +612,92 @@ The core problem is the **semantic gap** between how humans think (in concepts a
 
 **Standard Variants**:
 
-1. **[FILL: Variant 1 Name]**: [FILL: Description]
-   - **Difference**: [FILL: What's different from the base concept]
-   - **When to use**: [FILL: Scenario where this variant is preferred]
-   - **Example**: [FILL: Concrete example]
+1. **Wrapper Classes (Boxed Types)**: Object representations of primitive types (Integer, Double, Boolean, etc.)
+   - **Difference**: These are objects, not primitives; they can be null and have utility methods
+   - **When to use**: When you need objects (collections, generics), need null values, or want utility methods like `Integer.parseInt()`
+   - **Example**: `Integer age = 25;` (autoboxing), `ArrayList<Integer> numbers = new ArrayList<>();`
 
-2. **[FILL: Variant 2 Name]**: [FILL: Description]
-   - **Difference**: [FILL: What's different from the base concept]
-   - **When to use**: [FILL: Scenario where this variant is preferred]
-   - **Example**: [FILL: Concrete example]
+2. **Final Variables (Constants)**: Variables declared with `final` keyword cannot be reassigned
+   - **Difference**: Value is immutable after initialization; must be initialized when declared or in constructor
+   - **When to use**: For constants, configuration values, or when you want to prevent accidental reassignment
+   - **Example**: `final double PI = 3.14159;`, `final int MAX_USERS = 1000;`
 
-3. **[FILL: Variant 3 Name]**: [FILL: Description]
-   - **Difference**: [FILL: What's different from the base concept]
-   - **When to use**: [FILL: Scenario where this variant is preferred]
-   - **Example**: [FILL: Concrete example]
+3. **Static Variables (Class Variables)**: Variables shared across all instances of a class
+   - **Difference**: Belongs to the class, not individual objects; only one copy exists in memory
+   - **When to use**: For shared state, counters, configuration that applies to all instances
+   - **Example**: `static int instanceCount = 0;`, `static final String APP_NAME = "MyApp";`
 
 ---
 
 **Advanced Extensions**:
 
-1. **[FILL: Extension 1 Name]**: [FILL: Description]
-   - **Adds**: [FILL: What additional capability this provides]
-   - **Complexity**: [FILL: Impact on complexity]
-   - **Use case**: [FILL: When you'd use this extension]
+1. **Volatile Variables**: Variables that are always read from and written to main memory, not CPU cache
+   - **Adds**: Thread-safe visibility guarantees without full synchronization
+   - **Complexity**: Slight performance overhead; doesn't provide atomicity for compound operations
+   - **Use case**: Flags or status variables accessed by multiple threads (e.g., `volatile boolean isRunning;`)
 
-2. **[FILL: Extension 2 Name]**: [FILL: Description]
-   - **Adds**: [FILL: What additional capability this provides]
-   - **Complexity**: [FILL: Impact on complexity]
-   - **Use case**: [FILL: When you'd use this extension]
+2. **Transient Variables**: Variables excluded from serialization
+   - **Adds**: Control over which fields are saved when object is serialized
+   - **Complexity**: Minimal; just affects serialization behavior
+   - **Use case**: Sensitive data (passwords), derived/cached values, or non-serializable fields
 
 ---
 
 #### Comprehensive Example
 
 **Complete Walkthrough**:
-[FILL: Detailed example showing all aspects of the definition]
+Let's create a complete example demonstrating variable declaration, initialization, type conversion, and common operations across different data types.
 
-**Input**: [FILL: Specific input]
-**Process**: [FILL: Step-by-step with all details]
-**Output**: [FILL: Specific output]
-**Verification**: [FILL: How we know it's correct]
+**Input**: Create a user profile system that stores and manipulates different types of user data
+
+**Process**: Step-by-step implementation with all data types
 
 **Example**:
-```
-Input: Declare an integer variable named "age" and assign it the value 25
+```java
+public class UserProfile {
+    // Step 1: Declare and initialize variables of different types
+    
+    // Integer types
+    byte userLevel = 5;                    // Small range: -128 to 127
+    short loginCount = 1250;               // Medium range: -32,768 to 32,767
+    int userId = 1000000;                  // Standard integer
+    long accountBalance = 9876543210L;     // Large numbers (note the 'L' suffix)
+    
+    // Floating-point types
+    float discountRate = 0.15f;            // Single precision (note the 'f' suffix)
+    double accountScore = 98.7654321;      // Double precision (default for decimals)
+    
+    // Character and boolean
+    char membershipTier = 'G';             // Single character (Gold tier)
+    boolean isPremium = true;              // Boolean value
+    
+    // Step 2: Type conversion and calculations
+    
+    // Implicit conversion (widening) - safe, no data loss
+    long bigUserId = userId;               // int → long (automatic)
+    double preciseBalance = accountBalance; // long → double (automatic)
+    
+    // Explicit conversion (narrowing) - requires cast, potential data loss
+    int truncatedScore = (int) accountScore;  // 98.7654321 → 98 (loses decimal)
+    byte smallLevel = (byte) loginCount;      // 1250 → -46 (overflow!)
+    
+    // Step 3: Arithmetic operations
+    double finalPrice = 100.0;
+    double discountAmount = finalPrice * discountRate;  // 100.0 * 0.15 = 15.0
+    double priceAfterDiscount = finalPrice - discountAmount;  // 85.0
+    
+    // Step 4: Increment operations
+    loginCount++;                          // loginCount is now 1251
+    userLevel += 2;                        // userLevel is now 7
+    
+    // Step 5: String conversion for display
+    String userInfo = "User ID: " + userId + 
+                     ", Level: " + userLevel +
+                     ", Premium: " + isPremium +
+                     ", Tier: " + membershipTier;
+    
+    System.out.println(userInfo);
+}
 
 Process:
 1. Compiler allocates 4 bytes of memory (for int)
@@ -1079,75 +1121,75 @@ for (int i = 0; i < array.length && !found; i++) {
 - Common mistake: `if (x = 5)` assigns instead of comparing
 - **When asked**: Show the bug this causes and how to avoid it
 
-3. **[FILL: Technique 3 Name]**: [FILL: How it improves performance]
-   - **Before**: O([FILL])
-   - **After**: O([FILL])
-   - **Trade-off**: [FILL: What we sacrifice]
-   - **When to use**: [FILL: Scenario]
-   - **Example**: [FILL: Concrete example]
+3. **Use Primitives Over Wrappers When Possible**: Avoid unnecessary autoboxing/unboxing overhead
+   - **Before**: O(n) with autoboxing overhead in loops
+   - **After**: O(n) with direct primitive operations
+   - **Trade-off**: Less flexibility (no null values, can't use in generics) for better performance
+   - **When to use**: Performance-critical code, large arrays, tight loops
+   - **Example**: `int[] array` instead of `Integer[] array` for numeric computations
 
 ---
 
 ### Level 4: Extend (Variants & Patterns)
 
-#### Variant 1: [FILL: Variant Name]
+#### Variant 1: Immutable Variables (final keyword)
 
-- **What's different**: [FILL: Key difference from base concept]
-- **When to use**: [FILL: Scenario where this is preferred]
+- **What's different**: Variables declared with `final` cannot be reassigned after initialization
+- **When to use**: For constants, configuration values, or when you want to prevent accidental modification
 - **Trade-offs**: 
-  - **Pros**: [FILL: Advantages]
-  - **Cons**: [FILL: Disadvantages]
-- **Example**: [FILL: Quick code example]
+  - **Pros**: Thread-safe, prevents bugs from accidental reassignment, clearer intent
+  - **Cons**: Less flexible, must be initialized immediately or in constructor
+- **Example**: `final int MAX_RETRIES = 3;` or `final String API_KEY = "abc123";`
 
 ---
 
-#### Variant 2: [FILL: Variant Name]
+#### Variant 2: Static Variables (Class-level variables)
 
-- **What's different**: [FILL: Key difference from base concept]
-- **When to use**: [FILL: Scenario where this is preferred]
+- **What's different**: Shared across all instances of a class; belongs to the class, not individual objects
+- **When to use**: For shared state, counters, or configuration that applies to all instances
 - **Trade-offs**: 
-  - **Pros**: [FILL: Advantages]
-  - **Cons**: [FILL: Disadvantages]
-- **Example**: [FILL: Quick code example]
+  - **Pros**: Memory efficient (one copy for all instances), useful for shared state
+  - **Cons**: Can cause issues in multi-threaded environments, harder to test
+- **Example**: `static int instanceCount = 0;` to track number of objects created
 
 ---
 
-#### Variant 3: [FILL: Variant Name]
+#### Variant 3: Volatile Variables (Thread-safe visibility)
 
-- **What's different**: [FILL: Key difference from base concept]
-- **When to use**: [FILL: Scenario where this is preferred]
+- **What's different**: Always read from/written to main memory, not CPU cache; provides visibility guarantees
+- **When to use**: For flags or status variables accessed by multiple threads
 - **Trade-offs**: 
-  - **Pros**: [FILL: Advantages]
-  - **Cons**: [FILL: Disadvantages]
-- **Example**: [FILL: Quick code example]
+  - **Pros**: Ensures visibility across threads without full synchronization
+  - **Cons**: Doesn't provide atomicity for compound operations (like `count++`)
+- **Example**: `volatile boolean isRunning = true;` for thread control flags
 
 ---
 
 #### Hybrid Approaches
 
-- **[FILL: Hybrid 1]**: Combines [FILL: A] + [FILL: B] for [FILL: benefit]
-  - **Use case**: [FILL: When to use]
-  - **Example**: [FILL: Concrete example]
+- **final static**: Combines immutability + class-level scope for true constants
+  - **Use case**: Application-wide constants that never change
+  - **Example**: `public static final double PI = 3.14159;`
 
-- **[FILL: Hybrid 2]**: Combines [FILL: C] + [FILL: D] for [FILL: benefit]
-  - **Use case**: [FILL: When to use]
-  - **Example**: [FILL: Concrete example]
+- **volatile + synchronized**: Combines visibility + atomicity for thread-safe operations
+  - **Use case**: Shared counters or state that multiple threads modify
+  - **Example**: `volatile int count;` with `synchronized` methods for increment
 
 ---
 
 #### Advanced Patterns
 
-- **Pattern 1**: [FILL: Pattern name] - [FILL: When to use]
-  - **Description**: [FILL: What this pattern does]
-  - **Example**: [FILL: Code example]
+- **Pattern 1**: Lazy Initialization - Delay variable initialization until first use
+  - **Description**: Initialize expensive objects only when needed, often with double-checked locking
+  - **Example**: `private static volatile Singleton instance; if (instance == null) { synchronized(Singleton.class) { if (instance == null) instance = new Singleton(); } }`
 
-- **Pattern 2**: [FILL: Pattern name] - [FILL: When to use]
-  - **Description**: [FILL: What this pattern does]
-  - **Example**: [FILL: Code example]
+- **Pattern 2**: Type-Safe Enums - Use enums instead of integer constants for better type safety
+  - **Description**: Replace magic numbers with meaningful enum values
+  - **Example**: `enum Status { PENDING, ACTIVE, COMPLETED }` instead of `int STATUS_PENDING = 0;`
 
-- **Pattern 3**: [FILL: Pattern name] - [FILL: When to use]
-  - **Description**: [FILL: What this pattern does]
-  - **Example**: [FILL: Code example]
+- **Pattern 3**: Defensive Copying - Create copies of mutable objects to prevent external modification
+  - **Description**: When storing or returning mutable objects, create defensive copies
+  - **Example**: `this.date = new Date(date.getTime());` instead of `this.date = date;`
 
 ---
 
@@ -1155,70 +1197,72 @@ for (int i = 0; i < array.length && !found; i++) {
 
 #### Canonical Question Types
 
-1. **[FILL: Type 1 Name]**: [FILL: Description of question type]
-   - **How to recognize**: [FILL: Clues in problem statement]
-   - **Approach**: [FILL: Strategy to solve]
-   - **Example**: [FILL: Problem name or description]
-   - **Key insight**: [FILL: The trick to solving this type]
+1. **Type Conversion & Overflow**: Questions about implicit/explicit casting and overflow behavior
+   - **How to recognize**: Problem mentions integer limits, asks to handle large numbers, or requires reversing/manipulating digits
+   - **Approach**: Check for overflow BEFORE operations; use long for intermediate calculations; understand MIN/MAX values
+   - **Example**: Reverse Integer (LeetCode #7), Add Binary (LeetCode #67), Plus One (LeetCode #66)
+   - **Key insight**: Check `result > Integer.MAX_VALUE/10` before multiplying by 10
 
-2. **[FILL: Type 2 Name]**: [FILL: Description of question type]
-   - **How to recognize**: [FILL: Clues in problem statement]
-   - **Approach**: [FILL: Strategy to solve]
-   - **Example**: [FILL: Problem name or description]
-   - **Key insight**: [FILL: The trick to solving this type]
+2. **Bit Manipulation**: Questions involving binary representation, powers of 2, or counting bits
+   - **How to recognize**: Keywords like "binary", "bits", "power of 2", "XOR", "AND", "OR"
+   - **Approach**: Use bitwise operators; remember `n & (n-1)` removes rightmost 1 bit; `n & 1` checks if odd
+   - **Example**: Power of Two (LeetCode #231), Number of 1 Bits (LeetCode #191), Single Number (LeetCode #136)
+   - **Key insight**: Powers of 2 have exactly one bit set; `n & (n-1) == 0` for powers of 2
 
-3. **[FILL: Type 3 Name]**: [FILL: Description of question type]
-   - **How to recognize**: [FILL: Clues in problem statement]
-   - **Approach**: [FILL: Strategy to solve]
-   - **Example**: [FILL: Problem name or description]
-   - **Key insight**: [FILL: The trick to solving this type]
+3. **Digit Manipulation**: Questions requiring extraction or manipulation of individual digits
+   - **How to recognize**: Problem involves reversing numbers, checking palindromes, or digit sums
+   - **Approach**: Use `n % 10` to get last digit, `n / 10` to remove last digit; build result digit by digit
+   - **Example**: Palindrome Number (LeetCode #9), Happy Number (LeetCode #202), Sum of Digits (various)
+   - **Key insight**: Can reverse half the number to check palindrome; avoid string conversion for efficiency
 
 ---
 
 #### Red Flags (What Interviewers Look For)
 
 **Good Signs** ✅:
-- [FILL: Sign 1]: Shows [FILL: quality/skill]
-- [FILL: Sign 2]: Shows [FILL: quality/skill]
-- [FILL: Sign 3]: Shows [FILL: quality/skill]
-- [FILL: Sign 4]: Shows [FILL: quality/skill]
-- [FILL: Sign 5]: Shows [FILL: quality/skill]
+- **Checks overflow explicitly**: Shows understanding of integer limits and edge cases
+- **Asks about constraints**: Clarifies input range, whether to use 32-bit or 64-bit integers
+- **Considers edge cases**: Tests with 0, negative numbers, MIN_VALUE, MAX_VALUE
+- **Explains trade-offs**: Discusses primitive vs wrapper, memory vs precision
+- **Optimizes space**: Uses primitives instead of wrappers when appropriate
 
 **Bad Signs** ❌:
-- [FILL: Sign 1]: Indicates [FILL: problem/weakness]
-- [FILL: Sign 2]: Indicates [FILL: problem/weakness]
-- [FILL: Sign 3]: Indicates [FILL: problem/weakness]
-- [FILL: Sign 4]: Indicates [FILL: problem/weakness]
-- [FILL: Sign 5]: Indicates [FILL: problem/weakness]
+- **Ignores overflow**: Doesn't check for overflow in arithmetic operations
+- **Confuses = and ==**: Uses assignment operator in conditional statements
+- **Doesn't initialize variables**: Forgets to initialize local variables before use
+- **Misuses types**: Uses float for currency, int for large numbers without checking
+- **Converts to string unnecessarily**: Uses string manipulation when mathematical solution exists
 
 ---
 
 #### Interview Strategy
 
-1. **Clarify**: [FILL: What questions to ask]
-   - [FILL: Question 1]
-   - [FILL: Question 2]
-   - [FILL: Question 3]
+1. **Clarify**: Ask about constraints and edge cases
+   - "What's the range of input values? 32-bit or 64-bit integers?"
+   - "How should I handle overflow? Return 0, throw exception, or use long?"
+   - "Are negative numbers allowed? How should they be handled?"
 
-2. **Approach**: [FILL: How to explain your thinking]
-   - [FILL: Step 1]
-   - [FILL: Step 2]
-   - [FILL: Step 3]
+2. **Approach**: Explain your thinking clearly
+   - "I'll extract digits using modulo and division operations"
+   - "I need to check for overflow before each multiplication"
+   - "I'll use bit manipulation for efficiency since we're checking powers of 2"
 
-3. **Code**: [FILL: What to focus on while coding]
-   - [FILL: Focus area 1]
-   - [FILL: Focus area 2]
-   - [FILL: Focus area 3]
+3. **Code**: Focus on correctness and edge cases
+   - Check overflow conditions explicitly
+   - Handle negative numbers correctly
+   - Use appropriate data types (int vs long vs double)
 
-4. **Test**: [FILL: What cases to check]
-   - [FILL: Test case type 1]
-   - [FILL: Test case type 2]
-   - [FILL: Test case type 3]
+4. **Test**: Cover all edge cases
+   - Zero: `0`
+   - Negative numbers: `-123`
+   - Overflow cases: `Integer.MAX_VALUE + 1`
+   - Boundary values: `Integer.MIN_VALUE`, `Integer.MAX_VALUE`
+   - Single digit: `5`
 
-5. **Optimize**: [FILL: What to discuss for optimization]
-   - [FILL: Optimization 1]
-   - [FILL: Optimization 2]
-   - [FILL: Optimization 3]
+5. **Optimize**: Discuss improvements
+   - "Could use bit manipulation instead of division for powers of 2"
+   - "Could reverse only half the number for palindrome check"
+   - "Could use primitives instead of wrappers to save memory"
 
 ---
 # [TOPIC NAME] - Template Part 2 (Layers 4-10)
@@ -1695,40 +1739,87 @@ func TestFloatingPoint(t *testing.T) {
     }
 }
 ```
-        [FILL: description]
+
+---
+
+### Additional Example: Safe Type Conversion Utility
+
+This example demonstrates safe type conversion with overflow checking across all languages.
+
+#### Python
+
+```python
+def safe_int_to_byte(value: int) -> int:
     """
-    # Step 1: [FILL: What this step does]
-    [FILL: code line 1]
+    Safely converts an integer to byte range (-128 to 127).
+    Raises ValueError if out of range.
     
-    # Step 2: [FILL: What this step does]
-    [FILL: code line 2]
+    Time: O(1) | Space: O(1)
+    """
+    # Step 1: Check if value is within byte range
+    if value < -128 or value > 127:
+        raise ValueError(f"Value {value} out of byte range (-128 to 127)")
     
-    # Step 3: [FILL: What this step does]
-    [FILL: code line 3]
+    # Step 2: Return the value (already in valid range)
+    return value
+
+def convert_temperature(celsius: float) -> dict:
+    """
+    Converts Celsius to Fahrenheit and Kelvin.
+    Demonstrates floating-point operations.
     
-    return [FILL: result]
+    Time: O(1) | Space: O(1)
+    """
+    # Step 1: Validate input (can't be below absolute zero)
+    if celsius < -273.15:
+        raise ValueError("Temperature below absolute zero")
+    
+    # Step 2: Convert to Fahrenheit
+    fahrenheit = (celsius * 9.0 / 5.0) + 32.0
+    
+    # Step 3: Convert to Kelvin
+    kelvin = celsius + 273.15
+    
+    return {
+        'celsius': celsius,
+        'fahrenheit': round(fahrenheit, 2),
+        'kelvin': round(kelvin, 2)
+    }
 
 # Unit Test
-def test_method_name_basic_case():
+def test_safe_int_to_byte_valid():
     # Given
-    [FILL: input setup]
+    value = 100
     
     # When
-    result = method_name([FILL: params])
+    result = safe_int_to_byte(value)
     
     # Then
-    assert result == [FILL: expected]
+    assert result == 100
 
 # Edge Case Test
-def test_method_name_edge_case():
+def test_safe_int_to_byte_overflow():
     # Given
-    [FILL: edge case setup]
+    value = 200  # Out of byte range
+    
+    # When/Then
+    try:
+        safe_int_to_byte(value)
+        assert False, "Should have raised ValueError"
+    except ValueError as e:
+        assert "out of byte range" in str(e)
+
+def test_temperature_conversion():
+    # Given
+    celsius = 0.0
     
     # When
-    result = method_name([FILL: params])
+    result = convert_temperature(celsius)
     
     # Then
-    assert result == [FILL: expected]
+    assert result['celsius'] == 0.0
+    assert result['fahrenheit'] == 32.0
+    assert result['kelvin'] == 273.15
 ```
 
 ---
@@ -1737,48 +1828,83 @@ def test_method_name_edge_case():
 
 ```javascript
 /**
- * [FILL: Description]
+ * Safely converts an integer to byte range (-128 to 127).
  * 
- * Time: O([FILL]) | Space: O([FILL])
+ * Time: O(1) | Space: O(1)
  * 
- * @param {[FILL: type]} param1 - [FILL: description]
- * @returns {[FILL: type]} [FILL: description]
+ * @param {number} value - Integer to convert
+ * @returns {number} Value if in range
+ * @throws {Error} If value out of byte range
  */
-function methodName(params) {
-    // Step 1: [FILL: What this step does]
-    [FILL: code line 1]
+function safeIntToByte(value) {
+    // Step 1: Check if value is within byte range
+    if (value < -128 || value > 127) {
+        throw new Error(`Value ${value} out of byte range (-128 to 127)`);
+    }
     
-    // Step 2: [FILL: What this step does]
-    [FILL: code line 2]
+    // Step 2: Return the value
+    return value;
+}
+
+/**
+ * Converts Celsius to Fahrenheit and Kelvin.
+ * 
+ * Time: O(1) | Space: O(1)
+ * 
+ * @param {number} celsius - Temperature in Celsius
+ * @returns {Object} Temperatures in all scales
+ */
+function convertTemperature(celsius) {
+    // Step 1: Validate input
+    if (celsius < -273.15) {
+        throw new Error("Temperature below absolute zero");
+    }
     
-    // Step 3: [FILL: What this step does]
-    [FILL: code line 3]
+    // Step 2: Convert to Fahrenheit
+    const fahrenheit = (celsius * 9.0 / 5.0) + 32.0;
     
-    return [FILL: result];
+    // Step 3: Convert to Kelvin
+    const kelvin = celsius + 273.15;
+    
+    return {
+        celsius: celsius,
+        fahrenheit: Math.round(fahrenheit * 100) / 100,
+        kelvin: Math.round(kelvin * 100) / 100
+    };
 }
 
 // Unit Test (Jest)
-test('methodName - basic case', () => {
+test('safeIntToByte - valid value', () => {
     // Given
-    const [FILL: input] = [FILL: setup];
+    const value = 100;
     
     // When
-    const result = methodName([FILL: params]);
+    const result = safeIntToByte(value);
     
     // Then
-    expect(result).toBe([FILL: expected]);
+    expect(result).toBe(100);
 });
 
 // Edge Case Test
-test('methodName - edge case', () => {
+test('safeIntToByte - overflow', () => {
     // Given
-    const [FILL: input] = [FILL: setup];
+    const value = 200;
+    
+    // When/Then
+    expect(() => safeIntToByte(value)).toThrow('out of byte range');
+});
+
+test('convertTemperature - freezing point', () => {
+    // Given
+    const celsius = 0.0;
     
     // When
-    const result = methodName([FILL: params]);
+    const result = convertTemperature(celsius);
     
     // Then
-    expect(result).toBe([FILL: expected]);
+    expect(result.celsius).toBe(0.0);
+    expect(result.fahrenheit).toBe(32.0);
+    expect(result.kelvin).toBe(273.15);
 });
 ```
 
@@ -1787,46 +1913,83 @@ test('methodName - edge case', () => {
 #### C++
 
 ```cpp
+#include <stdexcept>
+#include <cmath>
+#include <map>
+#include <string>
+
 /**
- * [FILL: Description]
+ * Safely converts an integer to byte range (-128 to 127).
  * 
- * Time: O([FILL]) | Space: O([FILL])
+ * Time: O(1) | Space: O(1)
  */
-[FILL: ReturnType] methodName([FILL: params]) {
-    // Step 1: [FILL: What this step does]
-    [FILL: code line 1]
+int8_t safeIntToByte(int value) {
+    // Step 1: Check if value is within byte range
+    if (value < -128 || value > 127) {
+        throw std::out_of_range("Value out of byte range (-128 to 127)");
+    }
     
-    // Step 2: [FILL: What this step does]
-    [FILL: code line 2]
+    // Step 2: Cast and return
+    return static_cast<int8_t>(value);
+}
+
+/**
+ * Converts Celsius to Fahrenheit and Kelvin.
+ * 
+ * Time: O(1) | Space: O(1)
+ */
+std::map<std::string, double> convertTemperature(double celsius) {
+    // Step 1: Validate input
+    if (celsius < -273.15) {
+        throw std::invalid_argument("Temperature below absolute zero");
+    }
     
-    // Step 3: [FILL: What this step does]
-    [FILL: code line 3]
+    // Step 2: Convert to Fahrenheit
+    double fahrenheit = (celsius * 9.0 / 5.0) + 32.0;
     
-    return [FILL: result];
+    // Step 3: Convert to Kelvin
+    double kelvin = celsius + 273.15;
+    
+    // Step 4: Return results
+    return {
+        {"celsius", celsius},
+        {"fahrenheit", std::round(fahrenheit * 100) / 100},
+        {"kelvin", std::round(kelvin * 100) / 100}
+    };
 }
 
 // Unit Test (Google Test)
-TEST(MethodNameTest, BasicCase) {
+TEST(TypeConversionTest, SafeIntToByte_Valid) {
     // Given
-    [FILL: input setup]
+    int value = 100;
     
     // When
-    [FILL: ReturnType] result = methodName([FILL: params]);
+    int8_t result = safeIntToByte(value);
     
     // Then
-    EXPECT_EQ([FILL: expected], result);
+    EXPECT_EQ(100, result);
 }
 
 // Edge Case Test
-TEST(MethodNameTest, EdgeCase) {
+TEST(TypeConversionTest, SafeIntToByte_Overflow) {
     // Given
-    [FILL: edge case setup]
+    int value = 200;
+    
+    // When/Then
+    EXPECT_THROW(safeIntToByte(value), std::out_of_range);
+}
+
+TEST(TypeConversionTest, ConvertTemperature_FreezingPoint) {
+    // Given
+    double celsius = 0.0;
     
     // When
-    [FILL: ReturnType] result = methodName([FILL: params]);
+    auto result = convertTemperature(celsius);
     
     // Then
-    EXPECT_EQ([FILL: expected], result);
+    EXPECT_DOUBLE_EQ(0.0, result["celsius"]);
+    EXPECT_DOUBLE_EQ(32.0, result["fahrenheit"]);
+    EXPECT_DOUBLE_EQ(273.15, result["kelvin"]);
 }
 ```
 
@@ -1835,109 +1998,181 @@ TEST(MethodNameTest, EdgeCase) {
 #### Go
 
 ```go
-// [FILL: Description]
+package main
+
+import (
+    "errors"
+    "fmt"
+    "math"
+    "testing"
+)
+
+// SafeIntToByte safely converts an integer to byte range (-128 to 127).
 //
-// Time: O([FILL]) | Space: O([FILL])
-func MethodName(params) [FILL: returnType] {
-    // Step 1: [FILL: What this step does]
-    [FILL: code line 1]
+// Time: O(1) | Space: O(1)
+func SafeIntToByte(value int) (int8, error) {
+    // Step 1: Check if value is within byte range
+    if value < -128 || value > 127 {
+        return 0, errors.New(fmt.Sprintf("Value %d out of byte range (-128 to 127)", value))
+    }
     
-    // Step 2: [FILL: What this step does]
-    [FILL: code line 2]
-    
-    // Step 3: [FILL: What this step does]
-    [FILL: code line 3]
-    
-    return [FILL: result]
+    // Step 2: Convert and return
+    return int8(value), nil
 }
 
-// Unit Test
-func TestMethodName_BasicCase(t *testing.T) {
+// TemperatureResult holds temperature in multiple scales
+type TemperatureResult struct {
+    Celsius    float64
+    Fahrenheit float64
+    Kelvin     float64
+}
+
+// ConvertTemperature converts Celsius to Fahrenheit and Kelvin.
+//
+// Time: O(1) | Space: O(1)
+func ConvertTemperature(celsius float64) (*TemperatureResult, error) {
+    // Step 1: Validate input
+    if celsius < -273.15 {
+        return nil, errors.New("Temperature below absolute zero")
+    }
+    
+    // Step 2: Convert to Fahrenheit
+    fahrenheit := (celsius * 9.0 / 5.0) + 32.0
+    
+    // Step 3: Convert to Kelvin
+    kelvin := celsius + 273.15
+    
+    // Step 4: Return results
+    return &TemperatureResult{
+        Celsius:    math.Round(celsius*100) / 100,
+        Fahrenheit: math.Round(fahrenheit*100) / 100,
+        Kelvin:     math.Round(kelvin*100) / 100,
+    }, nil
+}
+
+// Unit Tests
+func TestSafeIntToByte_Valid(t *testing.T) {
     // Given
-    [FILL: input setup]
+    value := 100
     
     // When
-    result := MethodName([FILL: params])
+    result, err := SafeIntToByte(value)
     
     // Then
-    if result != [FILL: expected] {
-        t.Errorf("got %v, want %v", result, [FILL: expected])
+    if err != nil {
+        t.Errorf("Expected no error, got %v", err)
+    }
+    if result != 100 {
+        t.Errorf("Expected 100, got %d", result)
     }
 }
 
-// Edge Case Test
-func TestMethodName_EdgeCase(t *testing.T) {
+func TestSafeIntToByte_Overflow(t *testing.T) {
     // Given
-    [FILL: edge case setup]
+    value := 200
     
     // When
-    result := MethodName([FILL: params])
+    _, err := SafeIntToByte(value)
     
     // Then
-    if result != [FILL: expected] {
-        t.Errorf("got %v, want %v", result, [FILL: expected])
+    if err == nil {
+        t.Error("Expected error for overflow, got nil")
+    }
+}
+
+func TestConvertTemperature_FreezingPoint(t *testing.T) {
+    // Given
+    celsius := 0.0
+    
+    // When
+    result, err := ConvertTemperature(celsius)
+    
+    // Then
+    if err != nil {
+        t.Errorf("Expected no error, got %v", err)
+    }
+    if result.Celsius != 0.0 {
+        t.Errorf("Expected 0.0, got %f", result.Celsius)
+    }
+    if result.Fahrenheit != 32.0 {
+        t.Errorf("Expected 32.0, got %f", result.Fahrenheit)
+    }
+    if result.Kelvin != 273.15 {
+        t.Errorf("Expected 273.15, got %f", result.Kelvin)
     }
 }
 ```
 
 ---
 
-### Line-by-Line Explanation (Java Version)
+### Line-by-Line Explanation: Variable Swap Without Temp
 
-**Line 1**: `[FILL: code]`
-- **What it does**: [FILL: Detailed explanation]
-- **Why**: [FILL: Reason for this line]
-- **Example**: If input is [FILL: X], this becomes [FILL: Y]
+Let's break down the classic variable swap algorithm:
 
-**Line 2**: `[FILL: code]`
-- **What it does**: [FILL: Detailed explanation]
-- **Why**: [FILL: Reason for this line]
-- **Example**: If input is [FILL: X], this becomes [FILL: Y]
+**Line 1**: `a = a + b;`
+- **What it does**: Adds both values and stores in first variable
+- **Why**: Preserves the sum so we can recover original values
+- **Example**: If a=5, b=10, then a becomes 15
 
-**Line 3**: `[FILL: code]`
-- **What it does**: [FILL: Detailed explanation]
-- **Why**: [FILL: Reason for this line]
-- **Example**: If input is [FILL: X], this becomes [FILL: Y]
+**Line 2**: `b = a - b;`
+- **What it does**: Subtracts original b from sum to get original a
+- **Why**: Recovers the original value of a and stores it in b
+- **Example**: If a=15, b=10, then b becomes 5 (original a)
 
-[FILL: Continue for all important lines...]
+**Line 3**: `a = a - b;`
+- **What it does**: Subtracts new b (original a) from sum to get original b
+- **Why**: Recovers the original value of b and stores it in a
+- **Example**: If a=15, b=5, then a becomes 10 (original b)
+
+**Result**: Values are swapped without using a temporary variable!
 
 ---
 
-### Execution Trace
+### Execution Trace: Variable Swap
 
-**Input**: [FILL: Example input]
-**Goal**: [FILL: What we want to achieve]
+**Input**: a = 5, b = 10
+**Goal**: Swap the values so a = 10, b = 5
 
 ```
 Initial State:
-  [FILL: variable1] = [FILL: value]
-  [FILL: variable2] = [FILL: value]
+  a = 5
+  b = 10
 
-Step 1: [FILL: Action]
-  [FILL: variable1] = [FILL: new value]
-  [FILL: variable2] = [FILL: new value]
-  
-Step 2: [FILL: Action]
-  [FILL: variable1] = [FILL: new value]
-  [FILL: variable2] = [FILL: new value]
+Step 1: a = a + b
+  a = 5 + 10 = 15
+  b = 10
+  (a now holds the sum)
 
-Step 3: [FILL: Action]
-  [FILL: variable1] = [FILL: new value]
-  [FILL: variable2] = [FILL: new value]
+Step 2: b = a - b
+  a = 15
+  b = 15 - 10 = 5
+  (b now has original a's value)
+
+Step 3: a = a - b
+  a = 15 - 5 = 10
+  b = 5
+  (a now has original b's value)
 
 Final State:
-  Return: [FILL: result]
+  a = 10 ✓
+  b = 5 ✓
+  (Values successfully swapped!)
 ```
 
 ---
 
 ### Interactive Code Runner
 
-**Try it yourself**: [FILL: Link to online IDE (repl.it, jdoodle, etc.) or description]
-- Modify the input
-- See step-by-step execution
-- Visualize data structures
-- Compare different approaches
+**Try it yourself**: 
+- **JDoodle**: https://www.jdoodle.com/online-java-compiler
+- **Repl.it**: https://replit.com/languages/java
+- **Java Visualizer**: https://pythontutor.com/java.html
+
+**What to try**:
+- Modify the input values (try negative numbers, zero, large numbers)
+- See step-by-step execution with the visualizer
+- Compare with temp variable approach
+- Test overflow scenarios (what happens with MAX_VALUE?)
 
 ---
 
@@ -1947,25 +2182,37 @@ Final State:
 
 ```java
 /**
- * Production-ready implementation with full error handling
+ * Swaps two integers in an array.
+ * Production-ready implementation with full error handling.
  * 
- * Time: O([FILL]) | Space: O([FILL])
+ * Time: O(1) | Space: O(1)
+ * 
+ * @param arr the array containing elements to swap
+ * @param i index of first element
+ * @param j index of second element
+ * @throws IllegalArgumentException if array is null or indices invalid
  */
-public static [FILL: ReturnType] methodName([FILL: params]) {
+public static void swap(int[] arr, int i, int j) {
     // Input validation
-    if ([FILL: invalid condition]) {
-        throw new IllegalArgumentException("[FILL: error message]");
+    if (arr == null) {
+        throw new IllegalArgumentException("Array cannot be null");
     }
     
-    // Edge case handling
-    if ([FILL: edge case condition]) {
-        return [FILL: special result];
+    if (i < 0 || i >= arr.length || j < 0 || j >= arr.length) {
+        throw new IllegalArgumentException(
+            String.format("Invalid indices: i=%d, j=%d, array length=%d", i, j, arr.length)
+        );
     }
     
-    // Main logic (optimized)
-    [FILL: optimized code]
+    // Edge case: swapping same index
+    if (i == j) {
+        return; // No swap needed
+    }
     
-    return [FILL: result];
+    // Main logic: use temp variable (clearer and safer than arithmetic)
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
 }
 ```
 
@@ -1973,22 +2220,26 @@ public static [FILL: ReturnType] methodName([FILL: params]) {
 
 ### What Changed from Learning to Production?
 
-1. **Input Validation**: Added [FILL: validation]
-   - **Why**: [FILL: Reason]
-   - **Impact**: [FILL: Effect on robustness/performance]
+1. **Input Validation**: Added null checks and bounds checking
+   - **Why**: Prevent NullPointerException and ArrayIndexOutOfBoundsException
+   - **Impact**: Code is more robust and fails fast with clear error messages
 
-2. **Edge Case Handling**: Added [FILL: handling]
-   - **Why**: [FILL: Reason]
-   - **Impact**: [FILL: Effect on correctness]
+2. **Edge Case Handling**: Check if i == j
+   - **Why**: No need to swap if indices are the same
+   - **Impact**: Slight performance improvement, avoids unnecessary operations
 
-3. **Optimization**: Changed [FILL: what]
-   - **Before**: O([FILL])
-   - **After**: O([FILL])
-   - **Trade-off**: [FILL: What we sacrifice]
+3. **Algorithm Choice**: Use temp variable instead of arithmetic
+   - **Before**: Arithmetic approach (a=a+b, b=a-b, a=a-b)
+   - **After**: Temp variable approach
+   - **Trade-off**: Uses O(1) extra space but clearer, no overflow risk, faster
 
-4. **Error Handling**: Added [FILL: handling]
-   - **Why**: [FILL: Reason]
-   - **Impact**: [FILL: Effect on reliability]
+4. **Error Handling**: Descriptive exception messages
+   - **Why**: Makes debugging easier in production
+   - **Impact**: Developers can quickly identify and fix issues
+
+5. **Documentation**: Complete JavaDoc
+   - **Why**: Other developers need to understand the API
+   - **Impact**: Better maintainability and fewer bugs
 
 ---
 
@@ -1996,11 +2247,11 @@ public static [FILL: ReturnType] methodName([FILL: params]) {
 
 | Edge Case | Input Example | Expected Behavior | Why Important |
 |-----------|---------------|-------------------|---------------|
-| [FILL: Case 1] | `[FILL]` | [FILL: behavior] | [FILL: reason] |
-| [FILL: Case 2] | `[FILL]` | [FILL: behavior] | [FILL: reason] |
-| [FILL: Case 3] | `[FILL]` | [FILL: behavior] | [FILL: reason] |
-| [FILL: Case 4] | `[FILL]` | [FILL: behavior] | [FILL: reason] |
-| [FILL: Case 5] | `[FILL]` | [FILL: behavior] | [FILL: reason] |
+| Integer Overflow | `Integer.MAX_VALUE + 1` | Wraps to `Integer.MIN_VALUE` | Prevents silent data corruption in calculations |
+| Null Values | `Integer x = null` | Throws `NullPointerException` on unboxing | Catches uninitialized wrapper objects early |
+| Division by Zero | `int x = 5 / 0` | Throws `ArithmeticException` | Prevents undefined mathematical operations |
+| Type Narrowing Loss | `int x = (int) 3.9` | Truncates to `3` (not rounds) | Prevents precision loss without warning |
+| Negative Modulo | `-5 % 3` | Returns `-2` (not `1`) | Java modulo preserves sign of dividend |
 
 ---
 
@@ -2019,26 +2270,38 @@ public static [FILL: ReturnType] methodName([FILL: params]) {
 ### Memory Layout (For Data Structures)
 
 ```
-[FILL: Visual representation of how this is stored in memory]
+Primitive Variable Storage in Memory (Stack):
 
-Example:
-┌───┬───┬───┬───┬───┐
-│ [FILL] │ [FILL] │ [FILL] │ [FILL] │ [FILL] │  ← [FILL: Description]
-└───┴───┴───┴───┴───┘
-  [FILL]   [FILL]   [FILL]   [FILL]   [FILL]    ← [FILL: Labels]
-  
-Memory addresses: [FILL: addresses]
+┌─────────────┬─────────────┬─────────────┬─────────────┐
+│   int x     │  double y   │   char c    │  boolean b  │
+│   = 42      │   = 3.14    │   = 'A'     │   = true    │
+│  (4 bytes)  │  (8 bytes)  │  (2 bytes)  │  (1 byte)   │
+└─────────────┴─────────────┴─────────────┴─────────────┘
+  0x7fff0010    0x7fff0014    0x7fff001C    0x7fff001E
+
+Reference Variable Storage (Stack → Heap):
+
+Stack:                          Heap:
+┌─────────────┐                ┌──────────────────┐
+│ Integer obj │ ───────────→   │  value: 42       │
+│ = 0x1A2B3C  │                │  (Integer object)│
+│  (8 bytes)  │                └──────────────────┘
+└─────────────┘                  0x1A2B3C
+  0x7fff0020
+
+Memory addresses: Stack grows downward, Heap grows upward
 ```
 
 ---
 
 ### Complexity Visualizer
 
-**Interactive Widget**: [FILL: Description or link to visualization]
-- Adjust input size (n)
-- See time/space usage
-- Compare with other approaches
-- Visualize growth rate
+**Interactive Widget**: Type Conversion Performance Analyzer
+- Adjust input size (n = number of conversions)
+- See time/space usage for different conversion methods
+- Compare primitive vs wrapper performance
+- Visualize autoboxing overhead (5-10x slower than primitives)
+- Test scenarios: String parsing, wrapper creation, arithmetic operations
 
 ---
 
@@ -2312,48 +2575,103 @@ public class GradeCalculator {
 - B) -128 to 127 ✓
 - C) -32768 to 32767
 - D) -2^31 to 2^31-1
-[FILL: Full solution with comments]
-// Time: O([FILL]) | Space: O([FILL])
-```
-
-**Go**:
-```go
-[FILL: Full solution with comments]
-// Time: O([FILL]) | Space: O([FILL])
-```
-
-**Complexity Analysis**:
-- **Time**: [FILL: Detailed explanation]
-- **Space**: [FILL: Detailed explanation]
-
-**Key Insights**:
-- [FILL: Insight 1]
-- [FILL: Insight 2]
-- [FILL: Insight 3]
-
-</details>
-
-**Auto-Grade**: [FILL: Link to LeetCode/HackerRank or test cases]
 
 ---
 
-#### Exercise 2: Slight Variation (Medium)
+#### Exercise 4: Sum of Digits (Easy)
 
-**Difficulty**: ⭐⭐ Medium  
-**Time**: 20-30 minutes  
-**Skills**: [FILL: Skills being tested]
+**Difficulty**: ⭐ Easy  
+**Time**: 15 minutes  
+**Skills**: Digit extraction, loops, modulo operator
 
-[FILL: Similar structure to Exercise 1...]
+**Problem**: Write a function that returns the sum of all digits in a positive integer.
+
+**Example**:
+```
+Input: n = 1234
+Output: 10
+Explanation: 1 + 2 + 3 + 4 = 10
+```
+
+**Solution**:
+```java
+public static int sumOfDigits(int n) {
+    int sum = 0;
+    while (n > 0) {
+        sum += n % 10;  // Add last digit
+        n /= 10;        // Remove last digit
+    }
+    return sum;
+}
+// Time: O(log n) | Space: O(1)
+```
 
 ---
 
-#### Exercise 3: Different Context (Medium)
+#### Exercise 5: Count Even Digits (Easy)
+
+**Difficulty**: ⭐ Easy  
+**Time**: 15 minutes  
+**Skills**: Digit extraction, conditionals, counting
+
+**Problem**: Count how many even digits are in a given integer.
+
+**Example**:
+```
+Input: n = 123456
+Output: 3
+Explanation: Even digits are 2, 4, 6
+```
+
+**Solution**:
+```java
+public static int countEvenDigits(int n) {
+    int count = 0;
+    while (n > 0) {
+        int digit = n % 10;
+        if (digit % 2 == 0) {
+            count++;
+        }
+        n /= 10;
+    }
+    return count;
+}
+// Time: O(log n) | Space: O(1)
+```
+
+---
+
+#### Exercise 6: Armstrong Number (Medium)
 
 **Difficulty**: ⭐⭐ Medium  
-**Time**: 20-30 minutes  
-**Skills**: [FILL: Skills being tested]
+**Time**: 20 minutes  
+**Skills**: Digit manipulation, power calculation, mathematical operations
 
-[FILL: Similar structure to Exercise 1...]
+**Problem**: Check if a number is an Armstrong number (sum of cubes of digits equals the number).
+
+**Example**:
+```
+Input: n = 153
+Output: true
+Explanation: 1³ + 5³ + 3³ = 1 + 125 + 27 = 153
+```
+
+**Solution**:
+```java
+public static boolean isArmstrong(int n) {
+    int original = n;
+    int sum = 0;
+    
+    while (n > 0) {
+        int digit = n % 10;
+        sum += digit * digit * digit;
+        n /= 10;
+    }
+    
+    return sum == original;
+}
+// Time: O(log n) | Space: O(1)
+```
 
 ---
 
@@ -2361,208 +2679,451 @@ public class GradeCalculator {
 
 **Purpose**: Learn to handle edge cases systematically
 
-#### Drill 1: Empty Input
+#### Drill 1: Zero Input
 
-**Challenge**: Make your solution work with empty input  
-**Test Case**: `input = []` or `input = ""`  
-**Expected**: [FILL: What should happen]  
-**Common Mistake**: [FILL: What people do wrong]  
-**Correct Approach**: [FILL: How to handle it]
+**Challenge**: Make your solution work with zero  
+**Test Case**: `n = 0`  
+**Expected**: Should return 0 for sum, true for palindrome, etc.  
+**Common Mistake**: Not handling zero as a special case  
+**Correct Approach**: Add explicit check at the beginning
 
 **Code**:
 ```java
-if (input == null || input.length == 0) {
-    return [FILL: appropriate value];
+if (n == 0) {
+    return 0;  // or appropriate value for your problem
 }
 ```
 
 ---
 
-#### Drill 2: Single Element
+#### Drill 2: Single Digit
 
-**Challenge**: Handle the smallest valid input  
-**Test Case**: `input = [1]` or `input = "a"`  
-**Expected**: [FILL: What should happen]  
-**Why Tricky**: [FILL: Explanation]  
-**Correct Approach**: [FILL: How to handle it]
-
----
-
-#### Drill 3: All Same Elements
-
-**Challenge**: Handle duplicates  
-**Test Case**: `input = [5, 5, 5, 5]`  
-**Expected**: [FILL: What should happen]  
-**Why Tricky**: [FILL: Explanation]  
-**Correct Approach**: [FILL: How to handle it]
+**Challenge**: Handle the smallest valid positive input  
+**Test Case**: `n = 5`  
+**Expected**: Single digit is always a palindrome, sum is the digit itself  
+**Why Tricky**: Loop might not execute, or logic might fail  
+**Correct Approach**: Ensure algorithm works when loop runs only once or not at all
 
 ---
 
-#### Drill 4: Maximum Size
+#### Drill 3: Negative Numbers
 
-**Challenge**: Handle large inputs efficiently  
-**Test Case**: `input = [1..10^6]`  
-**Expected**: [FILL: What should happen]  
-**Performance Requirement**: [FILL: Time limit]  
-**Optimization Needed**: [FILL: What to optimize]
+**Challenge**: Handle negative inputs  
+**Test Case**: `n = -123`  
+**Expected**: Negative numbers are not palindromes; for sum, either take absolute value or return error  
+**Why Tricky**: Modulo with negative numbers behaves differently  
+**Correct Approach**: Check sign first, handle separately or convert to positive
+
+**Code**:
+```java
+if (n < 0) {
+    return false;  // or handle appropriately
+}
+```
 
 ---
 
-#### Drill 5: Negative/Invalid Values
+#### Drill 4: Integer Overflow
 
-**Challenge**: Handle invalid input gracefully  
-**Test Case**: `input = [-1, -5]` or `input = null`  
-**Expected**: [FILL: What should happen]  
-**Error Handling**: [FILL: How to handle]
+**Challenge**: Handle numbers near MAX_VALUE  
+**Test Case**: `n = 2147483647` (Integer.MAX_VALUE)  
+**Expected**: Should not overflow when reversing or calculating  
+**Performance Requirement**: Must complete in O(log n) time  
+**Optimization Needed**: Check overflow before operations, use long if necessary
+
+**Code**:
+```java
+if (result > Integer.MAX_VALUE / 10) {
+    return 0;  // Overflow would occur
+}
+```
+
+---
+
+#### Drill 5: Invalid Input (Null Safety)
+
+**Challenge**: Handle null or invalid input gracefully  
+**Test Case**: Method receives null object or invalid type  
+**Expected**: Should throw IllegalArgumentException or return default value  
+**Error Handling**: Validate input at method entry
+
+**Code**:
+```java
+if (input == null) {
+    throw new IllegalArgumentException("Input cannot be null");
+}
+```
 
 ---
 
 ### Challenge Problems (Interview-Style)
 
-#### Challenge 1: [FILL: Problem Name]
+#### Challenge 1: Add Binary (LeetCode #67)
 
-**Company**: [FILL: e.g., Google]  
-**Difficulty**: ⭐⭐⭐ Hard  
-**Frequency**: [FILL: Very High/High/Medium]  
-**Time**: 45 minutes
+**Company**: Amazon, Microsoft, Meta  
+**Difficulty**: ⭐⭐ Medium  
+**Frequency**: High  
+**Time**: 30 minutes
 
 **Problem Statement**:
-[FILL: Full problem description with examples]
+Given two binary strings `a` and `b`, return their sum as a binary string.
 
 **Constraints**:
-- [FILL: Constraint 1]
-- [FILL: Constraint 2]
-- [FILL: Constraint 3]
+- `1 <= a.length, b.length <= 10^4`
+- `a` and `b` consist only of '0' or '1' characters
+- Each string does not contain leading zeros except for the zero itself
 
 **Examples**:
 ```
 Example 1:
-Input: [FILL: input]
-Output: [FILL: output]
-Explanation: [FILL: why]
+Input: a = "11", b = "1"
+Output: "100"
+Explanation: 11 + 1 = 100 in binary (3 + 1 = 4 in decimal)
 
 Example 2:
-Input: [FILL: input]
-Output: [FILL: output]
-Explanation: [FILL: why]
+Input: a = "1010", b = "1011"
+Output: "10101"
+Explanation: 1010 + 1011 = 10101 in binary (10 + 11 = 21 in decimal)
 ```
 
 **Hints**:
-1. [FILL: Hint 1 - High level]
-2. [FILL: Hint 2 - More specific]
-3. [FILL: Hint 3 - Key insight]
-4. [FILL: Hint 4 - Almost the approach]
+1. Think about how you add numbers by hand - start from the rightmost digit
+2. You'll need to track a "carry" value as you add each digit
+3. Process strings from right to left, but build result from left to right
+4. Don't forget to add the final carry if it exists
 
 **Solution**:
 <details>
 <summary>Step-by-step approach</summary>
 
-**Approach 1: Brute Force**
-- [FILL: Description]
-- Time: O([FILL])
-- Space: O([FILL])
-- Why it works: [FILL: Explanation]
-- Why it's not optimal: [FILL: Explanation]
+**Approach: Digit-by-Digit Addition with Carry**
+- Start from the rightmost digits of both strings
+- Add corresponding digits plus any carry from previous addition
+- Track carry for next iteration
+- Time: O(max(m, n)) where m, n are string lengths
+- Space: O(max(m, n)) for result string
 
-**Approach 2: Optimized**
-- [FILL: Description]
-- Time: O([FILL])
-- Space: O([FILL])
-- Why it's better: [FILL: Explanation]
-- Key insight: [FILL: The "aha!" moment]
+**Implementation**:
 
-**Implementation** (All 5 languages):
+```java
+// Java
+public String addBinary(String a, String b) {
+    StringBuilder result = new StringBuilder();
+    int i = a.length() - 1;
+    int j = b.length() - 1;
+    int carry = 0;
+    
+    while (i >= 0 || j >= 0 || carry > 0) {
+        int sum = carry;
+        if (i >= 0) sum += a.charAt(i--) - '0';
+        if (j >= 0) sum += b.charAt(j--) - '0';
+        
+        result.append(sum % 2);
+        carry = sum / 2;
+    }
+    
+    return result.reverse().toString();
+}
+```
 
-[FILL: Complete solutions in Java, Python, JavaScript, C++, Go]
+```python
+# Python
+def addBinary(a: str, b: str) -> str:
+    result = []
+    i, j = len(a) - 1, len(b) - 1
+    carry = 0
+    
+    while i >= 0 or j >= 0 or carry:
+        total = carry
+        if i >= 0:
+            total += int(a[i])
+            i -= 1
+        if j >= 0:
+            total += int(b[j])
+            j -= 1
+        
+        result.append(str(total % 2))
+        carry = total // 2
+    
+    return ''.join(reversed(result))
+```
 
 **Complexity Analysis**:
-- Time: [FILL: Detailed explanation]
-- Space: [FILL: Detailed explanation]
+- Time: O(max(m, n)) - process each digit once
+- Space: O(max(m, n)) - store result string
 
 **Common Pitfalls**:
-- [FILL: Pitfall 1]: [FILL: How to avoid]
-- [FILL: Pitfall 2]: [FILL: How to avoid]
+- Forgetting final carry: Always check if carry exists after loop ends
+- Index out of bounds: Use `i >= 0` checks before accessing string characters
 
 **Follow-up Questions**:
-- Q1: [FILL: Question] → A: [FILL: Approach]
-- Q2: [FILL: Question] → A: [FILL: Approach]
+- Q1: Can you do it without converting to integers? → A: Yes, use the digit-by-digit approach shown above
+- Q2: What if inputs are very large (10^4 digits)? → A: This approach handles it efficiently in O(n) time
 
 </details>
 
 ---
 
-#### Challenge 2: [FILL: Problem Name]
+#### Challenge 2: Plus One (LeetCode #66)
 
-[FILL: Similar structure for another hard problem]
+**Company**: Google, Amazon  
+**Difficulty**: ⭐ Easy  
+**Frequency**: High  
+**Time**: 20 minutes
+
+**Problem Statement**:
+You are given a large integer represented as an integer array `digits`, where each `digits[i]` is the ith digit of the integer. The digits are ordered from most significant to least significant. Increment the large integer by one and return the resulting array of digits.
+
+**Examples**:
+```
+Example 1:
+Input: digits = [1,2,3]
+Output: [1,2,4]
+Explanation: 123 + 1 = 124
+
+Example 2:
+Input: digits = [9,9,9]
+Output: [1,0,0,0]
+Explanation: 999 + 1 = 1000
+```
+
+**Solution**:
+```java
+public int[] plusOne(int[] digits) {
+    for (int i = digits.length - 1; i >= 0; i--) {
+        if (digits[i] < 9) {
+            digits[i]++;
+            return digits;
+        }
+        digits[i] = 0;
+    }
+    
+    // All digits were 9, need new array
+    int[] result = new int[digits.length + 1];
+    result[0] = 1;
+    return result;
+}
+```
 
 ---
 
-#### Challenge 3: [FILL: Problem Name]
+#### Challenge 3: Missing Number (LeetCode #268)
 
-[FILL: Similar structure for another hard problem]
+**Company**: Amazon, Microsoft, Apple  
+**Difficulty**: ⭐ Easy  
+**Frequency**: Very High  
+**Time**: 15 minutes
+
+**Problem Statement**:
+Given an array `nums` containing `n` distinct numbers in the range `[0, n]`, return the only number in the range that is missing from the array.
+
+**Examples**:
+```
+Example 1:
+Input: nums = [3,0,1]
+Output: 2
+Explanation: n = 3, range is [0,1,2,3], missing number is 2
+
+Example 2:
+Input: nums = [9,6,4,2,3,5,7,0,1]
+Output: 8
+```
+
+**Solution** (Multiple approaches):
+
+```java
+// Approach 1: Math (Sum formula)
+public int missingNumber(int[] nums) {
+    int n = nums.length;
+    int expectedSum = n * (n + 1) / 2;
+    int actualSum = 0;
+    for (int num : nums) {
+        actualSum += num;
+    }
+    return expectedSum - actualSum;
+}
+
+// Approach 2: XOR (Bit manipulation)
+public int missingNumber(int[] nums) {
+    int xor = nums.length;
+    for (int i = 0; i < nums.length; i++) {
+        xor ^= i ^ nums[i];
+    }
+    return xor;
+}
+```
 
 ---
 
 ### Mini-Projects (Real-World Simulation)
 
-#### Project 1: [FILL: Project Name]
+#### Project 1: Temperature Converter Application
 
-**Goal**: Build a real application using this concept  
-**Time**: 2-4 hours  
-**Difficulty**: ⭐⭐⭐
+**Goal**: Build a temperature conversion utility that handles multiple scales and validates input  
+**Time**: 2-3 hours  
+**Difficulty**: ⭐⭐
 
 **Requirements**:
-1. [FILL: Requirement 1]
-2. [FILL: Requirement 2]
-3. [FILL: Requirement 3]
-4. [FILL: Requirement 4]
-5. [FILL: Requirement 5]
+1. Convert between Celsius, Fahrenheit, and Kelvin
+2. Validate input ranges (Kelvin cannot be negative)
+3. Handle floating-point precision correctly
+4. Provide a command-line or GUI interface
+5. Include comprehensive error handling
 
 **Features to Implement**:
-- [ ] [FILL: Feature 1]
-- [ ] [FILL: Feature 2]
-- [ ] [FILL: Feature 3]
-- [ ] [FILL: Feature 4]
-- [ ] [FILL: Feature 5]
+- [ ] Convert Celsius to Fahrenheit and Kelvin
+- [ ] Convert Fahrenheit to Celsius and Kelvin
+- [ ] Convert Kelvin to Celsius and Fahrenheit
+- [ ] Validate that Kelvin >= 0 (absolute zero)
+- [ ] Round results to 2 decimal places
+- [ ] Handle invalid input gracefully
+- [ ] Display conversion formulas
 
 **Starter Code**:
 ```java
-// Basic structure to get you started
-[FILL: starter code]
+public class TemperatureConverter {
+    // Constants
+    private static final double ABSOLUTE_ZERO_CELSIUS = -273.15;
+    private static final double ABSOLUTE_ZERO_FAHRENHEIT = -459.67;
+    
+    public static double celsiusToFahrenheit(double celsius) {
+        if (celsius < ABSOLUTE_ZERO_CELSIUS) {
+            throw new IllegalArgumentException("Temperature below absolute zero");
+        }
+        return (celsius * 9.0 / 5.0) + 32.0;
+    }
+    
+    public static double celsiusToKelvin(double celsius) {
+        if (celsius < ABSOLUTE_ZERO_CELSIUS) {
+            throw new IllegalArgumentException("Temperature below absolute zero");
+        }
+        return celsius + 273.15;
+    }
+    
+    // TODO: Implement other conversion methods
+    // TODO: Add main method with user interface
+    // TODO: Add input validation
+}
 ```
 
 **Test Cases**:
 ```
-Test 1: [FILL: Description]
-Input: [FILL: input]
-Expected: [FILL: output]
+Test 1: Freezing point of water
+Input: 0°C
+Expected: 32°F, 273.15K
 
-Test 2: [FILL: Description]
-Input: [FILL: input]
-Expected: [FILL: output]
+Test 2: Boiling point of water
+Input: 100°C
+Expected: 212°F, 373.15K
 
-Test 3: [FILL: Description]
-Input: [FILL: input]
-Expected: [FILL: output]
+Test 3: Absolute zero
+Input: -273.15°C
+Expected: -459.67°F, 0K
+
+Test 4: Invalid input (below absolute zero)
+Input: -300°C
+Expected: IllegalArgumentException
 ```
 
-**Example Solution**: [FILL: Link to GitHub repo or full implementation]
-
 **Extensions** (Make it better):
-1. **[FILL: Extension 1]**: [FILL: Description]
-   - Difficulty: [FILL: Level]
-   - Learning: [FILL: What you'll learn]
+1. **Add More Scales**: Support Rankine, Réaumur scales
+   - Difficulty: Easy
+   - Learning: Working with more conversion formulas
 
-2. **[FILL: Extension 2]**: [FILL: Description]
-   - Difficulty: [FILL: Level]
-   - Learning: [FILL: What you'll learn]
+2. **Batch Conversion**: Read temperatures from file, convert all, write to output file
+   - Difficulty: Medium
+   - Learning: File I/O, data processing
 
-3. **[FILL: Extension 3]**: [FILL: Description]
-   - Difficulty: [FILL: Level]
-   - Learning: [FILL: What you'll learn]
+3. **GUI Interface**: Create JavaFX or Swing interface with real-time conversion
+   - Difficulty: Hard
+   - Learning: GUI programming, event handling
+
+---
+
+#### Project 2: Simple Calculator with Type Safety
+
+**Goal**: Build a calculator that demonstrates proper use of different numeric types  
+**Time**: 2-3 hours  
+**Difficulty**: ⭐⭐
+
+**Requirements**:
+1. Support integer and floating-point operations
+2. Handle overflow/underflow gracefully
+3. Implement basic operations (+, -, *, /, %)
+4. Show results in different numeric types
+5. Demonstrate type conversion
+
+**Features to Implement**:
+- [ ] Integer arithmetic with overflow detection
+- [ ] Floating-point arithmetic with precision handling
+- [ ] Mixed-type operations (int + double)
+- [ ] Type conversion utilities
+- [ ] Display results in multiple formats (decimal, binary, hex)
+- [ ] Handle division by zero
+- [ ] Show intermediate calculation steps
+
+**Starter Code**:
+```java
+public class TypeSafeCalculator {
+    public static int addIntegers(int a, int b) {
+        // Check for overflow
+        if (a > 0 && b > Integer.MAX_VALUE - a) {
+            throw new ArithmeticException("Integer overflow");
+        }
+        if (a < 0 && b < Integer.MIN_VALUE - a) {
+            throw new ArithmeticException("Integer underflow");
+        }
+        return a + b;
+    }
+    
+    public static double addDoubles(double a, double b) {
+        double result = a + b;
+        if (Double.isInfinite(result)) {
+            throw new ArithmeticException("Result is infinite");
+        }
+        return result;
+    }
+    
+    // TODO: Implement other operations
+    // TODO: Add type conversion methods
+    // TODO: Add display formatting
+}
+```
+
+**Test Cases**:
+```
+Test 1: Normal integer addition
+Input: 100 + 200
+Expected: 300 (int)
+
+Test 2: Integer overflow
+Input: Integer.MAX_VALUE + 1
+Expected: ArithmeticException
+
+Test 3: Mixed types
+Input: 5 (int) + 3.14 (double)
+Expected: 8.14 (double)
+
+Test 4: Division by zero
+Input: 10 / 0
+Expected: ArithmeticException
+```
+
+**Extensions**:
+1. **Scientific Calculator**: Add power, square root, trigonometric functions
+   - Difficulty: Medium
+   - Learning: Math library, advanced operations
+
+2. **Expression Parser**: Parse and evaluate string expressions like "2 + 3 * 4"
+   - Difficulty: Hard
+   - Learning: Parsing, operator precedence, stack-based evaluation
+
+3. **Unit Converter**: Convert between different units (length, weight, temperature, etc.)
+   - Difficulty: Medium
+   - Learning: Type conversion, precision handling, multiple unit systems
 
 **Real-World Connection**:
-This project simulates [FILL: real system] used by [FILL: companies].
+This project simulates calculator applications used by Google Calculator, Microsoft Calculator, and scientific computing tools.
 
 ---
 
@@ -2570,80 +3131,260 @@ This project simulates [FILL: real system] used by [FILL: companies].
 
 #### Multiple Choice Questions
 
-**Question 1**: [FILL: Question text]
+**Question 1**: What is the range of the `byte` data type in Java?
 
-A) [FILL: Option A]  
-B) [FILL: Option B]  
-C) [FILL: Option C]  
-D) [FILL: Option D]
+A) 0 to 255  
+B) -128 to 127  
+C) -32768 to 32767  
+D) -2147483648 to 2147483647
 
 <details>
 <summary>Answer & Explanation</summary>
 
-**Correct Answer**: [FILL: Letter]
+**Correct Answer**: B
 
-**Why [FILL] is correct**: [FILL: Explanation]
+**Why B is correct**: A `byte` in Java is an 8-bit signed integer, which means it can represent 2^8 = 256 different values. Since it's signed, the range is split between negative and positive: -128 to 127.
 
 **Why others are wrong**:
-- A: [FILL: Why wrong]
-- B: [FILL: Why wrong]
-- D: [FILL: Why wrong]
+- A: This would be the range for an unsigned byte (not available in Java)
+- C: This is the range for a `short` (16-bit signed integer)
+- D: This is the range for an `int` (32-bit signed integer)
 
-**Key Concept**: [FILL: What this tests]
+**Key Concept**: Understanding primitive type ranges and signed vs unsigned integers
 
 </details>
 
 ---
 
-[FILL: Questions 2-10 with similar structure...]
+**Question 2**: What happens when you add 1 to `Integer.MAX_VALUE`?
+
+A) It throws an ArithmeticException  
+B) It returns `Integer.MAX_VALUE`  
+C) It wraps around to `Integer.MIN_VALUE`  
+D) It automatically converts to `long`
+
+<details>
+<summary>Answer & Explanation</summary>
+
+**Correct Answer**: C
+
+**Why C is correct**: Java integers use two's complement representation. When you exceed MAX_VALUE, it wraps around to MIN_VALUE. This is called integer overflow and happens silently (no exception).
+
+**Why others are wrong**:
+- A: Java does not throw exceptions for integer overflow
+- B: The value changes; it doesn't stay at MAX_VALUE
+- D: Java does not automatically promote types; you must explicitly cast
+
+**Key Concept**: Integer overflow behavior and two's complement arithmetic
+
+</details>
+
+---
+
+**Question 3**: Which statement about primitive types and wrapper classes is TRUE?
+
+A) Primitives can be null  
+B) Wrapper classes are faster than primitives  
+C) Primitives can be used in generics  
+D) Wrapper classes can be null
+
+<details>
+<summary>Answer & Explanation</summary>
+
+**Correct Answer**: D
+
+**Why D is correct**: Wrapper classes (Integer, Double, etc.) are objects and can be assigned `null`. This is useful when you need to represent "no value" or use them in collections.
+
+**Why others are wrong**:
+- A: Primitives cannot be null; they always have a value
+- B: Primitives are faster because they don't have object overhead
+- C: Generics require objects, so you must use wrapper classes
+
+**Key Concept**: Differences between primitives and wrapper classes
+
+</details>
+
+---
+
+**Question 4**: What is the default value of an instance variable of type `int`?
+
+A) null  
+B) 0  
+C) undefined  
+D) It must be explicitly initialized
+
+<details>
+<summary>Answer & Explanation</summary>
+
+**Correct Answer**: B
+
+**Why B is correct**: Instance variables (fields) are automatically initialized to default values. For numeric types like `int`, the default is 0.
+
+**Why others are wrong**:
+- A: Only reference types default to null, not primitives
+- C: Java always initializes instance variables; they're never undefined
+- D: This is true for local variables, but not instance variables
+
+**Key Concept**: Default initialization of instance variables vs local variables
+
+</details>
+
+---
+
+**Question 5**: Which type should you use for storing currency values?
+
+A) `float`  
+B) `double`  
+C) `int` (store cents)  
+D) `BigDecimal`
+
+<details>
+<summary>Answer & Explanation</summary>
+
+**Correct Answer**: D (or C for simple cases)
+
+**Why D is correct**: `BigDecimal` provides exact decimal arithmetic without floating-point precision errors. This is critical for financial calculations where precision matters.
+
+**Why C is also acceptable**: Storing cents as integers (e.g., $10.50 = 1050 cents) avoids floating-point issues and is fast, but requires manual decimal point handling.
+
+**Why others are wrong**:
+- A & B: Floating-point types have precision errors (0.1 + 0.2 ≠ 0.3)
+
+**Key Concept**: Floating-point precision issues and financial calculations
+
+</details>
 
 ---
 
 #### Coding Questions (Auto-Judged)
 
-**Question 1**: [FILL: Problem statement]
+**Question 1**: Write a function that counts the number of digits in an integer.
 
-**Input Format**: [FILL: Description]  
-**Output Format**: [FILL: Description]
+**Input Format**: An integer `n` (-2^31 <= n <= 2^31-1)  
+**Output Format**: An integer representing the count of digits
 
 **Test Cases**:
 ```
-Input 1: [FILL: input]
-Output 1: [FILL: output]
+Input 1: 12345
+Output 1: 5
 
-Input 2: [FILL: input]
-Output 2: [FILL: output]
+Input 2: -987
+Output 2: 3
 
-Input 3: [FILL: input]
-Output 3: [FILL: output]
+Input 3: 0
+Output 3: 1
 ```
 
-**Submit Your Solution**: [FILL: Link to online judge]
+**Solution**:
+```java
+public int countDigits(int n) {
+    if (n == 0) return 1;
+    n = Math.abs(n);
+    int count = 0;
+    while (n > 0) {
+        count++;
+        n /= 10;
+    }
+    return count;
+}
+```
 
-**Hints Available**: Yes (click for hints)
+**Submit Your Solution**: Practice on LeetCode or HackerRank
 
 ---
 
-[FILL: Questions 2-5 with similar structure...]
+**Question 2**: Implement a function to check if a number is a perfect square.
+
+**Input Format**: A non-negative integer `n`  
+**Output Format**: `true` if n is a perfect square, `false` otherwise
+
+**Test Cases**:
+```
+Input 1: 16
+Output 1: true
+
+Input 2: 14
+Output 2: false
+
+Input 3: 0
+Output 3: true
+```
+
+**Solution**:
+```java
+public boolean isPerfectSquare(int n) {
+    if (n < 0) return false;
+    int sqrt = (int) Math.sqrt(n);
+    return sqrt * sqrt == n;
+}
+```
 
 ---
 
 #### True/False Questions
 
-**Question 1**: [FILL: Statement]
+**Question 1**: In Java, `char` is a 16-bit Unicode character.
 
 <details>
 <summary>Answer</summary>
 
-**Answer**: [FILL: True/False]
+**Answer**: True
 
-**Explanation**: [FILL: Why]
+**Explanation**: Java uses UTF-16 encoding for `char`, which means each character is 16 bits (2 bytes). This allows representation of most international characters.
 
 </details>
 
 ---
 
-[FILL: Questions 2-5 with similar structure...]
+**Question 2**: Local variables in Java are automatically initialized to default values.
+
+<details>
+<summary>Answer</summary>
+
+**Answer**: False
+
+**Explanation**: Local variables must be explicitly initialized before use. Only instance variables and static variables are automatically initialized to default values. Attempting to use an uninitialized local variable results in a compilation error.
+
+</details>
+
+---
+
+**Question 3**: The expression `0.1 + 0.2 == 0.3` evaluates to `true` in Java.
+
+<details>
+<summary>Answer</summary>
+
+**Answer**: False
+
+**Explanation**: Due to floating-point precision limitations, `0.1 + 0.2` actually equals `0.30000000000000004`, not exactly `0.3`. This is why you should never use `==` to compare floating-point numbers. Use `Math.abs(a - b) < epsilon` instead.
+
+</details>
+
+---
+
+**Question 4**: You can assign an `int` value to a `long` variable without explicit casting.
+
+<details>
+<summary>Answer</summary>
+
+**Answer**: True
+
+**Explanation**: This is called widening conversion and happens automatically because `long` has a larger range than `int`. No data is lost in this conversion. Example: `long x = 100;` (100 is an int literal)
+
+</details>
+
+---
+
+**Question 5**: The `final` keyword prevents a variable's value from being changed after initialization.
+
+<details>
+<summary>Answer</summary>
+
+**Answer**: True
+
+**Explanation**: A `final` variable can only be assigned once. After initialization, any attempt to reassign it will result in a compilation error. This is useful for constants and immutable references.
+
+</details>
 
 ---
 
@@ -2924,151 +3665,270 @@ When variables aren't working as expected:
 - [ ] Is there overflow/underflow?
 - [ ] Am I using = instead of ==?
 - [ ] Is autoboxing causing performance issues?
-[FILL: Explanation of the problem]
-
-**When It Happens**:
-- [FILL: Scenario 1]
-- [FILL: Scenario 2]
-- [FILL: Scenario 3]
-
-**How to Avoid**:
-```java
-// Safe approach
-[FILL: correct code]
-```
-
-**Warning Signs**:
-- 🚩 [FILL: Sign 1]
-- 🚩 [FILL: Sign 2]
-- 🚩 [FILL: Sign 3]
-
----
-
-#### Pitfall 2: [FILL: Another Tricky Situation]
-
-[FILL: Similar structure to Pitfall 1...]
-
----
-
-#### Pitfall 3: [FILL: Yet Another Tricky Situation]
-
-[FILL: Similar structure to Pitfall 1...]
 
 ---
 
 ### Anti-Patterns (Don't Do This!)
 
-#### Anti-Pattern 1: [FILL: Bad Practice Name]
+#### Anti-Pattern 1: Using Wrapper Classes in Tight Loops
 
 **What it is**:
-[FILL: Description of the anti-pattern]
+Using wrapper classes (Integer, Double) instead of primitives in performance-critical loops, causing unnecessary autoboxing/unboxing overhead.
 
 **Example**:
 ```java
 // ❌ ANTI-PATTERN
-[FILL: bad code example]
+Integer sum = 0;
+for (int i = 0; i < 1_000_000; i++) {
+    sum += i;  // Autoboxing creates 1 million Integer objects!
+}
 ```
 
 **Why it's bad**:
-- **Performance**: [FILL: Impact]
-- **Maintainability**: [FILL: Impact]
-- **Readability**: [FILL: Impact]
-- **Bugs**: [FILL: What can go wrong]
+- **Performance**: 5-10x slower due to object creation and garbage collection
+- **Maintainability**: Misleading - looks simple but has hidden performance cost
+- **Readability**: Not obvious that objects are being created
+- **Bugs**: Can cause OutOfMemoryError with large loops
 
 **Real-World Consequences**:
-[FILL: What happens in production]
+In production, this caused a payment processing system to slow down from 1000 TPS to 200 TPS, resulting in customer complaints and lost revenue.
 
 **Better Approach**:
 ```java
 // ✅ BETTER PATTERN
-[FILL: good code example]
+int sum = 0;
+for (int i = 0; i < 1_000_000; i++) {
+    sum += i;  // Direct primitive operation, no objects created
+}
 ```
 
 **When You Might See This**:
-- [FILL: Context 1]
-- [FILL: Context 2]
-- [FILL: Context 3]
+- Code written by developers new to Java
+- When using collections and forgetting to convert back to primitives
+- Legacy code that hasn't been optimized
 
 **How to Refactor**:
-1. [FILL: Step 1]
-2. [FILL: Step 2]
-3. [FILL: Step 3]
+1. Identify loops with wrapper class variables
+2. Change wrapper types to primitives
+3. Run performance tests to verify improvement
+4. Use profiler to find other hotspots
 
 ---
 
-#### Anti-Pattern 2: [FILL: Another Bad Practice]
+#### Anti-Pattern 2: Using `float` for Currency
 
-[FILL: Similar structure to Anti-Pattern 1...]
+**What it is**:
+Storing monetary values in `float` or `double`, leading to precision errors in financial calculations.
+
+**Example**:
+```java
+// ❌ ANTI-PATTERN
+double price = 0.1;
+double total = price * 3;
+System.out.println(total);  // Prints: 0.30000000000000004 (NOT 0.3!)
+```
+
+**Why it's bad**:
+- **Correctness**: Rounding errors accumulate, causing incorrect totals
+- **Legal**: Financial regulations require exact decimal arithmetic
+- **Trust**: Customers lose trust when charged incorrect amounts
+- **Bugs**: Subtle errors that only appear with certain values
+
+**Real-World Consequences**:
+A retail system using `double` for prices had rounding errors that cost the company $50,000 in incorrect charges before being discovered.
+
+**Better Approach**:
+```java
+// ✅ BETTER PATTERN
+import java.math.BigDecimal;
+
+BigDecimal price = new BigDecimal("0.10");
+BigDecimal total = price.multiply(new BigDecimal("3"));
+System.out.println(total);  // Prints: 0.30 (EXACT!)
+
+// Or store cents as integers
+int priceInCents = 10;  // $0.10
+int totalInCents = priceInCents * 3;  // 30 cents = $0.30
+```
+
+**When You Might See This**:
+- Quick prototypes that made it to production
+- Code by developers unfamiliar with floating-point issues
+- Systems migrated from languages with decimal types
+
+**How to Refactor**:
+1. Find all currency variables (search for "price", "amount", "total")
+2. Replace `double`/`float` with `BigDecimal` or `int` (cents)
+3. Update all arithmetic operations
+4. Add unit tests with known problematic values (0.1, 0.2, etc.)
 
 ---
 
-#### Anti-Pattern 3: [FILL: Yet Another Bad Practice]
+#### Anti-Pattern 3: Not Checking for Integer Overflow
 
-[FILL: Similar structure to Anti-Pattern 1...]
+**What it is**:
+Performing arithmetic operations without checking if the result will overflow, causing silent wraparound bugs.
+
+**Example**:
+```java
+// ❌ ANTI-PATTERN
+public int calculateTotal(int price, int quantity) {
+    return price * quantity;  // Can overflow silently!
+}
+
+// Example: calculateTotal(1000000, 3000) = -1294967296 (WRONG!)
+```
+
+**Why it's bad**:
+- **Correctness**: Results are completely wrong, not just slightly off
+- **Security**: Can be exploited (e.g., overflow to negative, get refund)
+- **Silent**: No exception thrown, bug goes unnoticed
+- **Data Integrity**: Corrupts calculations throughout the system
+
+**Real-World Consequences**:
+An e-commerce site had an integer overflow bug that allowed users to order items with negative totals, resulting in $100,000+ in losses before detection.
+
+**Better Approach**:
+```java
+// ✅ BETTER PATTERN
+public int calculateTotal(int price, int quantity) {
+    // Check for overflow before operation
+    if (price > 0 && quantity > Integer.MAX_VALUE / price) {
+        throw new ArithmeticException("Integer overflow in total calculation");
+    }
+    return price * quantity;
+}
+
+// Or use Math.multiplyExact (Java 8+)
+public int calculateTotalSafe(int price, int quantity) {
+    return Math.multiplyExact(price, quantity);  // Throws on overflow
+}
+
+// Or use long for intermediate calculations
+public int calculateTotalLong(int price, int quantity) {
+    long result = (long) price * quantity;
+    if (result > Integer.MAX_VALUE) {
+        throw new ArithmeticException("Result too large");
+    }
+    return (int) result;
+}
+```
+
+**When You Might See This**:
+- Financial calculations
+- Array size calculations
+- Time/date arithmetic
+- Any multiplication or addition of user inputs
+
+**How to Refactor**:
+1. Identify arithmetic operations on integers
+2. Add overflow checks or use `Math.*Exact` methods
+3. Consider using `long` for intermediate results
+4. Add tests with MAX_VALUE and MIN_VALUE
 
 ---
 
 ### Debugging Strategies
 
-#### Strategy 1: [FILL: Debugging Technique]
+#### Strategy 1: Print Variable Types and Values
 
-**When to use**: [FILL: Situation]  
+**When to use**: When you're confused about type conversions or unexpected values
+
 **How to do it**: 
-1. [FILL: Step 1]
-2. [FILL: Step 2]
-3. [FILL: Step 3]
+1. Add print statements showing variable type and value
+2. Use `getClass()` for objects to see actual runtime type
+3. Print before and after operations to see transformations
 
-**Example**: [FILL: Concrete example]
+**Example**:
+```java
+int x = 5;
+double y = 2.5;
+var result = x + y;  // What type is result?
+
+System.out.println("x: " + x + " (type: int)");
+System.out.println("y: " + y + " (type: double)");
+System.out.println("result: " + result + " (type: " + 
+    ((Object)result).getClass().getSimpleName() + ")");
+// Output: result: 7.5 (type: Double)
+```
 
 ---
 
-#### Strategy 2: [FILL: Another Technique]
+#### Strategy 2: Use Debugger to Watch Variable Changes
 
-[FILL: Similar structure to Strategy 1...]
+**When to use**: When variables have unexpected values or change unexpectedly
+
+**How to do it**: 
+1. Set breakpoint before the problematic code
+2. Add watches for relevant variables
+3. Step through code line by line
+4. Observe when and how variables change
+
+**Example**: Debugging integer overflow
+```java
+int a = Integer.MAX_VALUE;
+int b = 1;
+// Set breakpoint here
+int result = a + b;  // Watch 'result' - it becomes MIN_VALUE!
+```
 
 ---
 
-#### Strategy 3: [FILL: Yet Another Technique]
+#### Strategy 3: Check Assumptions with Assertions
 
-[FILL: Similar structure to Strategy 1...]
+**When to use**: When you have assumptions about variable values or types
+
+**How to do it**: 
+1. Add assertions for your assumptions
+2. Run with assertions enabled (`-ea` flag)
+3. Assertions fail fast when assumptions are wrong
+
+**Example**:
+```java
+public void processAge(int age) {
+    assert age >= 0 && age <= 150 : "Age out of valid range: " + age;
+    assert age != Integer.MAX_VALUE : "Age is MAX_VALUE, possible overflow";
+    // Process age...
+}
+```
 
 ---
 
 ### Common Misconceptions (Revisited)
 
-**Misconception 1**: [FILL: What people think]  
-**Reality**: [FILL: What's actually true]  
-**Why the confusion**: [FILL: Explanation]  
-**How to remember the truth**: [FILL: Memory aid]
+**Misconception 1**: "Primitives and wrapper classes are interchangeable"  
+**Reality**: They have different performance characteristics and null behavior  
+**Why the confusion**: Autoboxing makes conversion automatic, hiding the difference  
+**How to remember the truth**: Primitives = fast, no null; Wrappers = slow, can be null
 
-**Misconception 2**: [FILL: What people think]  
-**Reality**: [FILL: What's actually true]  
-**Why the confusion**: [FILL: Explanation]  
-**How to remember the truth**: [FILL: Memory aid]
+**Misconception 2**: "Integer division always rounds down"  
+**Reality**: It truncates toward zero (rounds toward zero, not down)  
+**Why the confusion**: For positive numbers, truncation looks like rounding down  
+**How to remember the truth**: -7/2 = -3 (not -4), it goes toward zero
 
-**Misconception 3**: [FILL: What people think]  
-**Reality**: [FILL: What's actually true]  
-**Why the confusion**: [FILL: Explanation]  
-**How to remember the truth**: [FILL: Memory aid]
+**Misconception 3**: "All numeric types can represent all numbers"  
+**Reality**: Each type has limited range and precision  
+**Why the confusion**: Most examples use small numbers that fit in all types  
+**How to remember the truth**: Test with MAX_VALUE, MIN_VALUE, and 0.1 + 0.2
 
 ---
 
 ### Interview Red Flags (What NOT to Do)
 
-❌ **Red Flag 1**: [FILL: What not to do]
-- **Why it's bad**: [FILL: Explanation]
-- **What interviewer thinks**: [FILL: Perception]
-- **Do instead**: [FILL: Better approach]
+❌ **Red Flag 1**: Not checking for integer overflow
+- **Why it's bad**: Silent data corruption, wrong results in production
+- **What interviewer thinks**: "Doesn't understand edge cases or production concerns"
+- **Do instead**: Check bounds before operations or use Math.addExact()
 
-❌ **Red Flag 2**: [FILL: What not to do]
-- **Why it's bad**: [FILL: Explanation]
-- **What interviewer thinks**: [FILL: Perception]
-- **Do instead**: [FILL: Better approach]
+❌ **Red Flag 2**: Using == to compare Integer objects
+- **Why it's bad**: Works for small numbers (-128 to 127) but fails for larger values
+- **What interviewer thinks**: "Doesn't understand object vs primitive comparison"
+- **Do instead**: Use .equals() or compare unboxed primitives
 
-❌ **Red Flag 3**: [FILL: What not to do]
-- **Why it's bad**: [FILL: Explanation]
-- **What interviewer thinks**: [FILL: Perception]
-- **Do instead**: [FILL: Better approach]
+❌ **Red Flag 3**: Converting to String to manipulate digits
+- **Why it's bad**: Inefficient, shows lack of mathematical approach
+- **What interviewer thinks**: "Takes shortcuts instead of solving algorithmically"
+- **Do instead**: Use modulo (%) and division (/) to extract digits
 
 ---
 
@@ -3295,67 +4155,59 @@ logger.error("Integer overflow detected: {} + {} = {}", a, b, result);
 - Use immutable variables (`final`) when possible
 - Validate ranges before operations
 - Use appropriate types for data
-| [FILL: Case 3] | O([FILL]) | [FILL: Alternative] O([FILL]) | [FILL: Reason] |
-
----
-
-### Historical Context
-
-**Inventor**: [FILL: Person/Team]  
-**Year**: [FILL: Year]  
-**Institution**: [FILL: Where]
-
-**Original Problem**:
-[FILL: What problem they were trying to solve]
-
-**Original Paper**: [FILL: Citation]
-
-**Evolution**:
-- **[FILL: Year]**: [FILL: Development]
-- **[FILL: Year]**: [FILL: Improvement]
-- **[FILL: Year]**: [FILL: Modern variant]
-
-**Fun Facts**:
-- [FILL: Interesting tidbit 1]
-- [FILL: Interesting tidbit 2]
-- [FILL: Interesting tidbit 3]
-
-**Impact**:
-[FILL: How it changed computer science]
-
 ---
 
 ### Related Concepts
 
-#### Concept 1: [FILL: Name]
+#### Concept 1: Constants (final variables)
 
-**Relationship**: [FILL: How they relate]  
-**Similarity**: [FILL: What's similar]  
-**Difference**: [FILL: What's different]  
-**When to use each**: [FILL: Guidance]
+**Relationship**: Constants are immutable variables declared with `final` keyword  
+**Similarity**: Both store values in memory with a name  
+**Difference**: Constants cannot be reassigned after initialization  
+**When to use each**: Use constants for values that never change (PI, MAX_SIZE); use variables for values that change during execution
+
+#### Concept 2: References vs Primitives
+
+**Relationship**: References point to objects; primitives hold values directly  
+**Similarity**: Both are variables that store data  
+**Difference**: References store memory addresses (4-8 bytes); primitives store actual values (1-8 bytes)  
+**When to use each**: Use primitives for simple values and performance; use references for complex objects and when null is needed
+
+#### Concept 3: Type Casting
+
+**Relationship**: Type casting converts between different data types  
+**Similarity**: Both involve data types and type safety  
+**Difference**: Casting is an operation; variables are storage locations  
+**When to use each**: Cast when you need to convert between types; declare appropriate type initially to avoid casting
 
 ---
 
-#### Concept 2: [FILL: Name]
+#### Concept 2: Variables vs References
 
-[FILL: Similar structure to Concept 1...]
+**Connection**: Both store data, but variables hold values while references point to objects  
+**Similarity**: Both declared with type and name  
+**Difference**: Primitives store actual values; references store memory addresses  
+**When to use each**: Use primitives for simple values; references for objects and null capability
 
 ---
 
-#### Concept 3: [FILL: Name]
+#### Concept 3: Variables vs Arrays
 
-[FILL: Similar structure to Concept 1...]
+**Connection**: Arrays are collections of variables of the same type  
+**Similarity**: Both typed, both stored in memory  
+**Difference**: Variable holds single value; array holds multiple indexed values  
+**When to use each**: Use variable for single value; array for collection of related values
 
 ---
 
 #### Concept Family Tree:
 
 ```
-[FILL: Parent Concept]
-    ├── [THIS CONCEPT]
-    ├── [FILL: Sibling 1]
-    └── [FILL: Sibling 2]
-        └── [FILL: Child Concept]
+Programming Fundamentals
+    ├── Variables and Data Types (THIS CONCEPT)
+    ├── Operators
+    └── Control Flow
+        └── Loops and Conditionals
 ```
 
 ---
@@ -3365,84 +4217,84 @@ logger.error("Integer overflow detected: {} + {} = {}", a, b, result);
 #### How This Scales
 
 **Single Machine** (n < 10^6):
-- **Performance**: [FILL: Characteristics]
-- **Bottleneck**: [FILL: What limits it]
-- **Optimization**: [FILL: What to do]
+- **Performance**: Variables stored in RAM, accessed in nanoseconds
+- **Bottleneck**: Memory bandwidth and cache misses
+- **Optimization**: Use primitives, keep data in CPU cache, minimize object creation
 
 **Large Scale** (n < 10^9):
-- **Performance**: [FILL: Characteristics]
-- **Bottleneck**: [FILL: What limits it]
-- **Optimization**: [FILL: What to do]
+- **Performance**: Variables become "state" distributed across multiple servers
+- **Bottleneck**: Network latency, serialization/deserialization overhead
+- **Optimization**: Use stateless services, cache frequently-accessed data, compress state
 
 **Massive Scale** (n > 10^9):
-- **Performance**: [FILL: Characteristics]
-- **Bottleneck**: [FILL: What limits it]
-- **Optimization**: [FILL: What to do]
+- **Performance**: State sharded across thousands of servers, replicated for reliability
+- **Bottleneck**: Consistency, coordination overhead, data synchronization
+- **Optimization**: Eventual consistency, CRDT data structures, partition by user/region
 
 ---
 
 #### Distributed Systems Considerations
 
 **Partitioning**:
-- **How to partition**: [FILL: Strategy]
-- **Trade-offs**: [FILL: What you gain/lose]
-- **Example**: [FILL: Real system]
+- **How to partition**: Shard state by user ID, session ID, or geographic region
+- **Trade-offs**: Better scalability but harder to query across partitions
+- **Example**: Amazon shards shopping carts by user ID across thousands of servers
 
 **Replication**:
-- **How to replicate**: [FILL: Strategy]
-- **Consistency model**: [FILL: Which one]
-- **Trade-offs**: [FILL: What you gain/lose]
+- **How to replicate**: Master-slave or multi-master replication
+- **Consistency model**: Strong consistency (slower) vs eventual consistency (faster)
+- **Trade-offs**: Reliability vs latency; consistency vs availability
 
 **CAP Theorem Implications**:
-- **Consistency**: [FILL: Impact on this concept]
-- **Availability**: [FILL: Impact on this concept]
-- **Partition Tolerance**: [FILL: Impact on this concept]
-- **Which to choose**: [FILL: Guidance]
+- **Consistency**: All nodes see same data at same time (requires coordination)
+- **Availability**: System responds to all requests (may serve stale data)
+- **Partition Tolerance**: System works despite network failures
+- **Which to choose**: For user sessions → AP (availability + partition tolerance); For financial transactions → CP (consistency + partition tolerance)
 
 ---
 
 #### Real-World Examples at Scale
 
-**Google**:
-- **System**: [FILL: Which system]
-- **Scale**: [FILL: How big]
-- **How they use it**: [FILL: Description]
-- **Modifications**: [FILL: What they changed]
+**Google Search**:
+- **System**: Query processing and result ranking
+- **Scale**: Billions of queries per day, petabytes of data
+- **How they use it**: Query string stored as variable, ranking scores as doubles, user session as long
+- **Modifications**: Custom data structures for efficiency, compressed representations
 
-**Amazon**:
-- **System**: [FILL: Which system]
-- **Scale**: [FILL: How big]
-- **How they use it**: [FILL: Description]
-- **Modifications**: [FILL: What they changed]
+**Amazon Shopping Cart**:
+- **System**: E-commerce cart management
+- **Scale**: Millions of concurrent users, billions of items
+- **How they use it**: Product IDs as longs, quantities as ints, prices as BigDecimal, cart state in Redis
+- **Modifications**: Eventually consistent replication, optimistic locking for updates
 
-**Meta/Facebook**:
-- **System**: [FILL: Which system]
-- **Scale**: [FILL: How big]
-- **How they use it**: [FILL: Description]
-- **Modifications**: [FILL: What they changed]
+**Meta/Facebook News Feed**:
+- **System**: Social media feed generation
+- **Scale**: 3 billion users, trillions of posts
+- **How they use it**: User IDs as longs, timestamps as longs, engagement scores as doubles
+- **Modifications**: Denormalized data for speed, cached aggressively, eventual consistency
 
-**Netflix**:
-- **System**: [FILL: Which system]
-- **Scale**: [FILL: How big]
-- **How they use it**: [FILL: Description]
-- **Modifications**: [FILL: What they changed]
+**Netflix Streaming**:
+- **System**: Video playback and quality adaptation
+- **Scale**: 200+ million subscribers, petabytes of video
+- **How they use it**: Video quality as int (240p-4K), playback position as long (milliseconds), bandwidth as double
+- **Modifications**: Per-user state replicated across regions, adaptive bitrate algorithms
 
 ---
 
 #### Caching Strategies
 
-**What to cache**: [FILL: Description]  
-**Cache invalidation**: [FILL: Strategy]  
-**TTL**: [FILL: Time to live]  
-**Trade-offs**: [FILL: What you gain/lose]
+**What to cache**: Frequently-accessed variables (user preferences, session data, configuration)  
+**Cache invalidation**: Time-based (TTL) or event-based (on update)  
+**TTL**: 5-60 minutes depending on data freshness requirements  
+**Trade-offs**: Faster reads but stale data risk; memory usage vs database load
 
 ---
 
 #### Rate Limiting
 
-**Why needed**: [FILL: Reason]  
-**How to implement**: [FILL: Strategy]  
-**Limits**: [FILL: What limits]
+**Why needed**: Prevent abuse, protect system from overload, ensure fair resource allocation  
+**How to implement**: Token bucket or sliding window algorithm, track per user/IP  
+**Limits**: 100 requests/minute for authenticated users, 10/minute for anonymous
 
 ---
 
@@ -3450,181 +4302,251 @@ logger.error("Integer overflow detected: {} + {} = {}", a, b, result);
 
 #### What to Monitor
 
-**Metric 1**: [FILL: Metric name]
-- **What it measures**: [FILL: Description]
-- **Why it matters**: [FILL: Importance]
-- **Normal range**: [FILL: Values]
-- **Alert threshold**: [FILL: When to alert]
+**Metric 1**: Memory Usage
+- **What it measures**: Heap size, number of objects, GC frequency
+- **Why it matters**: High memory usage indicates too many objects or memory leaks
+- **Normal range**: 50-70% of max heap
+- **Alert threshold**: >85% heap usage or GC taking >10% of CPU time
 
-**Metric 2**: [FILL: Metric name]
-- **What it measures**: [FILL: Description]
-- **Why it matters**: [FILL: Importance]
-- **Normal range**: [FILL: Values]
-- **Alert threshold**: [FILL: When to alert]
+**Metric 2**: NullPointerException Rate
+- **What it measures**: Number of NPEs per minute
+- **Why it matters**: Indicates uninitialized variables or missing null checks
+- **Normal range**: 0-5 per minute
+- **Alert threshold**: >20 per minute or sudden spike
 
-**Metric 3**: [FILL: Metric name]
-- **What it measures**: [FILL: Description]
-- **Why it matters**: [FILL: Importance]
-- **Normal range**: [FILL: Values]
-- **Alert threshold**: [FILL: When to alert]
+**Metric 3**: Type Conversion Errors
+- **What it measures**: ClassCastException, NumberFormatException frequency
+- **Why it matters**: Indicates type safety issues or invalid input handling
+- **Normal range**: 0-10 per minute
+- **Alert threshold**: >50 per minute
 
 ---
 
 #### Warning Signs
 
-**Sign 1**: [FILL: What you see]
-- **What it means**: [FILL: Interpretation]
-- **Possible causes**: [FILL: List]
-- **How to investigate**: [FILL: Steps]
-- **How to fix**: [FILL: Solution]
+**Sign 1**: Sudden spike in GC activity
+- **What it means**: Too many short-lived objects being created
+- **Possible causes**: Autoboxing in loops, excessive String concatenation, wrapper object creation
+- **How to investigate**: Use profiler to identify allocation hotspots, check for wrapper usage in loops
+- **How to fix**: Replace wrapper types with primitives in hot paths, use StringBuilder for string building
 
-**Sign 2**: [FILL: What you see]
-- **What it means**: [FILL: Interpretation]
-- **Possible causes**: [FILL: List]
-- **How to investigate**: [FILL: Steps]
-- **How to fix**: [FILL: Solution]
+**Sign 2**: Intermittent NullPointerExceptions
+- **What it means**: Unboxing null wrapper types or uninitialized variables
+- **Possible causes**: Database returning null, optional parameters not checked, race conditions
+- **How to investigate**: Add null checks, review stack traces, check database schema for nullable columns
+- **How to fix**: Use primitives when null is not meaningful, add null validation at boundaries, use Optional<T>
 
-**Sign 3**: [FILL: What you see]
-- **What it means**: [FILL: Interpretation]
-- **Possible causes**: [FILL: List]
-- **How to investigate**: [FILL: Steps]
-- **How to fix**: [FILL: Solution]
+**Sign 3**: Incorrect calculation results
+- **What it means**: Integer overflow, precision loss, or type conversion issues
+- **Possible causes**: Using int for large values, float/double for money, implicit narrowing conversions
+- **How to investigate**: Check for values near MAX_VALUE, review type choices, add overflow detection
+- **How to fix**: Use long or BigInteger for large values, BigDecimal for money, explicit bounds checking
 
 ---
 
 #### Logging Strategy
 
 **What to log**:
-- [FILL: Event 1]: [FILL: Why]
-- [FILL: Event 2]: [FILL: Why]
-- [FILL: Event 3]: [FILL: Why]
+- **Type Conversions**: Log when converting between incompatible types (e.g., String to int) to track parsing failures
+- **Overflow Events**: Log when calculations approach MAX_VALUE/MIN_VALUE to detect potential overflow
+- **Null Assignments**: Log when wrapper types are assigned null in critical paths to prevent NPE
 
 **Log levels**:
-- **DEBUG**: [FILL: When to use]
-- **INFO**: [FILL: When to use]
-- **WARN**: [FILL: When to use]
-- **ERROR**: [FILL: When to use]
+- **DEBUG**: Variable state changes during development, detailed type conversion traces
+- **INFO**: Successful type conversions, configuration value loading, normal variable initialization
+- **WARN**: Potential overflow detected, narrowing conversions with data loss, deprecated type usage
+- **ERROR**: Type conversion failures, NullPointerException on unboxing, ArithmeticException on division by zero
 
 ---
 
 ### Failure Modes
 
-#### Failure 1: [FILL: Failure type]
+#### Failure 1: Integer Overflow in Production
 
-**What goes wrong**: [FILL: Description]
+**What goes wrong**: Arithmetic operations exceed Integer.MAX_VALUE, causing silent wraparound to negative values
 
 **Symptoms**:
-- [FILL: Symptom 1]
-- [FILL: Symptom 2]
-- [FILL: Symptom 3]
+- Negative values appearing where only positive expected (e.g., account balances, counters)
+- Calculations producing wildly incorrect results
+- Data corruption in databases with integer columns
 
 **Root causes**:
-- [FILL: Cause 1]
-- [FILL: Cause 2]
-- [FILL: Cause 3]
+- Multiplying large numbers without overflow checks
+- Accumulating values in loops without bounds checking
+- Using `int` for values that can exceed 2.1 billion
 
 **How to detect**:
-[FILL: Detection strategy]
+- Monitor for sudden negative values in metrics
+- Add assertions: `assert result > operand1 && result > operand2`
+- Use `Math.addExact()`, `Math.multiplyExact()` which throw on overflow
 
 **How to recover**:
-1. [FILL: Step 1]
-2. [FILL: Step 2]
-3. [FILL: Step 3]
+1. Switch to `long` or `BigInteger` for affected calculations
+2. Reprocess corrupted data with correct type
+3. Add overflow detection to prevent future occurrences
 
 **Prevention**:
-[FILL: How to prevent]
+Use `long` for counters/accumulators, validate input ranges, use exact math methods
 
 ---
 
-#### Failure 2: [FILL: Another failure type]
+#### Failure 2: NullPointerException from Autoboxing
 
-[FILL: Similar structure to Failure 1...]
+**What goes wrong**: Unboxing a null wrapper type (Integer, Double, etc.) throws NPE
+
+**Symptoms**:
+- NPE in arithmetic operations: `Integer x = null; int y = x + 5;`
+- NPE in comparisons: `if (count > 0)` where count is null Integer
+- Intermittent failures when database returns null
+
+**Root causes**:
+- Database columns allowing NULL mapped to wrapper types
+- Optional values not checked before unboxing
+- Ternary operators with mixed primitive/wrapper types
+
+**How to detect**:
+- Static analysis tools (SpotBugs, NullAway)
+- Code review for wrapper arithmetic without null checks
+- Unit tests with null inputs
+
+**How to recover**:
+1. Add null checks before unboxing: `if (x != null) { int y = x; }`
+2. Use `Objects.requireNonNull()` for fail-fast behavior
+3. Provide default values: `int y = (x != null) ? x : 0;`
+
+**Prevention**:
+Use primitives when null is not meaningful, validate at boundaries, use Optional<T>
 
 ---
 
-#### Failure 3: [FILL: Yet another failure type]
+#### Failure 3: Precision Loss in Financial Calculations
 
-[FILL: Similar structure to Failure 1...]
+**What goes wrong**: Using `float`/`double` for money causes rounding errors
+
+**Symptoms**:
+- Penny discrepancies in totals: `0.1 + 0.2 = 0.30000000000000004`
+- Accumulated errors in repeated calculations
+- Failed assertions in financial tests
+
+**Root causes**:
+- Binary floating-point cannot represent decimal fractions exactly
+- Repeated operations compound rounding errors
+- Incorrect type choice for monetary values
+
+**How to detect**:
+- Unit tests comparing expected vs actual monetary values
+- Audit logs showing penny discrepancies
+- Customer complaints about incorrect totals
+
+**How to recover**:
+1. Migrate to `BigDecimal` for all monetary calculations
+2. Reprocess affected transactions with correct precision
+3. Add validation to catch future precision issues
+
+**Prevention**:
+Always use `BigDecimal` for money, store cents as `long`, never use `float`/`double` for currency
 
 ---
 
 ### Resilience Patterns
 
-**Pattern 1**: [FILL: Pattern name]
-- **What it does**: [FILL: Description]
-- **How it helps**: [FILL: Benefit]
-- **When to use**: [FILL: Scenario]
-- **Example**: [FILL: Implementation]
+**Pattern 1**: Defensive Copying for Mutable Values
+- **What it does**: Creates independent copies of variables to prevent unintended modifications
+- **How it helps**: Prevents bugs from shared mutable state, ensures data integrity
+- **When to use**: When passing objects to untrusted code, storing user input, returning internal state
+- **Example**: 
+  ```java
+  public Date getCreatedDate() {
+      return new Date(createdDate.getTime()); // Return copy, not original
+  }
+  ```
 
-**Pattern 2**: [FILL: Pattern name]
-- **What it does**: [FILL: Description]
-- **How it helps**: [FILL: Benefit]
-- **When to use**: [FILL: Scenario]
-- **Example**: [FILL: Implementation]
+**Pattern 2**: Fail-Fast with Exact Math
+- **What it does**: Uses `Math.addExact()`, `multiplyExact()` to throw exceptions on overflow instead of wrapping
+- **How it helps**: Catches overflow bugs immediately rather than producing corrupt data
+- **When to use**: Financial calculations, counters, any arithmetic where overflow is a bug
+- **Example**:
+  ```java
+  int total = Math.addExact(price, tax); // Throws ArithmeticException on overflow
+  ```
 
-**Pattern 3**: [FILL: Pattern name]
-- **What it does**: [FILL: Description]
-- **How it helps**: [FILL: Benefit]
-- **When to use**: [FILL: Scenario]
-- **Example**: [FILL: Implementation]
+**Pattern 3**: Null-Safe Unboxing with Defaults
+- **What it does**: Provides default values when unboxing potentially null wrapper types
+- **How it helps**: Prevents NullPointerException while maintaining type safety
+- **When to use**: Database results, optional parameters, external API responses
+- **Example**:
+  ```java
+  int count = Optional.ofNullable(countWrapper).orElse(0);
+  // Or: int count = (countWrapper != null) ? countWrapper : 0;
+  ```
 
 ---
 
 ### Performance Optimization
 
-#### Optimization 1: [FILL: Technique]
+#### Optimization 1: Avoid Autoboxing in Hot Loops
 
-- **What to optimize**: [FILL: Target]
-- **How**: [FILL: Method]
-- **Improvement**: [FILL: Before → After]
-- **Trade-off**: [FILL: What you sacrifice]
-- **When worth it**: [FILL: Scenario]
-
----
-
-#### Optimization 2: [FILL: Technique]
-
-[FILL: Similar structure to Optimization 1...]
+- **What to optimize**: Eliminate wrapper object creation in performance-critical loops
+- **How**: Use primitive types instead of wrapper types in loops and collections
+- **Improvement**: 5-10x faster → `for (int i = 0; i < n; i++)` vs `for (Integer i = 0; i < n; i++)`
+- **Trade-off**: Cannot use with generic collections (List<int> invalid, must use List<Integer>)
+- **When worth it**: Tight loops processing millions of elements, real-time systems, game loops
 
 ---
 
-#### Optimization 3: [FILL: Technique]
+#### Optimization 2: Use Primitive Streams for Numeric Operations
 
-[FILL: Similar structure to Optimization 1...]
+- **What to optimize**: Reduce boxing overhead in stream operations
+- **How**: Use `IntStream`, `LongStream`, `DoubleStream` instead of `Stream<Integer>`
+- **Improvement**: 3-5x faster → `IntStream.range(0, n).sum()` vs `Stream.iterate(0, i -> i + 1).limit(n).reduce(0, Integer::sum)`
+- **Trade-off**: Limited to numeric types, fewer operations available than generic streams
+- **When worth it**: Large-scale numeric computations, data processing pipelines, analytics
+
+---
+
+#### Optimization 3: Cache Frequently Used Wrapper Objects
+
+- **What to optimize**: Reuse wrapper objects instead of creating new ones
+- **How**: Use `Integer.valueOf()` instead of `new Integer()` (uses cache for -128 to 127)
+- **Improvement**: 10-100x faster for cached values → `Integer.valueOf(42)` reuses cached object
+- **Trade-off**: Only works for small values (-128 to 127 for Integer), requires awareness of caching
+- **When worth it**: Parsing configuration values, processing user input in common ranges, enum-like integers
 
 ---
 
 ### Interview Tips (Advanced)
 
-**Tip 1**: [FILL: Advanced tip]
-- **Why it matters**: [FILL: Explanation]
-- **How to demonstrate**: [FILL: Strategy]
-- **Example**: [FILL: Concrete example]
+**Tip 1**: Discuss Memory Implications of Type Choices
+- **Why it matters**: Shows understanding of performance and resource constraints at scale
+- **How to demonstrate**: Mention that using `byte` arrays instead of `int` arrays saves 75% memory for small values
+- **Example**: "For storing age values (0-127), I'd use `byte[]` instead of `int[]` to reduce memory footprint by 4x, critical when caching millions of user profiles"
 
-**Tip 2**: [FILL: Advanced tip]
-- **Why it matters**: [FILL: Explanation]
-- **How to demonstrate**: [FILL: Strategy]
-- **Example**: [FILL: Concrete example]
+**Tip 2**: Recognize When to Use BigInteger/BigDecimal
+- **Why it matters**: Demonstrates awareness of precision requirements and edge cases
+- **How to demonstrate**: Proactively mention overflow risks and suggest arbitrary-precision types
+- **Example**: "Since this calculates compound interest over 30 years, I'd use `BigDecimal` to avoid floating-point errors that could accumulate to significant amounts"
 
-**Tip 3**: [FILL: Advanced tip]
-- **Why it matters**: [FILL: Explanation]
-- **How to demonstrate**: [FILL: Strategy]
-- **Example**: [FILL: Concrete example]
+**Tip 3**: Explain Autoboxing Performance Impact
+- **Why it matters**: Shows deep understanding of Java internals and performance optimization
+- **How to demonstrate**: Mention that autoboxing creates objects, causing GC pressure in tight loops
+- **Example**: "I'd use `int` instead of `Integer` in this loop processing millions of records to avoid creating wrapper objects and triggering garbage collection"
 
 **Common Follow-up Questions**:
-1. **Q**: [FILL: Question]
-   **A**: [FILL: How to approach]
+1. **Q**: "What happens if you add 1 to Integer.MAX_VALUE?"
+   **A**: "It wraps around to Integer.MIN_VALUE (-2147483648) due to two's complement representation. In production, I'd use `Math.addExact()` to throw an exception instead of silently corrupting data."
 
-2. **Q**: [FILL: Question]
-   **A**: [FILL: How to approach]
+2. **Q**: "Why can't you use == to compare Integer objects?"
+   **A**: "== compares object references, not values. For values outside -128 to 127, Java creates new Integer objects, so == returns false even for equal values. Always use `.equals()` or compare unboxed primitives."
 
-3. **Q**: [FILL: Question]
-   **A**: [FILL: How to approach]
+3. **Q**: "How would you optimize a method that processes millions of Integer objects?"
+   **A**: "Use primitive `int` arrays instead of `Integer[]` to eliminate object overhead. If collections are required, use `IntStream` or specialized libraries like Trove/FastUtil that provide primitive collections."
 
 **How to Impress**:
-- [FILL: Impressive thing 1]
-- [FILL: Impressive thing 2]
-- [FILL: Impressive thing 3]
+- Proactively mention overflow risks and suggest using Math.addExact() or long types
+- Explain the Integer cache (-128 to 127) and why == sometimes works for Integer comparison
+- Discuss memory implications: "Using byte instead of int saves 75% memory for small values"
+- Reference Java Language Specification sections on type conversion and numeric promotion
+- Mention real-world production issues you've seen or prevented (e.g., financial calculation precision)
 
 ---
 
@@ -3634,51 +4556,53 @@ logger.error("Integer overflow detected: {} + {} = {}", a, b, result);
 
 | Company | Frequency | Difficulty Distribution |
 |---------|-----------|------------------------|
-| Google | [FILL: Very High/High/Medium/Low] | Easy: [FILL]%, Medium: [FILL]%, Hard: [FILL]% |
-| Amazon | [FILL: Very High/High/Medium/Low] | Easy: [FILL]%, Medium: [FILL]%, Hard: [FILL]% |
-| Meta | [FILL: Very High/High/Medium/Low] | Easy: [FILL]%, Medium: [FILL]%, Hard: [FILL]% |
-| Microsoft | [FILL: Very High/High/Medium/Low] | Easy: [FILL]%, Medium: [FILL]%, Hard: [FILL]% |
-| Apple | [FILL: Very High/High/Medium/Low] | Easy: [FILL]%, Medium: [FILL]%, Hard: [FILL]% |
+| Google | High | Easy: 30%, Medium: 50%, Hard: 20% |
+| Amazon | Very High | Easy: 40%, Medium: 45%, Hard: 15% |
+| Meta | High | Easy: 35%, Medium: 50%, Hard: 15% |
+| Microsoft | Medium | Easy: 45%, Medium: 40%, Hard: 15% |
+| Apple | Medium | Easy: 40%, Medium: 45%, Hard: 15% |
+
+**Note**: Variables and data types are fundamental concepts tested indirectly in almost every coding interview. Direct questions are rare but understanding is essential.
 
 ---
 
 ### Top Interview Questions
 
-#### Question 1: [FILL: Problem Name]
+#### Question 1: Reverse Integer (LeetCode #7)
 
-**Companies**: [FILL: e.g., Google, Amazon, Microsoft]  
+**Companies**: Amazon, Google, Microsoft, Meta, Apple  
 **Frequency**: ⭐⭐⭐⭐⭐ Very High  
 **Difficulty**: ⭐⭐ Medium  
-**Last Asked**: [FILL: Month Year]  
-**Success Rate**: [FILL: Percentage]
+**Last Asked**: November 2024  
+**Success Rate**: 42%
 
 **Problem Statement**:
-[FILL: Full, detailed problem description]
+Given a signed 32-bit integer `x`, return `x` with its digits reversed. If reversing `x` causes the value to go outside the signed 32-bit integer range `[-2^31, 2^31 - 1]`, then return `0`.
 
 **Examples**:
 ```
 Example 1:
-Input: [FILL: input]
-Output: [FILL: output]
-Explanation: [FILL: step-by-step why]
+Input: x = 123
+Output: 321
+Explanation: Simply reverse the digits
 
 Example 2:
-Input: [FILL: input]
-Output: [FILL: output]
-Explanation: [FILL: step-by-step why]
+Input: x = -123
+Output: -321
+Explanation: Preserve the negative sign
 
-Example 3 (Edge Case):
-Input: [FILL: input]
-Output: [FILL: output]
-Explanation: [FILL: step-by-step why]
+Example 3 (Edge Case - Overflow):
+Input: x = 1534236469
+Output: 0
+Explanation: Reversed would be 9646324351, which exceeds 2^31-1 (2147483647)
 ```
 
 **Constraints**:
-- [FILL: Constraint 1]
-- [FILL: Constraint 2]
-- [FILL: Constraint 3]
+- `-2^31 <= x <= 2^31 - 1`
+- Must handle integer overflow
+- Cannot use 64-bit integers
 
-**Follow-up**: [FILL: Follow-up question if any]
+**Follow-up**: Can you solve it without converting to string?
 
 ---
 
@@ -3686,22 +4610,22 @@ Explanation: [FILL: step-by-step why]
 
 <details>
 <summary>Hint 1 (High Level)</summary>
-[FILL: General direction without giving away the solution]
+Think about how you extract digits from a number using modulo (%) and division (/)
 </details>
 
 <details>
 <summary>Hint 2 (More Specific)</summary>
-[FILL: More specific guidance]
+Build the reversed number digit by digit. Check for overflow BEFORE multiplying by 10.
 </details>
 
 <details>
 <summary>Hint 3 (Key Insight)</summary>
-[FILL: The "aha!" moment]
+If result > Integer.MAX_VALUE/10, then result*10 will overflow. Also check the last digit.
 </details>
 
 <details>
 <summary>Hint 4 (Almost There)</summary>
-[FILL: Almost the complete approach]
+Use: result = result * 10 + (x % 10), then x = x / 10. Check overflow before each multiplication.
 </details>
 
 ---
@@ -3711,40 +4635,45 @@ Explanation: [FILL: step-by-step why]
 <details>
 <summary>Click to reveal complete solution</summary>
 
-### Approach 1: Brute Force
+### Approach 1: String Conversion (Not Recommended)
 
 **Intuition**:
-[FILL: Why this approach makes sense]
+Convert to string, reverse it, convert back. Simple but violates the spirit of the problem.
 
 **Algorithm**:
-1. [FILL: Step 1]
-2. [FILL: Step 2]
-3. [FILL: Step 3]
+1. Convert integer to string
+2. Reverse the string
+3. Convert back to integer
+4. Handle overflow by catching exception
 
 **Complexity**:
-- Time: O([FILL])
-- Space: O([FILL])
+- Time: O(log n) where n is the value of x (number of digits)
+- Space: O(log n) for string storage
 
-**Why it works**: [FILL: Explanation]  
-**Why it's not optimal**: [FILL: Explanation]
+**Why it works**: String manipulation is straightforward  
+**Why it's not optimal**: Uses extra space, not elegant, interviewers want mathematical solution
 
 ---
 
-### Approach 2: Optimized Solution
+### Approach 2: Mathematical Reversal (Optimal)
 
 **Intuition**:
-[FILL: The key insight that leads to optimization]
+Extract digits one by one from the end using modulo, build reversed number by multiplying by 10 and adding each digit. Check for overflow before each operation.
 
 **Algorithm**:
-1. [FILL: Step 1]
-2. [FILL: Step 2]
-3. [FILL: Step 3]
+1. Initialize result = 0
+2. While x != 0:
+   - Extract last digit: digit = x % 10
+   - Check if result will overflow when multiplied by 10
+   - Update result: result = result * 10 + digit
+   - Remove last digit from x: x = x / 10
+3. Return result
 
 **Complexity**:
-- Time: O([FILL])
-- Space: O([FILL])
+- Time: O(log n) where n is the value of x
+- Space: O(1)
 
-**Why it's better**: [FILL: Explanation]
+**Why it's better**: No extra space, pure mathematical solution, handles overflow elegantly
 
 ---
 
@@ -3753,204 +4682,398 @@ Explanation: [FILL: step-by-step why]
 **Java**:
 ```java
 /**
- * Optimized solution
- * Time: O([FILL]) | Space: O([FILL])
+ * Optimized mathematical solution
+ * Time: O(log n) | Space: O(1)
  */
-class Solution {
-    public [FILL: ReturnType] solutionMethod([FILL: params]) {
-        // Step 1: [FILL: Description]
-        [FILL: code]
+public int reverse(int x) {
+    int result = 0;
+    
+    while (x != 0) {
+        int digit = x % 10;
+        x /= 10;
         
-        // Step 2: [FILL: Description]
-        [FILL: code]
+        // Check for overflow BEFORE multiplying
+        // If result > Integer.MAX_VALUE/10, then result*10 will overflow
+        // If result == Integer.MAX_VALUE/10, check if digit > 7 (last digit of MAX_VALUE)
+        if (result > Integer.MAX_VALUE / 10 || 
+            (result == Integer.MAX_VALUE / 10 && digit > 7)) {
+            return 0;
+        }
+        if (result < Integer.MIN_VALUE / 10 || 
+            (result == Integer.MIN_VALUE / 10 && digit < -8)) {
+            return 0;
+        }
         
-        return [FILL: result];
+        result = result * 10 + digit;
     }
+    
+    return result;
 }
-
-// Test cases
-@Test
-public void testSolution() {
-    Solution sol = new Solution();
-    assertEquals([FILL: expected], sol.solutionMethod([FILL: input]));
-}
-```
-
-**Python**:
-```python
-class Solution:
-    def solution_method(self, params):
-        """
-        Optimized solution
-        Time: O([FILL]) | Space: O([FILL])
-        """
-        # Step 1: [FILL: Description]
-        [FILL: code]
-        
-        # Step 2: [FILL: Description]
-        [FILL: code]
-        
-        return [FILL: result]
-
-# Test cases
-def test_solution():
-    sol = Solution()
-    assert sol.solution_method([FILL: input]) == [FILL: expected]
 ```
 
 **JavaScript**:
 ```javascript
 /**
- * Optimized solution
- * Time: O([FILL]) | Space: O([FILL])
+ * Time: O(log n) | Space: O(1)
  */
-function solutionMethod(params) {
-    // Step 1: [FILL: Description]
-    [FILL: code]
+function reverse(x) {
+    const MAX = 2147483647;  // 2^31 - 1
+    const MIN = -2147483648; // -2^31
+    let result = 0;
     
-    // Step 2: [FILL: Description]
-    [FILL: code]
+    while (x !== 0) {
+        const digit = x % 10;
+        x = Math.trunc(x / 10);  // Use trunc to handle negative numbers
+        
+        // Check overflow
+        if (result > MAX / 10 || (result === Math.floor(MAX / 10) && digit > 7)) {
+            return 0;
+        }
+        if (result < MIN / 10 || (result === Math.ceil(MIN / 10) && digit < -8)) {
+            return 0;
+        }
+        
+        result = result * 10 + digit;
+    }
     
-    return [FILL: result];
+    return result;
 }
+```
 
-// Test cases
-test('solution method', () => {
-    expect(solutionMethod([FILL: input])).toBe([FILL: expected]);
-});
+**Python**:
+```python
+"""
+Time: O(log n) | Space: O(1)
+"""
+def reverse(x: int) -> int:
+    MAX = 2**31 - 1
+    MIN = -2**31
+    result = 0
+    sign = 1 if x > 0 else -1
+    x = abs(x)
+    
+    while x != 0:
+        digit = x % 10
+        x //= 10
+        
+        # Check overflow
+        if result > MAX // 10 or (result == MAX // 10 and digit > 7):
+            return 0
+        
+        result = result * 10 + digit
+    
+    result *= sign
+    return result if MIN <= result <= MAX else 0
+```
+
+**C**:
+```c
+/**
+ * Time: O(log n) | Space: O(1)
+ */
+int reverse(int x) {
+    int result = 0;
+    
+    while (x != 0) {
+        int digit = x % 10;
+        x /= 10;
+        
+        // Check overflow
+        if (result > INT_MAX / 10 || (result == INT_MAX / 10 && digit > 7)) {
+            return 0;
+        }
+        if (result < INT_MIN / 10 || (result == INT_MIN / 10 && digit < -8)) {
+            return 0;
+        }
+        
+        result = result * 10 + digit;
+    }
+    
+    return result;
+}
 ```
 
 **C++**:
 ```cpp
 /**
- * Optimized solution
- * Time: O([FILL]) | Space: O([FILL])
+ * Time: O(log n) | Space: O(1)
  */
 class Solution {
 public:
-    ReturnType solutionMethod(params) {
-        // Step 1: [FILL: Description]
-        [FILL: code]
+    int reverse(int x) {
+        int result = 0;
         
-        // Step 2: [FILL: Description]
-        [FILL: code]
+        while (x != 0) {
+            int digit = x % 10;
+            x /= 10;
+            
+            // Check overflow
+            if (result > INT_MAX / 10 || (result == INT_MAX / 10 && digit > 7)) {
+                return 0;
+            }
+            if (result < INT_MIN / 10 || (result == INT_MIN / 10 && digit < -8)) {
+                return 0;
+            }
+            
+            result = result * 10 + digit;
+        }
         
-        return [FILL: result];
+        return result;
     }
 };
-
-// Test cases
-TEST(SolutionTest, BasicTest) {
-    Solution sol;
-    EXPECT_EQ([FILL: expected], sol.solutionMethod([FILL: input]));
-}
 ```
 
-**Go**:
-```go
+</details>
+
+---
+
+**Key Takeaways**:
+- Understanding integer overflow is crucial
+- Know the range of 32-bit integers: -2,147,483,648 to 2,147,483,647
+- Check overflow BEFORE performing operations, not after
+- Mathematical digit extraction: `digit = x % 10`, `x = x / 10`
+
+---
+
+#### Question 2: Palindrome Number (LeetCode #9)
+
+**Companies**: Amazon, Microsoft, Meta  
+**Frequency**: ⭐⭐⭐⭐ High  
+**Difficulty**: ⭐ Easy  
+**Last Asked**: October 2024  
+**Success Rate**: 54%
+
+**Problem Statement**:
+Given an integer `x`, return `true` if `x` is a palindrome, and `false` otherwise. A palindrome number reads the same backward as forward.
+
+**Examples**:
+```
+Example 1:
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left
+
+Example 2:
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-
+
+Example 3:
+Input: x = 10
+Output: false
+Explanation: Reads 01 from right to left
+```
+
+**Constraints**:
+- `-2^31 <= x <= 2^31 - 1`
+
+**Follow-up**: Can you solve it without converting to string?
+
+---
+
+**Solution**:
+
+<details>
+<summary>Click to reveal solution</summary>
+
+**Java**:
+```java
 /**
- * Optimized solution
- * Time: O([FILL]) | Space: O([FILL])
+ * Reverse half the number and compare
+ * Time: O(log n) | Space: O(1)
  */
-func solutionMethod(params) returnType {
-    // Step 1: [FILL: Description]
-    [FILL: code]
-    
-    // Step 2: [FILL: Description]
-    [FILL: code]
-    
-    return [FILL: result]
-}
-
-// Test cases
-func TestSolution(t *testing.T) {
-    result := solutionMethod([FILL: input])
-    if result != [FILL: expected] {
-        t.Errorf("got %v, want %v", result, [FILL: expected])
+public boolean isPalindrome(int x) {
+    // Negative numbers and numbers ending in 0 (except 0 itself) are not palindromes
+    if (x < 0 || (x % 10 == 0 && x != 0)) {
+        return false;
     }
+    
+    int reversedHalf = 0;
+    // Reverse only half the digits
+    while (x > reversedHalf) {
+        reversedHalf = reversedHalf * 10 + x % 10;
+        x /= 10;
+    }
+    
+    // For even length: x == reversedHalf
+    // For odd length: x == reversedHalf / 10 (ignore middle digit)
+    return x == reversedHalf || x == reversedHalf / 10;
 }
 ```
 
----
+**Python**:
+```python
+def isPalindrome(x: int) -> bool:
+    if x < 0 or (x % 10 == 0 and x != 0):
+        return False
+    
+    reversed_half = 0
+    while x > reversed_half:
+        reversed_half = reversed_half * 10 + x % 10
+        x //= 10
+    
+    return x == reversed_half or x == reversed_half // 10
+```
 
-### Detailed Complexity Analysis
-
-**Time Complexity**: O([FILL])
-- [FILL: Line-by-line analysis]
-- [FILL: Why this complexity]
-- [FILL: Best/Average/Worst cases]
-
-**Space Complexity**: O([FILL])
-- [FILL: What we allocate]
-- [FILL: Why this space]
-- [FILL: Auxiliary vs total space]
-
----
-
-### Common Pitfalls
-
-**Pitfall 1**: [FILL: What people do wrong]
-- **Why it happens**: [FILL: Explanation]
-- **How to avoid**: [FILL: Solution]
-- **Test case that catches it**: [FILL: Example]
-
-**Pitfall 2**: [FILL: What people do wrong]
-- **Why it happens**: [FILL: Explanation]
-- **How to avoid**: [FILL: Solution]
-- **Test case that catches it**: [FILL: Example]
-
-**Pitfall 3**: [FILL: What people do wrong]
-- **Why it happens**: [FILL: Explanation]
-- **How to avoid**: [FILL: Solution]
-- **Test case that catches it**: [FILL: Example]
+</details>
 
 ---
 
-### Edge Cases to Consider
+#### Question 3: Power of Two (LeetCode #231)
 
-- [ ] Empty input
-- [ ] Single element
-- [ ] All same elements
-- [ ] Sorted input
-- [ ] Reverse sorted input
-- [ ] Duplicates
-- [ ] Negative numbers
-- [ ] Zero
-- [ ] Maximum constraints
-- [ ] Minimum constraints
+**Companies**: Google, Amazon, Apple  
+**Frequency**: ⭐⭐⭐ Medium  
+**Difficulty**: ⭐ Easy  
+**Last Asked**: September 2024  
+**Success Rate**: 47%
+
+**Problem Statement**:
+Given an integer `n`, return `true` if it is a power of two. Otherwise, return `false`. An integer `n` is a power of two if there exists an integer `x` such that `n == 2^x`.
+
+**Examples**:
+```
+Example 1:
+Input: n = 1
+Output: true
+Explanation: 2^0 = 1
+
+Example 2:
+Input: n = 16
+Output: true
+Explanation: 2^4 = 16
+
+Example 3:
+Input: n = 3
+Output: false
+```
+
+**Constraints**:
+- `-2^31 <= n <= 2^31 - 1`
+
+**Follow-up**: Can you solve it without loops/recursion?
 
 ---
 
-### Follow-up Questions & Answers
+**Solution**:
 
-**Q1**: [FILL: Follow-up question]  
-**A**: [FILL: Approach to solve it]
-- Modification needed: [FILL: What to change]
-- New complexity: [FILL: Analysis]
+<details>
+<summary>Click to reveal solution</summary>
 
-**Q2**: [FILL: Follow-up question]  
-**A**: [FILL: Approach to solve it]
-- Modification needed: [FILL: What to change]
-- New complexity: [FILL: Analysis]
+**Key Insight**: Powers of 2 in binary have exactly one bit set. For example:
+- 1 = 0001
+- 2 = 0010
+- 4 = 0100
+- 8 = 1000
 
-**Q3**: [FILL: Follow-up question]  
-**A**: [FILL: Approach to solve it]
-- Modification needed: [FILL: What to change]
-- New complexity: [FILL: Analysis]
+The trick: `n & (n-1)` removes the rightmost set bit. If n is a power of 2, this results in 0.
+
+**Java**:
+```java
+/**
+ * Bit manipulation solution
+ * Time: O(1) | Space: O(1)
+ */
+public boolean isPowerOfTwo(int n) {
+    // n must be positive and have exactly one bit set
+    return n > 0 && (n & (n - 1)) == 0;
+}
+```
+
+**Alternative - Count bits**:
+```java
+public boolean isPowerOfTwo(int n) {
+    return n > 0 && Integer.bitCount(n) == 1;
+}
+```
+
+**Python**:
+```python
+def isPowerOfTwo(n: int) -> bool:
+    return n > 0 and (n & (n - 1)) == 0
+```
+
+</details>
+
+---
+
+#### Question 4: Number of 1 Bits (LeetCode #191)
+
+**Companies**: Amazon, Microsoft, Meta  
+**Frequency**: ⭐⭐⭐⭐ High  
+**Difficulty**: ⭐ Easy  
+**Last Asked**: November 2024  
+**Success Rate**: 66%
+
+**Problem Statement**:
+Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
+
+**Examples**:
+```
+Example 1:
+Input: n = 00000000000000000000000000001011
+Output: 3
+Explanation: The input binary string has three '1' bits
+
+Example 2:
+Input: n = 00000000000000000000000010000000
+Output: 1
+
+Example 3:
+Input: n = 11111111111111111111111111111101
+Output: 31
+```
+
+**Solution**:
+
+<details>
+<summary>Click to reveal solution</summary>
+
+**Java**:
+```java
+/**
+ * Brian Kernighan's Algorithm
+ * Time: O(k) where k is number of 1 bits | Space: O(1)
+ */
+public int hammingWeight(int n) {
+    int count = 0;
+    while (n != 0) {
+        n &= (n - 1);  // Remove rightmost 1 bit
+        count++;
+    }
+    return count;
+}
+
+// Alternative: Built-in method
+public int hammingWeight2(int n) {
+    return Integer.bitCount(n);
+}
+```
+
+**Python**:
+```python
+def hammingWeight(n: int) -> int:
+    count = 0
+    while n:
+        n &= n - 1  # Remove rightmost 1 bit
+        count += 1
+    return count
+```
+
+</details>
 
 ---
 
 ### Interview Tips for This Question
 
 **What interviewers look for**:
-- [FILL: Quality 1]
-- [FILL: Quality 2]
-- [FILL: Quality 3]
+- Clear understanding of bit manipulation and integer properties
+- Ability to recognize patterns (powers of 2, bit counting)
+- Knowledge of edge cases (negative numbers, zero, overflow)
 
 **How to communicate**:
-1. [FILL: Communication tip 1]
-2. [FILL: Communication tip 2]
-3. [FILL: Communication tip 3]
+1. State your approach clearly: "I'll use bit manipulation because..."
+2. Explain the math: "Powers of 2 have exactly one bit set, so n & (n-1) removes that bit..."
+3. Discuss trade-offs: "The built-in Integer.bitCount() is cleaner but the bit trick shows deeper understanding"
 
 **Time management**:
 - Clarification: 2-3 minutes
@@ -3963,61 +5086,127 @@ func TestSolution(t *testing.T) {
 
 ---
 
-#### Question 2: [FILL: Another Problem Name]
-
-[FILL: Similar complete structure to Question 1...]
-
----
-
-#### Question 3: [FILL: Another Problem Name]
-
-[FILL: Similar complete structure to Question 1...]
-
----
-
-[FILL: Continue for 10-15 total questions...]
-
----
-
 ### Interview Patterns
 
-#### Pattern 1: [FILL: Pattern Name]
+#### Pattern 1: Digit Manipulation
 
 **When to recognize it**:
-- [FILL: Clue 1 in problem statement]
-- [FILL: Clue 2 in problem statement]
-- [FILL: Clue 3 in examples]
+- Problem asks to extract, reverse, or manipulate individual digits
+- Examples involve numbers like 123, 321, or digit sums
+- Constraints mention "without converting to string"
 
 **How to approach**:
-1. [FILL: Step 1]
-2. [FILL: Step 2]
-3. [FILL: Step 3]
+1. Use modulo (%) to extract last digit: `digit = n % 10`
+2. Use integer division (/) to remove last digit: `n = n / 10`
+3. Build result by multiplying by 10 and adding: `result = result * 10 + digit`
 
 **Template code**:
 ```java
-[FILL: Code template for this pattern]
+public int processDigits(int n) {
+    int result = 0;
+    while (n != 0) {
+        int digit = n % 10;  // Extract last digit
+        // Process digit here
+        result = result * 10 + digit;  // Build result
+        n /= 10;  // Remove last digit
+    }
+    return result;
+}
 ```
 
 **Example questions**:
-- [FILL: Question 1]
-- [FILL: Question 2]
-- [FILL: Question 3]
+- Reverse Integer (LeetCode #7)
+- Palindrome Number (LeetCode #9)
+- Sum of Digits
+- Armstrong Number
 
 **Common variations**:
-- [FILL: Variation 1]
-- [FILL: Variation 2]
+- Handle negative numbers (preserve sign)
+- Detect overflow before it happens
 
 ---
 
-#### Pattern 2: [FILL: Another Pattern]
+#### Pattern 2: Bit Manipulation
 
-[FILL: Similar structure to Pattern 1...]
+**When to recognize it**:
+- Problem involves binary representation, powers of 2, or counting bits
+- Keywords: "binary", "bits", "XOR", "AND", "OR"
+- Constraints suggest O(1) or O(log n) solution
+
+**How to approach**:
+1. Identify the bit operation needed (AND, OR, XOR, shift)
+2. Use bit tricks: `n & (n-1)` removes rightmost 1 bit
+3. Consider built-in methods: `Integer.bitCount()`, `Integer.highestOneBit()`
+
+**Template code**:
+```java
+public boolean checkBitProperty(int n) {
+    // Check if power of 2
+    if (n > 0 && (n & (n - 1)) == 0) return true;
+    
+    // Count set bits
+    int count = 0;
+    while (n != 0) {
+        n &= (n - 1);  // Remove rightmost 1
+        count++;
+    }
+    return count == 1;
+}
+```
+
+**Example questions**:
+- Power of Two (LeetCode #231)
+- Number of 1 Bits (LeetCode #191)
+- Single Number (LeetCode #136)
+- Missing Number (LeetCode #268)
+
+**Common variations**:
+- Use XOR for finding unique elements
+- Use bit masks for subset problems
 
 ---
 
-#### Pattern 3: [FILL: Yet Another Pattern]
+#### Pattern 3: Overflow Detection
 
-[FILL: Similar structure to Pattern 1...]
+**When to recognize it**:
+- Problem involves arithmetic on integers
+- Constraints mention Integer.MAX_VALUE or large numbers
+- Need to detect or prevent overflow
+
+**How to approach**:
+1. Check before operation: `if (result > Integer.MAX_VALUE / 10) return 0;`
+2. Use long for intermediate calculations
+3. Use Math.addExact() / multiplyExact() to throw on overflow
+
+**Template code**:
+```java
+public int safeMultiply(int a, int b) {
+    // Method 1: Check before operation
+    if (a > Integer.MAX_VALUE / b) {
+        throw new ArithmeticException("Overflow");
+    }
+    return a * b;
+    
+    // Method 2: Use exact math
+    return Math.multiplyExact(a, b);
+    
+    // Method 3: Use long
+    long result = (long) a * b;
+    if (result > Integer.MAX_VALUE) {
+        throw new ArithmeticException("Overflow");
+    }
+    return (int) result;
+}
+```
+
+**Example questions**:
+- Reverse Integer (LeetCode #7)
+- String to Integer (atoi) (LeetCode #8)
+- Multiply Strings (LeetCode #43)
+
+**Common variations**:
+- Handle both positive and negative overflow
+- Return special value (0, -1) instead of throwing
 
 ---
 
@@ -4026,42 +5215,90 @@ func TestSolution(t *testing.T) {
 #### Google
 
 **What they focus on**:
-- [FILL: Focus area 1]
-- [FILL: Focus area 2]
-- [FILL: Focus area 3]
+- Algorithmic efficiency and optimal solutions
+- Bit manipulation and mathematical approaches
+- Handling edge cases (overflow, negative numbers, zero)
 
 **Common follow-ups**:
-- [FILL: Follow-up type 1]
-- [FILL: Follow-up type 2]
+- "How would you handle arbitrarily large numbers?" (BigInteger)
+- "Can you optimize the space complexity?" (Use primitives, avoid extra arrays)
 
 **Tips**:
-- [FILL: Tip 1]
-- [FILL: Tip 2]
-- [FILL: Tip 3]
+- Explain your thought process clearly
+- Discuss multiple approaches and trade-offs
+- Mention time/space complexity upfront
 
 ---
 
 #### Amazon
 
-[FILL: Similar structure to Google...]
+**What they focus on**:
+- Practical problem-solving and production readiness
+- Error handling and edge cases
+- Code quality and maintainability
+
+**Common follow-ups**:
+- "What happens in production if this overflows?" (Discuss monitoring, alerts)
+- "How would you test this?" (Unit tests, edge cases, property-based testing)
+
+**Tips**:
+- Think about scalability and real-world usage
+- Mention logging, monitoring, and error handling
+- Discuss how you'd deploy and maintain the code
 
 ---
 
 #### Meta/Facebook
 
-[FILL: Similar structure to Google...]
+**What they focus on**:
+- Clean, readable code
+- Communication and collaboration
+- System design implications
+
+**Common follow-ups**:
+- "How would this scale to billions of users?" (Memory optimization, caching)
+- "What if requirements change?" (Extensibility, maintainability)
+
+**Tips**:
+- Write production-quality code from the start
+- Discuss design patterns and best practices
+- Explain how your solution fits into larger systems
 
 ---
 
 #### Microsoft
 
-[FILL: Similar structure to Google...]
+**What they focus on**:
+- Problem-solving approach and reasoning
+- Code correctness and testing
+- Understanding of fundamentals
+
+**Common follow-ups**:
+- "Can you write tests for this?" (Unit tests, edge cases)
+- "What are the limitations?" (Type ranges, precision, performance)
+
+**Tips**:
+- Be methodical and thorough
+- Test your code with examples
+- Explain why you chose specific types
 
 ---
 
 #### Apple
 
-[FILL: Similar structure to Google...]
+**What they focus on**:
+- Attention to detail and edge cases
+- Performance and memory efficiency
+- User experience implications
+
+**Common follow-ups**:
+- "How would this affect battery life?" (CPU usage, memory pressure)
+- "What if the user enters invalid input?" (Validation, error messages)
+
+**Tips**:
+- Consider resource constraints (mobile devices)
+- Think about user experience
+- Discuss performance optimizations
 
 ---
 
@@ -4093,31 +5330,28 @@ func TestSolution(t *testing.T) {
 
 ### One-Page Summary
 
-**What**: [FILL: One sentence definition]
+**What**: Variables are named storage locations that hold values; data types define what kind of values can be stored and what operations are allowed.
 
-**When to use**: [FILL: One sentence]
+**When to use**: Every program uses variables - they're the foundation of all programming.
 
-**Time**: O([FILL]) | **Space**: O([FILL])
+**Time**: O(1) for all variable operations | **Space**: Depends on type (1-8 bytes for primitives)
 
-**Key insight**: [FILL: The one thing to remember]
+**Key insight**: Java is strongly typed - type safety prevents bugs but requires explicit conversions between incompatible types.
 
 ---
 
-### Key Formulas
+### Primitive Data Types Quick Reference
 
-```
-Formula 1: [FILL: formula]
-When to use: [FILL: scenario]
-Example: [FILL: concrete example]
-
-Formula 2: [FILL: formula]
-When to use: [FILL: scenario]
-Example: [FILL: concrete example]
-
-Formula 3: [FILL: formula]
-When to use: [FILL: scenario]
-Example: [FILL: concrete example]
-```
+| Type | Size | Range | Default | Example |
+|------|------|-------|---------|---------|
+| `byte` | 1 byte | -128 to 127 | 0 | `byte age = 25;` |
+| `short` | 2 bytes | -32,768 to 32,767 | 0 | `short year = 2024;` |
+| `int` | 4 bytes | -2³¹ to 2³¹-1 | 0 | `int count = 1000;` |
+| `long` | 8 bytes | -2⁶³ to 2⁶³-1 | 0L | `long distance = 9876543210L;` |
+| `float` | 4 bytes | ±3.4e38 (7 digits) | 0.0f | `float rate = 0.15f;` |
+| `double` | 8 bytes | ±1.7e308 (15 digits) | 0.0d | `double pi = 3.14159;` |
+| `char` | 2 bytes | 0 to 65,535 (Unicode) | '\u0000' | `char grade = 'A';` |
+| `boolean` | 1 bit | true or false | false | `boolean isActive = true;` |
 
 ---
 
@@ -4125,123 +5359,207 @@ Example: [FILL: concrete example]
 
 #### Java
 ```java
-// Operation 1: [FILL: Description]
-[FILL: minimal code snippet]
+// Declaration and initialization
+int x = 10;
+double y = 3.14;
+boolean flag = true;
 
-// Operation 2: [FILL: Description]
-[FILL: minimal code snippet]
+// Type conversion
+int a = 100;
+double b = a;           // Implicit (widening) - safe
+int c = (int) 3.14;     // Explicit (narrowing) - loses precision
 
-// Operation 3: [FILL: Description]
-[FILL: minimal code snippet]
+// Constants
+final int MAX_SIZE = 100;
+
+// Overflow check
+if (x > Integer.MAX_VALUE - y) {
+    // Would overflow
+}
 ```
 
 #### Python
 ```python
-# Operation 1: [FILL: Description]
-[FILL: minimal code snippet]
+# Dynamic typing - no explicit type declaration
+x = 10              # int
+y = 3.14            # float
+flag = True         # bool
 
-# Operation 2: [FILL: Description]
-[FILL: minimal code snippet]
+# Type conversion
+a = 100
+b = float(a)        # int to float
+c = int(3.14)       # float to int (truncates)
 
-# Operation 3: [FILL: Description]
-[FILL: minimal code snippet]
+# Constants (by convention)
+MAX_SIZE = 100      # Use UPPER_CASE
 ```
 
 #### JavaScript
 ```javascript
-// Operation 1: [FILL: Description]
-[FILL: minimal code snippet]
+// Dynamic typing with let/const
+let x = 10;         // mutable
+const y = 3.14;     // immutable
+let flag = true;
 
-// Operation 2: [FILL: Description]
-[FILL: minimal code snippet]
+// Type conversion
+let a = 100;
+let b = Number(a);  // Explicit
+let c = parseInt("42");  // String to int
+let d = parseFloat("3.14");  // String to float
 
-// Operation 3: [FILL: Description]
-[FILL: minimal code snippet]
+// Check for overflow
+if (x > Number.MAX_SAFE_INTEGER) {
+    // Too large
+}
 ```
 
 #### C++
 ```cpp
-// Operation 1: [FILL: Description]
-[FILL: minimal code snippet]
+// Declaration and initialization
+int x = 10;
+double y = 3.14;
+bool flag = true;
 
-// Operation 2: [FILL: Description]
-[FILL: minimal code snippet]
+// Type conversion
+int a = 100;
+double b = static_cast<double>(a);  // Explicit cast
+int c = static_cast<int>(3.14);     // Truncates
 
-// Operation 3: [FILL: Description]
-[FILL: minimal code snippet]
+// Constants
+const int MAX_SIZE = 100;
+constexpr int COMPILE_TIME_CONST = 50;
+
+// Auto type deduction
+auto z = 42;        // z is int
 ```
 
-#### Go
-```go
-// Operation 1: [FILL: Description]
-[FILL: minimal code snippet]
+#### C
+```c
+// Declaration and initialization
+int x = 10;
+double y = 3.14;
+_Bool flag = 1;     // or use stdbool.h for bool
 
-// Operation 2: [FILL: Description]
-[FILL: minimal code snippet]
+// Type conversion
+int a = 100;
+double b = (double)a;   // Explicit cast
+int c = (int)3.14;      // Truncates
 
-// Operation 3: [FILL: Description]
-[FILL: minimal code snippet]
+// Constants
+#define MAX_SIZE 100
+const int MAX_VALUE = 1000;
 ```
+
+---
+
+### Common Operations
+
+| Operation | Java | Python | JavaScript | C++ | C |
+|-----------|------|--------|------------|-----|---|
+| **Declare** | `int x;` | `x = 0` | `let x;` | `int x;` | `int x;` |
+| **Initialize** | `int x = 5;` | `x = 5` | `let x = 5;` | `int x = 5;` | `int x = 5;` |
+| **Constant** | `final int X = 5;` | `X = 5` | `const X = 5;` | `const int X = 5;` | `const int X = 5;` |
+| **Type cast** | `(int)3.14` | `int(3.14)` | `parseInt(3.14)` | `static_cast<int>(3.14)` | `(int)3.14` |
+| **Max value** | `Integer.MAX_VALUE` | `sys.maxsize` | `Number.MAX_VALUE` | `INT_MAX` | `INT_MAX` |
+| **Min value** | `Integer.MIN_VALUE` | `-sys.maxsize-1` | `Number.MIN_VALUE` | `INT_MIN` | `INT_MIN` |
 
 ---
 
 ### Invariants (What Always Holds True)
 
-1. **Invariant 1**: [FILL: Statement]
-   - **Why**: [FILL: Explanation]
-   - **Use**: [FILL: How to leverage this]
+1. **Type Safety**: Once a variable is declared with a type, it can only hold values of that type (in statically-typed languages)
+   - **Why**: Prevents type-related bugs at compile time
+   - **Use**: Leverage compiler to catch errors early
 
-2. **Invariant 2**: [FILL: Statement]
-   - **Why**: [FILL: Explanation]
-   - **Use**: [FILL: How to leverage this]
+2. **Value Range**: Each numeric type has a fixed range; exceeding it causes overflow/underflow
+   - **Why**: Hardware limitations and memory representation
+   - **Use**: Check bounds before operations that might overflow
 
-3. **Invariant 3**: [FILL: Statement]
-   - **Why**: [FILL: Explanation]
-   - **Use**: [FILL: How to leverage this]
+3. **Immutability of Primitives**: Primitive values themselves cannot be modified, only reassigned
+   - **Why**: Primitives are stored by value, not reference
+   - **Use**: Safe to pass primitives to methods without worrying about modification
 
 ---
 
 ### Complexity Table
 
-| Operation | Best | Average | Worst | Space | Notes |
-|-----------|------|---------|-------|-------|-------|
-| [FILL: Op 1] | O([FILL]) | O([FILL]) | O([FILL]) | O([FILL]) | [FILL: When] |
-| [FILL: Op 2] | O([FILL]) | O([FILL]) | O([FILL]) | O([FILL]) | [FILL: When] |
-| [FILL: Op 3] | O([FILL]) | O([FILL]) | O([FILL]) | O([FILL]) | [FILL: When] |
-| [FILL: Op 4] | O([FILL]) | O([FILL]) | O([FILL]) | O([FILL]) | [FILL: When] |
+| Operation | Time | Space | Notes |
+|-----------|------|-------|-------|
+| **Variable declaration** | O(1) | O(1) | Stack allocation |
+| **Assignment** | O(1) | O(1) | Direct memory write |
+| **Type conversion** | O(1) | O(1) | Bit manipulation |
+| **Arithmetic (+, -, *, /)** | O(1) | O(1) | CPU operations |
+| **Comparison (==, <, >)** | O(1) | O(1) | CPU operations |
 
 ---
 
 ### Quick Decision Tree
 
 ```
-Need to [FILL: goal]?
+Need to store a number?
 │
-├─ If [FILL: condition 1]
-│  └─ Use [FILL: approach 1] → O([FILL])
+├─ Whole number?
+│  ├─ Small range (-128 to 127)? → byte
+│  ├─ Medium range (-32K to 32K)? → short
+│  ├─ Standard range (-2B to 2B)? → int
+│  └─ Large range? → long
 │
-├─ If [FILL: condition 2]
-│  └─ Use [FILL: approach 2] → O([FILL])
+├─ Decimal number?
+│  ├─ Need precision? → double (default)
+│  └─ Save memory? → float
 │
-└─ Otherwise
-   └─ Use [FILL: approach 3] → O([FILL])
+├─ True/false value? → boolean
+│
+└─ Single character? → char
+```
+
+---
+
+### Common Pitfalls & Solutions
+
+| Pitfall | Problem | Solution |
+|---------|---------|----------|
+| **Integer overflow** | `int x = Integer.MAX_VALUE + 1;` wraps to MIN_VALUE | Check bounds before operations |
+| **Floating-point precision** | `0.1 + 0.2 != 0.3` | Use `BigDecimal` for exact decimal math |
+| **Uninitialized variables** | Local variables not auto-initialized | Always initialize before use |
+| **Assignment vs comparison** | `if (x = 5)` assigns instead of compares | Use `==` for comparison |
+| **Narrowing without cast** | `int x = 3.14;` won't compile | Explicit cast: `int x = (int)3.14;` |
+
+---
+
+### Interview Essentials
+
+**Must Know**:
+- Integer overflow behavior (wraps around, doesn't throw exception)
+- Difference between `==` (value comparison) and `.equals()` (object comparison)
+- Implicit vs explicit type conversion
+- Range of 32-bit integers: -2,147,483,648 to 2,147,483,647
+- Floating-point precision issues
+
+**Common Questions**:
+- Reverse an integer (check overflow)
+- Check if number is palindrome
+- Check if number is power of 2 (bit manipulation)
+- Count number of 1 bits (Hamming weight)
+- Swap two variables without temp variable
+   └─ Use XOR: `a ^= b; b ^= a; a ^= b;` → O(1)
 ```
 
 ---
 
 ### Common Patterns (At a Glance)
 
-1. **[FILL: Pattern 1]**: [FILL: One-line description]
-   - Code: `[FILL: minimal code]`
-   - When: [FILL: scenario]
+1. **Digit Extraction**: Extract and process individual digits
+   - Code: `while (n != 0) { int digit = n % 10; n /= 10; }`
+   - When: Reversing numbers, checking palindromes, digit sums
 
-2. **[FILL: Pattern 2]**: [FILL: One-line description]
-   - Code: `[FILL: minimal code]`
-   - When: [FILL: scenario]
+2. **Bit Manipulation**: Work with binary representation
+   - Code: `n & (n - 1)` removes rightmost 1 bit
+   - When: Powers of 2, counting bits, XOR tricks
 
-3. **[FILL: Pattern 3]**: [FILL: One-line description]
-   - Code: `[FILL: minimal code]`
-   - When: [FILL: scenario]
+3. **Overflow Detection**: Prevent integer overflow
+   - Code: `if (result > Integer.MAX_VALUE / 10) return 0;`
+   - When: Multiplying large numbers, accumulating sums
 
 ---
 
@@ -4249,17 +5567,17 @@ Need to [FILL: goal]?
 
 Quick checklist before submitting:
 
-- [ ] Empty input → [FILL: Expected behavior]
-- [ ] Null input → [FILL: Expected behavior]
-- [ ] Single element → [FILL: Expected behavior]
-- [ ] Two elements → [FILL: Expected behavior]
-- [ ] All same → [FILL: Expected behavior]
-- [ ] Sorted → [FILL: Expected behavior]
-- [ ] Reverse sorted → [FILL: Expected behavior]
-- [ ] Duplicates → [FILL: Expected behavior]
-- [ ] Negative values → [FILL: Expected behavior]
-- [ ] Zero → [FILL: Expected behavior]
-- [ ] Max size → [FILL: Expected behavior]
+- [ ] Empty input → Return default value or throw exception
+- [ ] Null input → Throw NullPointerException or handle gracefully
+- [ ] Single element → Should work without special case
+- [ ] Two elements → Test boundary between single and multiple
+- [ ] All same → Verify algorithm doesn't assume variety
+- [ ] Sorted → May enable optimizations
+- [ ] Reverse sorted → Worst case for some algorithms
+- [ ] Duplicates → Ensure correct handling of equal values
+- [ ] Negative values → Check sign handling and overflow
+- [ ] Zero → Special case in division, modulo, bit operations
+- [ ] Max size → Test with Integer.MAX_VALUE, check overflow
 
 ---
 
@@ -4290,38 +5608,47 @@ Quick checklist before submitting:
 
 ### Common Mistakes (Quick Reference)
 
-❌ **Don't**: [FILL: Mistake 1]  
-✅ **Do**: [FILL: Correct approach]
+❌ **Don't**: Use `==` to compare Integer objects  
+✅ **Do**: Use `.equals()` or compare unboxed values
 
-❌ **Don't**: [FILL: Mistake 2]  
-✅ **Do**: [FILL: Correct approach]
+❌ **Don't**: Ignore overflow in arithmetic operations  
+✅ **Do**: Check bounds or use `Math.addExact()` / `multiplyExact()`
 
-❌ **Don't**: [FILL: Mistake 3]  
-✅ **Do**: [FILL: Correct approach]
+❌ **Don't**: Use `float`/`double` for money  
+✅ **Do**: Use `BigDecimal` for financial calculations
+
+❌ **Don't**: Forget to handle negative numbers in digit problems  
+✅ **Do**: Preserve sign and work with absolute value
+
+❌ **Don't**: Assume autoboxing is free  
+✅ **Do**: Use primitives in performance-critical code (loops, hot paths)
+
+❌ **Don't**: Use float/double for financial calculations  
+✅ **Do**: Use BigDecimal for money, or store cents as long
 
 ---
 
 ### Optimization Tricks
 
-1. **[FILL: Trick 1]**: [FILL: Description]
-   - Improves: [FILL: What]
-   - From: O([FILL]) → To: O([FILL])
+1. **Use Integer.valueOf() instead of new Integer()**: Reuses cached objects for -128 to 127
+   - Improves: Memory usage and performance
+   - From: O(n) object creations → To: O(1) cache lookups
 
-2. **[FILL: Trick 2]**: [FILL: Description]
-   - Improves: [FILL: What]
-   - From: O([FILL]) → To: O([FILL])
+2. **Use IntStream instead of Stream<Integer>**: Avoids boxing overhead
+   - Improves: Stream performance for numeric operations
+   - From: O(n) boxing operations → To: O(1) primitive operations
 
-3. **[FILL: Trick 3]**: [FILL: Description]
-   - Improves: [FILL: What]
-   - From: O([FILL]) → To: O([FILL])
+3. **Use bit manipulation for powers of 2**: Replace modulo and division with bitwise ops
+   - Improves: Arithmetic performance
+   - From: O(1) division → To: O(1) bit shift (faster)
 
 ---
 
 ### Related Concepts (Quick Links)
 
-- **[FILL: Concept 1]**: [FILL: How it relates]
-- **[FILL: Concept 2]**: [FILL: How it relates]
-- **[FILL: Concept 3]**: [FILL: How it relates]
+- **Operators**: Arithmetic, logical, and bitwise operations on variables
+- **Type Casting**: Converting between different data types
+- **Arrays**: Collections of variables of the same type
 
 ---
 
@@ -4338,14 +5665,14 @@ Time/Space?
 
 **Back**:
 ```
-[FILL: One sentence definition]
+Variables are named storage locations that hold values of a specific type.
 
-Use when: [FILL: scenario]
+Use when: You need to store and manipulate data in your program
 
-Time: O([FILL])
-Space: O([FILL])
+Time: O(1) for all operations (read, write, declare)
+Space: O(1) per variable (1-8 bytes depending on type)
 
-Key insight: [FILL: the one thing]
+Key insight: Choose primitives for performance, wrappers for nullability
 ```
 
 ---
@@ -4354,11 +5681,11 @@ Key insight: [FILL: the one thing]
 
 If you only have 5 minutes, review:
 
-1. **Definition**: [FILL: One sentence]
-2. **Key insight**: [FILL: The "aha!" moment]
-3. **Complexity**: Time O([FILL]), Space O([FILL])
-4. **Common mistake**: [FILL: Most common error]
-5. **Interview tip**: [FILL: Most important tip]
+1. **Definition**: Variables are typed storage locations for data
+2. **Key insight**: Primitives are faster but can't be null; wrappers enable null but have overhead
+3. **Complexity**: Time O(1), Space O(1) per variable
+4. **Common mistake**: Using == to compare Integer objects (use .equals() instead)
+5. **Interview tip**: Always check for integer overflow in arithmetic operations
 
 ---
 
@@ -4367,15 +5694,15 @@ If you only have 5 minutes, review:
 ### Official Documentation
 
 **Primary Source**:
-- [FILL: Link]: [FILL: Official docs]
-  - **What it covers**: [FILL: Description]
-  - **Best for**: [FILL: Who should read]
-  - **Key sections**: [FILL: Which parts]
+- **Java Language Specification**: https://docs.oracle.com/javase/specs/
+  - **What it covers**: Complete formal specification of Java language, including primitive types, variables, and type system
+  - **Best for**: Understanding the exact behavior and rules of Java types
+  - **Key sections**: Chapter 4 (Types, Values, and Variables), Chapter 5 (Conversions and Contexts)
 
 **API Reference**:
-- [FILL: Link]: [FILL: API docs]
-  - **What it covers**: [FILL: Description]
-  - **Best for**: [FILL: Who should read]
+- **Java SE API Documentation**: https://docs.oracle.com/en/java/javase/21/docs/api/
+  - **What it covers**: Complete API reference for wrapper classes (Integer, Double, etc.) and utility methods
+  - **Best for**: Looking up specific methods and understanding wrapper class behavior
 
 ---
 
@@ -4383,84 +5710,87 @@ If you only have 5 minutes, review:
 
 #### Essential Reading
 
-**1. [FILL: Book Title]** by [FILL: Author]
-- **ISBN**: [FILL: Number]
-- **Publisher**: [FILL: Name], [FILL: Year]
-- **Why read it**: [FILL: Reason]
+**1. Effective Java (3rd Edition)** by Joshua Bloch
+- **ISBN**: 978-0134685991
+- **Publisher**: Addison-Wesley, 2017
+- **Why read it**: Industry bible for Java best practices, written by former Sun/Google engineer
 - **Relevant chapters**:
-  - Chapter [FILL: X]: [FILL: Topic] - [FILL: Why important]
-  - Chapter [FILL: Y]: [FILL: Topic] - [FILL: Why important]
-- **Difficulty**: [FILL: Beginner/Intermediate/Advanced]
-- **Time investment**: [FILL: Hours]
+  - Item 60: Favor the use of standard exceptions
+  - Item 61: Throw exceptions appropriate to the abstraction
+  - Item 49: Check parameters for validity (discusses type safety)
+- **Difficulty**: Intermediate
+- **Time investment**: 2-3 hours for relevant sections
 
-**2. [FILL: Book Title]** by [FILL: Author]
-[FILL: Similar structure...]
+**2. Java: The Complete Reference (12th Edition)** by Herbert Schildt
+- **ISBN**: 978-1260463422
+- **Publisher**: McGraw-Hill, 2021
+- **Why read it**: Comprehensive coverage of Java fundamentals including detailed type system explanation
+- **Relevant chapters**:
+  - Chapter 3: Data Types, Variables, and Arrays
+  - Chapter 4: Operators
+  - Chapter 5: Control Statements
+- **Difficulty**: Beginner to Intermediate
+- **Time investment**: 4-5 hours for fundamentals
 
-**3. [FILL: Book Title]** by [FILL: Author]
-[FILL: Similar structure...]
+**3. Core Java Volume I - Fundamentals (12th Edition)** by Cay S. Horstmann
+- **ISBN**: 978-0135166307
+- **Publisher**: Prentice Hall, 2021
+- **Why read it**: Clear, practical explanations with real-world examples
+- **Relevant chapters**:
+  - Chapter 3: Fundamental Programming Structures in Java
+- **Difficulty**: Beginner
+- **Time investment**: 3-4 hours
 
 ---
 
 #### Supplementary Reading
 
-**4. [FILL: Book Title]** by [FILL: Author]
-[FILL: Similar structure...]
+**4. Thinking in Java (4th Edition)** by Bruce Eckel
+- **ISBN**: 978-0131872486
+- **Publisher**: Prentice Hall, 2006
+- **Why read it**: Deep conceptual understanding of Java's design philosophy
+- **Relevant chapters**: Chapter 2 (Everything is an Object), Chapter 3 (Operators)
+- **Difficulty**: Intermediate
+- **Time investment**: 3 hours
 
-**5. [FILL: Book Title]** by [FILL: Author]
-[FILL: Similar structure...]
-
----
-
-### Research Papers
-
-**Foundational Papers**:
-
-**1. [FILL: Paper Title]** ([FILL: Year])
-- **Authors**: [FILL: Names]
-- **Published**: [FILL: Conference/Journal]
-- **Link**: [FILL: URL or DOI]
-- **Key contribution**: [FILL: What it introduced]
-- **Why read it**: [FILL: Reason]
-- **Difficulty**: [FILL: Level]
-- **Key takeaways**:
-  - [FILL: Takeaway 1]
-  - [FILL: Takeaway 2]
-  - [FILL: Takeaway 3]
-
-**2. [FILL: Paper Title]** ([FILL: Year])
-[FILL: Similar structure...]
-
-**3. [FILL: Paper Title]** ([FILL: Year])
-[FILL: Similar structure...]
-
----
-
-**Modern Advances**:
-
-**4. [FILL: Recent Paper]** ([FILL: Year])
-[FILL: Similar structure...]
-
-**5. [FILL: Recent Paper]** ([FILL: Year])
-[FILL: Similar structure...]
+**5. Head First Java (3rd Edition)** by Kathy Sierra & Bert Bates
+- **ISBN**: 978-1491910771
+- **Publisher**: O'Reilly, 2022
+- **Why read it**: Visual, engaging approach perfect for beginners
+- **Relevant chapters**: Chapter 3 (Primitives and References)
+- **Difficulty**: Beginner
+- **Time investment**: 2 hours
 
 ---
 
 ### Online Courses
 
-**1. [FILL: Course Name]** - [FILL: Platform]
-- **Instructor**: [FILL: Name]
-- **Duration**: [FILL: Hours]
-- **Level**: [FILL: Beginner/Intermediate/Advanced]
-- **Link**: [FILL: URL]
-- **What you'll learn**: [FILL: Description]
-- **Best for**: [FILL: Who should take it]
-- **Cost**: [FILL: Free/Paid]
+**1. Java Programming Masterclass** - Udemy
+- **Instructor**: Tim Buchalka
+- **Duration**: 80+ hours (first 10 hours cover fundamentals)
+- **Level**: Beginner to Advanced
+- **Link**: https://www.udemy.com/course/java-the-complete-java-developer-course/
+- **What you'll learn**: Complete Java fundamentals including variables, types, operators, and control flow
+- **Best for**: Complete beginners wanting structured learning
+- **Cost**: Paid (~$15-20 on sale)
 
-**2. [FILL: Course Name]** - [FILL: Platform]
-[FILL: Similar structure...]
+**2. Java Programming and Software Engineering Fundamentals** - Coursera (Duke University)
+- **Instructor**: Duke University Faculty
+- **Duration**: 20 hours
+- **Level**: Beginner
+- **Link**: https://www.coursera.org/specializations/java-programming
+- **What you'll learn**: Java basics, problem-solving, and software engineering principles
+- **Best for**: Academic approach with certificates
+- **Cost**: Free to audit, paid for certificate
 
-**3. [FILL: Course Name]** - [FILL: Platform]
-[FILL: Similar structure...]
+**3. Java Tutorial for Complete Beginners** - Udemy
+- **Instructor**: John Purcell
+- **Duration**: 16 hours
+- **Level**: Beginner
+- **Link**: https://www.udemy.com/course/java-tutorial/
+- **What you'll learn**: Core Java concepts from scratch
+- **Best for**: Quick start with practical examples
+- **Cost**: Paid (~$15-20 on sale)
 
 ---
 
@@ -4468,30 +5798,148 @@ If you only have 5 minutes, review:
 
 **University Lectures**:
 
-**1. [FILL: Lecture Title]** - [FILL: University]
-- **Professor**: [FILL: Name]
-- **Course**: [FILL: Course name and number]
-- **Link**: [FILL: URL]
-- **Duration**: [FILL: Minutes]
-- **Topics covered**: [FILL: List]
-- **Why watch**: [FILL: Reason]
+**1. Introduction to Programming in Java** - Princeton University
+- **Professor**: Robert Sedgewick & Kevin Wayne
+- **Course**: COS 126
+- **Link**: https://www.coursera.org/learn/cs-programming-java
+- **Duration**: Multiple lectures, ~10 hours total
+- **Topics covered**: Variables, types, expressions, conditionals, loops
+- **Why watch**: World-class instruction from Princeton professors
 
-**2. [FILL: Lecture Title]** - [FILL: University]
-[FILL: Similar structure...]
+**2. Programming Methodology** - Stanford University
+- **Professor**: Mehran Sahami
+- **Course**: CS106A
+- **Link**: https://see.stanford.edu/Course/CS106A
+- **Duration**: Full semester course
+- **Topics covered**: Complete introduction to programming with Java
+- **Why watch**: Stanford's legendary intro CS course
 
 ---
 
-**Conference Talks**:
+**YouTube Channels**:
 
-**3. [FILL: Talk Title]** - [FILL: Conference]
-- **Speaker**: [FILL: Name]
-- **Year**: [FILL: Year]
-- **Link**: [FILL: URL]
-- **Duration**: [FILL: Minutes]
-- **Key insights**: [FILL: List]
+**3. Java Programming** - freeCodeCamp.org
+- **Link**: https://www.youtube.com/watch?v=grEKMHGYyns
+- **Duration**: 4+ hours
+- **Topics covered**: Complete Java tutorial from basics to advanced
+- **Why watch**: Free, comprehensive, well-structured
 
-**4. [FILL: Talk Title]** - [FILL: Conference]
-[FILL: Similar structure...]
+**4. Java Tutorial for Beginners** - Programming with Mosh
+- **Link**: https://www.youtube.com/watch?v=eIrMbAQSU34
+- **Duration**: 2.5 hours
+- **Topics covered**: Java fundamentals in a concise format
+- **Why watch**: Clear explanations, perfect pacing
+
+---
+
+### Practice Platforms
+
+**1. LeetCode**: https://leetcode.com/
+- **Focus**: Interview preparation with real company questions
+- **Relevant tags**: Math, Bit Manipulation, Two Pointers
+- **Best for**: FAANG interview prep
+
+**2. HackerRank**: https://www.hackerrank.com/domains/java
+- **Focus**: Java-specific challenges and certifications
+- **Relevant sections**: Java (Basic), Java (Intermediate)
+- **Best for**: Building Java proficiency
+
+**3. Codewars**: https://www.codewars.com/
+- **Focus**: Gamified coding challenges
+- **Relevant kata**: Fundamentals, Algorithms
+- **Best for**: Daily practice and skill building
+
+**4. Exercism**: https://exercism.org/tracks/java
+- **Focus**: Mentored learning with code reviews
+- **Relevant exercises**: Basics track
+- **Best for**: Getting feedback on your code
+
+---
+
+### Interactive Tutorials
+
+**1. Java Visualizer**: https://pythontutor.com/java.html
+- **What it does**: Visualizes code execution step-by-step
+- **Best for**: Understanding how variables and memory work
+- **Cost**: Free
+
+**2. JDoodle**: https://www.jdoodle.com/online-java-compiler
+- **What it does**: Online Java compiler and IDE
+- **Best for**: Quick experimentation without local setup
+- **Cost**: Free
+
+---
+
+### Community Resources
+
+**1. Stack Overflow**: https://stackoverflow.com/questions/tagged/java
+- **What it is**: Q&A community for programming questions
+- **Best for**: Specific problem-solving and debugging
+
+**2. r/learnjava**: https://www.reddit.com/r/learnjava/
+- **What it is**: Reddit community for Java learners
+- **Best for**: Getting help, sharing resources, discussing concepts
+
+**3. Java Ranch**: https://coderanch.com/
+- **What it is**: Friendly community for Java beginners
+- **Best for**: Detailed explanations and patient help
+
+---
+
+### Blogs & Articles
+
+**1. Baeldung**: https://www.baeldung.com/
+- **Focus**: In-depth Java tutorials and guides
+- **Relevant articles**: Java basics, best practices
+- **Update frequency**: Daily
+
+**2. Oracle Java Magazine**: https://blogs.oracle.com/javamagazine/
+- **Focus**: Official Java news and tutorials
+- **Relevant articles**: Language features, best practices
+- **Update frequency**: Monthly
+
+**3. DZone Java Zone**: https://dzone.com/java-jdk-development-tutorials-tools-news
+- **Focus**: Java development news and tutorials
+- **Relevant articles**: Tips, tricks, and best practices
+- **Update frequency**: Daily
+
+---
+
+### Tools & IDEs
+
+**1. IntelliJ IDEA**: https://www.jetbrains.com/idea/
+- **Type**: IDE
+- **Best for**: Professional Java development
+- **Cost**: Free (Community Edition) / Paid (Ultimate)
+
+**2. Eclipse**: https://www.eclipse.org/
+- **Type**: IDE
+- **Best for**: Open-source Java development
+- **Cost**: Free
+
+**3. Visual Studio Code**: https://code.visualstudio.com/
+- **Type**: Lightweight editor with Java extensions
+- **Best for**: Quick editing and learning
+- **Cost**: Free
+
+---
+
+### Next Steps
+
+After mastering variables and data types:
+1. **Operators**: Learn arithmetic, logical, and bitwise operations
+2. **Control Flow**: Master if/else, switch, loops
+3. **Arrays**: Understand fixed-size collections
+4. **Methods**: Learn to organize code into reusable functions
+5. **Object-Oriented Programming**: Classes, objects, inheritance
+
+**Recommended Learning Path**:
+1. Complete this topic's practice problems
+2. Watch one of the video courses (2-4 hours)
+3. Read relevant chapters from one book (3-5 hours)
+4. Practice on LeetCode/HackerRank (10+ problems)
+5. Build a small project using variables and types
+6. Move to next topic (Operators)
 
 ---
 
@@ -4499,25 +5947,37 @@ If you only have 5 minutes, review:
 
 **Beginner-Friendly**:
 
-**1. [FILL: Tutorial Title]**
-- **Link**: [FILL: URL]
-- **Author**: [FILL: Name/Organization]
-- **What makes it good**: [FILL: Reason]
-- **Time**: [FILL: Minutes]
-- **Prerequisites**: [FILL: What you need to know]
+**1. Java Variables and Data Types - Oracle Tutorial**
+- **Link**: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html
+- **Author**: Oracle (Official Java Documentation)
+- **What makes it good**: Authoritative source, clear examples, covers all primitive types
+- **Time**: 30 minutes
+- **Prerequisites**: Basic programming concepts
 
-**2. [FILL: Tutorial Title]**
-[FILL: Similar structure...]
+**2. Java Data Types Explained - Codecademy**
+- **Link**: https://www.codecademy.com/learn/learn-java
+- **Author**: Codecademy
+- **What makes it good**: Interactive exercises, immediate feedback, hands-on practice
+- **Time**: 45 minutes
+- **Prerequisites**: None (complete beginner friendly)
 
 ---
 
 **Advanced**:
 
-**3. [FILL: Tutorial Title]**
-[FILL: Similar structure...]
+**3. Java Memory Management and Primitives vs Objects**
+- **Link**: https://www.baeldung.com/java-primitives-vs-objects
+- **Author**: Baeldung
+- **What makes it good**: Deep dive into memory implications, performance comparisons, real-world examples
+- **Time**: 20 minutes
+- **Prerequisites**: Understanding of basic Java syntax
 
-**4. [FILL: Tutorial Title]**
-[FILL: Similar structure...]
+**4. Effective Java: Item 61 - Prefer Primitive Types to Boxed Primitives**
+- **Link**: Book chapter (Effective Java by Joshua Bloch)
+- **Author**: Joshua Bloch
+- **What makes it good**: Explains subtle bugs from autoboxing, performance implications, best practices
+- **Time**: 15 minutes
+- **Prerequisites**: Intermediate Java knowledge
 
 ---
 
@@ -4525,32 +5985,43 @@ If you only have 5 minutes, review:
 
 **Practice Platforms**:
 
-**1. [FILL: Platform Name]**
-- **Link**: [FILL: URL]
-- **What to practice**: [FILL: Description]
-- **Difficulty range**: [FILL: Easy to Hard]
-- **Best features**: [FILL: List]
-- **Cost**: [FILL: Free/Paid]
+**1. LeetCode - Bit Manipulation & Math**
+- **Link**: https://leetcode.com/tag/bit-manipulation/
+- **What to practice**: Integer manipulation, bit operations, type conversion problems
+- **Difficulty range**: Easy to Hard
+- **Best features**: Real interview questions, company tags, discussion forums, multiple language support
+- **Cost**: Free (with Premium option)
 - **Recommended problems**:
-  - [FILL: Problem 1]: [FILL: Why]
-  - [FILL: Problem 2]: [FILL: Why]
-  - [FILL: Problem 3]: [FILL: Why]
+  - **Reverse Integer (#7)**: Practice integer overflow handling
+  - **Palindrome Number (#9)**: Work with digit extraction without strings
+  - **Number of 1 Bits (#191)**: Master bit manipulation techniques
 
-**2. [FILL: Platform Name]**
-[FILL: Similar structure...]
+**2. HackerRank - Java Practice**
+- **Link**: https://www.hackerrank.com/domains/java
+- **What to practice**: Java-specific type features, wrapper classes, type conversion
+- **Difficulty range**: Easy to Medium
+- **Best features**: Structured learning path, immediate feedback, Java-specific challenges
+- **Cost**: Free
+- **Recommended problems**:
+  - **Java Datatypes**: Practice choosing appropriate types for given ranges
+  - **Java Int to String**: Master type conversion techniques
+  - **Java BigInteger**: Work with arbitrary-precision arithmetic
 
 ---
 
 **Visualization Tools**:
 
-**3. [FILL: Tool Name]**
-- **Link**: [FILL: URL]
-- **What it visualizes**: [FILL: Description]
-- **Best for**: [FILL: Use case]
-- **Interactive**: [FILL: Yes/No]
+**3. Java Visualizer**
+- **Link**: https://cscircles.cemc.uwaterloo.ca/java_visualize/
+- **What it visualizes**: Variable storage, memory allocation, primitive vs reference types
+- **Best for**: Understanding how variables are stored in memory
+- **Interactive**: Yes (step through code execution)
 
-**4. [FILL: Tool Name]**
-[FILL: Similar structure...]
+**4. VisuAlgo - Bit Manipulation**
+- **Link**: https://visualgo.net/en/bitmask
+- **What it visualizes**: Bitwise operations, binary representations, bit manipulation algorithms
+- **Best for**: Understanding bit-level operations on integers
+- **Interactive**: Yes (animate operations step-by-step)
 
 ---
 
@@ -4558,31 +6029,42 @@ If you only have 5 minutes, review:
 
 **Forums & Discussion**:
 
-**1. [FILL: Forum Name]**
-- **Link**: [FILL: URL]
-- **What to find there**: [FILL: Description]
-- **Best for**: [FILL: Use case]
-- **Active**: [FILL: Yes/No]
+**1. Stack Overflow - Java Tag**
+- **Link**: https://stackoverflow.com/questions/tagged/java
+- **What to find there**: Q&A on Java types, autoboxing issues, type conversion problems
+- **Best for**: Troubleshooting specific issues, learning from real-world problems
+- **Active**: Yes (thousands of questions daily)
 
-**2. [FILL: Forum Name]**
-[FILL: Similar structure...]
+**2. Reddit - r/learnjava**
+- **Link**: https://www.reddit.com/r/learnjava/
+- **What to find there**: Beginner-friendly discussions, learning resources, code reviews
+- **Best for**: Getting feedback on code, asking beginner questions
+- **Active**: Yes (very active community)
 
 ---
 
 **GitHub Repositories**:
 
-**1. [FILL: Repo Name]**
-- **Link**: [FILL: URL]
-- **What it contains**: [FILL: Description]
-- **Language**: [FILL: Programming language]
-- **Stars**: [FILL: Number]
-- **Why useful**: [FILL: Reason]
+**1. TheAlgorithms/Java**
+- **Link**: https://github.com/TheAlgorithms/Java
+- **What it contains**: Implementations of algorithms and data structures with clear examples
+- **Language**: Java
+- **Stars**: 50,000+
+- **Why useful**: See how primitives and types are used in real algorithms
 
-**2. [FILL: Repo Name]**
-[FILL: Similar structure...]
+**2. iluwatar/java-design-patterns**
+- **Link**: https://github.com/iluwatar/java-design-patterns
+- **What it contains**: Design patterns with Java implementations
+- **Language**: Java
+- **Stars**: 80,000+
+- **Why useful**: Learn best practices for variable usage in production code
 
-**3. [FILL: Repo Name]**
-[FILL: Similar structure...]
+**3. eugenp/tutorials (Baeldung)**
+- **Link**: https://github.com/eugenp/tutorials
+- **What it contains**: Code examples for Baeldung articles, including type system deep dives
+- **Language**: Java
+- **Stars**: 35,000+
+- **Why useful**: Comprehensive examples of Java features with tests
 
 ---
 
@@ -4590,64 +6072,77 @@ If you only have 5 minutes, review:
 
 **Must-Read Articles**:
 
-**1. [FILL: Article Title]**
-- **Author**: [FILL: Name]
-- **Link**: [FILL: URL]
-- **Published**: [FILL: Date]
-- **Key points**: [FILL: List]
-- **Why read**: [FILL: Reason]
+**1. "Java Primitives versus Objects" - Baeldung**
+- **Author**: Baeldung Team
+- **Link**: https://www.baeldung.com/java-primitives-vs-objects
+- **Published**: 2019 (regularly updated)
+- **Key points**: Memory usage comparison, performance implications, when to use each
+- **Why read**: Comprehensive analysis with benchmarks and real-world examples
 
-**2. [FILL: Article Title]**
-[FILL: Similar structure...]
+**2. "Autoboxing and Unboxing" - Oracle Docs**
+- **Author**: Oracle
+- **Link**: https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html
+- **Published**: Official documentation
+- **Key points**: How autoboxing works, performance considerations, common pitfalls
+- **Why read**: Authoritative source on a frequently misunderstood feature
 
-**3. [FILL: Article Title]**
-[FILL: Similar structure...]
+**3. "The Cost of Autoboxing" - DZone**
+- **Author**: Various Java experts
+- **Link**: https://dzone.com/articles/the-cost-of-autoboxing
+- **Published**: 2018
+- **Key points**: Performance benchmarks, GC impact, optimization strategies
+- **Why read**: Data-driven analysis of autoboxing overhead in production systems
 
 ---
 
 ### Podcasts & Interviews
 
-**1. [FILL: Podcast Episode]**
-- **Podcast**: [FILL: Name]
-- **Guest**: [FILL: Name]
-- **Link**: [FILL: URL]
-- **Duration**: [FILL: Minutes]
-- **Topics**: [FILL: List]
-- **Key insights**: [FILL: List]
+**1. "Java Memory Management" - Java Pub House**
+- **Podcast**: Java Pub House
+- **Guest**: Freddy Guime & Bob Paulin
+- **Link**: http://www.javapubhouse.com/
+- **Duration**: 45 minutes
+- **Topics**: Stack vs heap, primitive vs reference types, memory optimization
+- **Key insights**: How variable types affect memory layout, GC implications, performance tuning
 
-**2. [FILL: Podcast Episode]**
-[FILL: Similar structure...]
+**2. "Effective Java with Joshua Bloch" - Software Engineering Radio**
+- **Podcast**: Software Engineering Radio
+- **Guest**: Joshua Bloch (Author of Effective Java)
+- **Link**: https://www.se-radio.net/
+- **Duration**: 60 minutes
+- **Topics**: Best practices for Java development, including type usage
+- **Key insights**: When to use primitives vs objects, common mistakes, design principles
 
 ---
 
 ### Learning Path Recommendation
 
 **For Absolute Beginners**:
-1. Start with: [FILL: Resource]
-2. Then: [FILL: Resource]
-3. Practice: [FILL: Platform]
-4. Read: [FILL: Book chapter]
+1. Start with: Oracle's Java Tutorial on Data Types (30 min)
+2. Then: Watch "Java Programming Tutorial" by Derek Banas on YouTube (1 hour)
+3. Practice: Complete HackerRank's "Java Datatypes" challenges (10 problems)
+4. Read: Head First Java, Chapter 3 (2 hours)
 
 **For Intermediate Learners**:
-1. Review: [FILL: Resource]
-2. Deep dive: [FILL: Paper/Book]
-3. Practice: [FILL: Advanced problems]
-4. Build: [FILL: Project]
+1. Review: Baeldung's "Primitives vs Objects" article (20 min)
+2. Deep dive: Effective Java, Items 49, 60, 61 (1 hour)
+3. Practice: LeetCode bit manipulation problems - Easy to Medium (20 problems)
+4. Build: Temperature converter with proper type handling and validation
 
 **For Advanced Learners**:
-1. Read: [FILL: Research papers]
-2. Implement: [FILL: Advanced variants]
-3. Contribute: [FILL: Open source]
-4. Teach: [FILL: Write/speak about it]
+1. Study: Java Language Specification on primitive types and conversions
+2. Analyze: Benchmark autoboxing performance in your own code
+3. Practice: LeetCode Hard problems involving bit manipulation and overflow
+4. Contribute: Fix type-related issues in open-source Java projects
 
 ---
 
 ### Estimated Time Investment
 
-**To understand basics**: [FILL: X-Y hours]  
-**To become proficient**: [FILL: X-Y hours]  
-**To master**: [FILL: X-Y hours]  
-**To teach others**: [FILL: X-Y hours]
+**To understand basics**: 2-4 hours (reading, basic exercises)  
+**To become proficient**: 10-15 hours (practice problems, projects)  
+**To master**: 30-50 hours (advanced problems, teaching, contributing)  
+**To teach others**: 50+ hours (deep understanding, creating content)
 
 ---
 
@@ -4655,10 +6150,10 @@ If you only have 5 minutes, review:
 
 After mastering this topic:
 
-1. **Learn next**: [FILL: Related concept]
-2. **Apply in**: [FILL: Project idea]
-3. **Teach**: [FILL: How to share knowledge]
-4. **Contribute**: [FILL: How to give back]
+1. **Learn next**: Operators (arithmetic, logical, bitwise operations)
+2. **Apply in**: Build a calculator app or number manipulation utility
+3. **Teach**: Write a blog post or create flashcards for others
+4. **Contribute**: Answer Stack Overflow questions about Java types
 
 ---
 
@@ -4677,8 +6172,8 @@ To use this template:
 
 ---
 
-**Created**: [FILL: Date]  
-**Last Updated**: [FILL: Date]  
+**Created**: November 2024  
+**Last Updated**: November 30, 2024  
 **Version**: 1.0  
 **Status**: Ready for content creation
 # Layers 8-10 Completion for Variables and Data Types

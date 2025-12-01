@@ -2610,3 +2610,171 @@ These consecutive code blocks are grouped into a single CodeTabs component.
 - `@types/react-syntax-highlighter`: TypeScript types
 
 ---
+
+
+---
+
+## CodeTabs Component (Phase 2 - Implemented)
+
+### Purpose
+Display multi-language code solutions with tabbed interface, similar to LeetCode/GeeksForGeeks.
+
+### Features
+- Tab interface for switching between programming languages
+- Monaco Editor integration for syntax highlighting and code display
+- Supports Java, Python, JavaScript, C++, C, Go, TypeScript, SQL
+- Read-only mode by default (can be made editable)
+- Smooth tab transitions with professional animations
+- AWS-inspired professional design
+- Responsive layout for desktop, tablet, and mobile
+
+### Component API
+
+```typescript
+interface CodeTabsProps {
+  solutions: {
+    language: string;
+    code: string;
+  }[];
+  title?: string;
+  readOnly?: boolean;
+}
+```
+
+### Usage Example
+
+```typescript
+<CodeTabs 
+  solutions={[
+    { language: 'java', code: 'public class Solution { ... }' },
+    { language: 'python', code: 'def solution(): ...' },
+    { language: 'javascript', code: 'function solution() { ... }' }
+  ]}
+  title="Multi-Language Solution"
+  readOnly={true}
+/>
+```
+
+### Integration in TopicDetailPage
+
+The CodeTabs component is automatically integrated into the TopicDetailPage through intelligent content parsing:
+
+**Parsing Logic**:
+1. Split markdown content by lines
+2. Detect code block boundaries (triple backticks ```)
+3. Group consecutive code blocks (within 3 lines of each other)
+4. Filter to only multi-language groups (2+ languages)
+5. Replace code block groups with placeholders (`__CODE_TABS_N__`)
+6. Render CodeTabs component for placeholders
+7. Render regular markdown for other content
+
+**Example Content Structure**:
+```markdown
+Here's the solution in multiple languages:
+
+```java
+public class Solution {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+```
+
+```python
+def add(a, b):
+    return a + b
+```
+
+```javascript
+function add(a, b) {
+    return a + b;
+}
+```
+```
+
+This will automatically render as a CodeTabs component with three tabs (Java, Python, JavaScript).
+
+### Language Support
+
+The component maps language identifiers to Monaco Editor language IDs:
+
+| Markdown Language | Monaco Language ID |
+|-------------------|-------------------|
+| java              | java              |
+| javascript        | javascript        |
+| python            | python            |
+| c++               | cpp               |
+| c                 | c                 |
+| go                | go                |
+| typescript        | typescript        |
+| sql               | sql               |
+
+### Monaco Editor Configuration
+
+```typescript
+{
+  readOnly: true,
+  minimap: { enabled: false },
+  fontSize: 14,
+  lineNumbers: 'on',
+  scrollBeyondLastLine: false,
+  automaticLayout: true,
+  tabSize: 2,
+  theme: 'vs-dark'
+}
+```
+
+### Styling
+
+The component uses CSS classes for styling:
+- `.code-tabs` - Main container
+- `.code-tabs-title` - Optional title
+- `.code-tabs-header` - Tab header container
+- `.code-tab` - Individual tab button
+- `.code-tab.active` - Active tab
+- `.code-tabs-content` - Monaco Editor container
+
+### Performance Optimization
+
+- Uses `useMemo` hook to parse content only when topic changes
+- Lazy rendering of Monaco Editor (only active tab is rendered)
+- Efficient placeholder replacement algorithm
+
+### Accessibility
+
+- Keyboard navigation support (Tab, Arrow keys)
+- ARIA labels for screen readers
+- Focus indicators on tabs
+- High contrast mode support
+
+---
+
+## Dynamic Sidebar Navigation (Phase 2 - Upcoming)
+
+### Current State
+The sidebar is currently hardcoded with static topic lists. It needs to be made dynamic to fetch topics from the backend API.
+
+### Requirements
+1. Fetch modules and topics from backend API
+2. Display real-time progress for each module
+3. Update topic completion status dynamically
+4. Support locked/unlocked states based on prerequisites
+5. Maintain collapsible sections
+6. Show accurate topic counts and progress percentages
+
+### Implementation Plan
+1. Create API service methods for fetching modules and topics
+2. Update Sidebar component to use React state and effects
+3. Fetch data on component mount
+4. Update progress indicators based on user progress
+5. Handle loading and error states
+6. Cache data to minimize API calls
+
+### API Endpoints Needed
+- `GET /api/learning/modules` - Get all modules
+- `GET /api/learning/modules/{id}/topics` - Get topics for a module
+- `GET /api/progress/user` - Get user progress for all topics
+
+This will be implemented as part of Phase 2 content creation tasks.
+
+---

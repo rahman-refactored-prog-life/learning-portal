@@ -25,19 +25,47 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle }) => {
   const navigate = useNavigate();
   const [expandedSections, setExpandedSections] = useState<string[]>(['java']);
+  const [javaTopics, setJavaTopics] = useState<SidebarItem[]>([]);
+
+  // Fetch Java topics on mount
+  React.useEffect(() => {
+    const fetchJavaTopics = async () => {
+      try {
+        const response = await fetch('http://localhost:2025/api/learning/modules');
+        const modules = await response.json();
+        const javaModule = modules.find((m: any) => m.type === 'JAVA');
+        
+        if (javaModule) {
+          const topicsResponse = await fetch(`http://localhost:2025/api/learning/modules/${javaModule.id}/topics?page=0&size=100`);
+          const topicsData = await topicsResponse.json();
+          
+          const topics = topicsData.content.map((topic: any) => ({
+            id: topic.id.toString(),
+            title: topic.title,
+            completed: false,
+            locked: false
+          }));
+          
+          setJavaTopics(topics);
+        }
+      } catch (error) {
+        console.error('Failed to fetch topics:', error);
+        // Fallback to empty array
+        setJavaTopics([]);
+      }
+    };
+    
+    fetchJavaTopics();
+  }, []);
 
   const sections: SidebarSection[] = [
     {
       id: 'java',
       title: 'Java',
       icon: '☕',
-      progress: 15,
-      items: [
-        { id: 'java-basics', title: 'Java Basics', completed: true },
-        { id: 'oop', title: 'OOP Concepts', completed: true },
-        { id: 'collections', title: 'Collections', completed: false },
-        { id: 'streams', title: 'Streams & Lambda', completed: false },
-        { id: 'concurrency', title: 'Concurrency', completed: false, locked: true },
+      progress: 1,
+      items: javaTopics.length > 0 ? javaTopics : [
+        { id: 'loading', title: 'Loading topics...', completed: false, locked: true },
       ],
     },
     {
@@ -165,17 +193,34 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle 
               <ul className="section-items">
                 {section.items.map((item) => (
                   <li key={item.id} className="section-item">
-                    <a
-                      href={`#${item.id}`}
+                    <button
+                      onClick={() => {
+                        if (!item.locked && section.id === 'java') {
+                          navigate(`/topics/${item.id}`);
+                        }
+                      }}
                       className={`item-link ${item.completed ? 'completed' : ''} ${
                         item.locked ? 'locked' : ''
                       }`}
+                      disabled={item.locked}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        width: '100%',
+                        textAlign: 'left',
+                        cursor: item.locked ? 'not-allowed' : 'pointer',
+                        color: 'inherit',
+                        padding: '8px 12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
                     >
                       <span className="item-status">
                         {item.completed ? '✓' : item.locked ? '🔒' : '○'}
                       </span>
                       <span className="item-title">{item.title}</span>
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>

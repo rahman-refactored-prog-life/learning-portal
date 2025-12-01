@@ -1,36 +1,237 @@
-# UI Layout Issues - Root Cause Analysis
+# My Reference Guide - Comprehensive Learning Portal
 
-## The Problem
-Content has white space on left and right sides, not using full width.
+## Table of Contents
+1. [Project Paths](#project-paths)
+2. [Session Management](#session-management)
+3. [Development Commands](#development-commands)
+4. [Task Completion Workflow](#task-completion-workflow)
+5. [Git Commands](#git-commands)
+6. [Troubleshooting](#troubleshooting)
+7. [Useful Aliases](#useful-aliases)
 
-## Root Causes Found
+---
 
-### 1. DashboardPage has max-width constraint
-File: `frontend/src/pages/DashboardPage.tsx`
-Line 69: `style={{ padding: 'var(--space-8)', maxWidth: '1600px', margin: '0 auto' }}`
+## Project Paths
 
-**Fix**: Remove `maxWidth` and `margin: '0 auto'`
-Should be: `style={{ padding: 'var(--space-8)' }}`
+**Project Root**: `/Users/syedrahman/Desktop/Career-and-Growth/KIRO/interview-prep-attempt-100`
 
-### 2. Browser Cache
-The browser is caching the old CSS/JS files.
+**Key Directories**:
+- Backend: `backend/`
+- Frontend: `frontend/`
+- Specs: `.kiro/specs/comprehensive-learning-portal/`
+- Session State: `.kiro/session-state/`
+- Session Logs: `.kiro/session-logs/`
 
-**Fix**: Hard refresh
-- Chrome/Edge: Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows)
-- Or: Open DevTools > Network tab > Check "Disable cache" > Refresh
+---
 
-### 3. Check if changes were actually built
-Run: `ls -lh backend/target/classes/static/assets/`
-The CSS and JS files should have recent timestamps.
+## Session Management
 
-## Quick Test
-1. Open browser DevTools (F12)
-2. Go to Elements tab
-3. Find the div with class "dashboard-page"
-4. Check its computed styles
-5. Look for `max-width` - if it's 1600px, the build didn't include our changes
+### Starting a Session
+```bash
+# Terminal
+bash .kiro/hooks/session-start.sh
 
-## Nuclear Option - Force Complete Rebuild
+# Or with alias
+kiro-start
+```
+
+**In Kiro** (copy-paste):
+```
+Please read .kiro/SESSION_INIT.md to load the full project context
+```
+
+### During Session (Every 30 min)
+```bash
+bash .kiro/hooks/session-checkpoint.sh
+
+# Or with alias
+save
+```
+
+### Saving Conversation
+```bash
+# Save conversation from temporary.md
+bash .kiro/hooks/save-conversation.sh
+
+# Or with alias
+save-conv
+```
+
+### Updating Context
+```bash
+# Quick auto-update (non-interactive)
+bash .kiro/hooks/auto-update.sh
+# Or: auto-update
+
+# Full interactive update (asks 4 questions)
+bash .kiro/hooks/update-context.sh
+# Or: update-context
+```
+
+### Ending Session
+```bash
+bash .kiro/hooks/session-end.sh
+
+# Or with alias
+kiro-end
+```
+
+### Complete End-of-Session Workflow
+```bash
+# 1. Save conversation
+save-conv
+
+# 2. Add semantic context
+update-context
+
+# 3. Checkpoint everything
+save
+
+# 4. End session
+kiro-end
+```
+
+---
+
+## Development Commands
+
+### Build Everything
+```bash
+cd backend
+mvn clean package
+```
+
+### Run Development Mode (2 Terminals)
+```bash
+# Terminal 1 - Backend (port 2025)
+cd backend
+mvn spring-boot:run
+
+# Terminal 2 - Frontend (port 2026)
+cd frontend
+npm run dev
+```
+
+### Run Production Mode (Single JAR)
+```bash
+cd backend
+mvn clean package
+java -jar target/learning-portal-backend-1.0.0-SNAPSHOT.jar
+```
+
+### Access Points
+- **Frontend**: http://localhost:2025
+- **Swagger API Docs**: http://localhost:2025/swagger-ui.html
+- **Health Check**: http://localhost:2025/actuator/health
+
+### API Endpoints
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login
+- `GET /api/auth/me` - Get current user (requires JWT)
+
+---
+
+## Task Completion Workflow
+
+### 1. Find Next Task
+```bash
+cat .kiro/specs/comprehensive-learning-portal/tasks.md
+# Or
+grep "\[ \]" .kiro/specs/comprehensive-learning-portal/tasks.md | head -5
+```
+
+### 2. Understand the Task
+```bash
+# Check requirements
+grep -A 10 "Requirement 1.1" .kiro/specs/comprehensive-learning-portal/requirements.md
+
+# Check design
+grep -A 10 "Maven" .kiro/specs/comprehensive-learning-portal/design.md
+```
+
+### 3. Implement the Task
+- Write code
+- Create files
+- Configure systems
+- Follow project standards
+
+### 4. Test Implementation
+```bash
+# Backend
+cd backend
+mvn test
+
+# Frontend
+cd frontend
+npm test
+```
+
+### 5. Mark Task Complete
+```bash
+bash .kiro/hooks/task-complete.sh 1.1.1
+# Replace 1.1.1 with actual task number
+```
+
+### 6. Run Checkpoint
+```bash
+bash .kiro/hooks/session-checkpoint.sh
+```
+
+### Task Completion Checklist
+- [ ] Task implementation complete
+- [ ] Code follows project standards
+- [ ] All tests pass
+- [ ] Code committed
+- [ ] Documentation updated (if needed)
+- [ ] No errors or warnings
+- [ ] Acceptance criteria met
+
+---
+
+## Git Commands
+
+### Quick Git Save
+```bash
+bash .kiro/hooks/git-sync.sh "Your commit message"
+```
+
+### Check Status
+```bash
+git status
+```
+
+### View Recent Commits
+```bash
+git log --oneline -10
+```
+
+### Push to GitHub
+```bash
+git push origin main
+```
+
+---
+
+## Troubleshooting
+
+### UI Layout Issues - White Space on Sides
+
+**Root Causes**:
+1. **DashboardPage has max-width constraint**
+   - File: `frontend/src/pages/DashboardPage.tsx`
+   - Line 69: `style={{ padding: 'var(--space-8)', maxWidth: '1600px', margin: '0 auto' }}`
+   - **Fix**: Remove `maxWidth` and `margin: '0 auto'`
+
+2. **Browser Cache**
+   - **Fix**: Hard refresh
+   - Chrome/Edge: `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows)
+   - Or: Open DevTools > Network tab > Check "Disable cache" > Refresh
+
+3. **Build Not Picking Up Changes**
+   - Check: `ls -lh backend/target/classes/static/assets/`
+   - Files should have recent timestamps
+
+### Nuclear Option - Force Complete Rebuild
 ```bash
 cd backend
 rm -rf target
@@ -42,295 +243,42 @@ mvn clean package -DskipTests
 # Start new process
 ```
 
-## The Real Issue
-The changes ARE being made to the source files, but either:
-1. The build isn't picking them up
-2. The browser is aggressively caching
-3. The running server is serving old files from memory
+### Clear Kiro Cache
+```bash
+# Close Kiro first, then:
+rm -rf .kiro/.cache 2>/dev/null
+rm -rf .vscode/.kiro-cache 2>/dev/null
+```
 
-Try: Stop the server, delete target folder, rebuild, restart.
-During work (every 30-60 min):
-
-bash .kiro/hooks/session-checkpoint.sh
-After completing a task:
-
-bash .kiro/hooks/task-complete.sh 1.1.1
-End session:
-
-bash .kiro/hooks/session-end.sh
-📚 Read the Documentation
-# Complete overview
-cat .kiro/HOOKS_AND_STEERING_COMPLETE.md
-
-# Session continuity guide
-cat .kiro/steering/session-continuity.md
-
-# Project standards
-cat .kiro/steering/project-standards.md
-
-# Phase guidelines
-cat .kiro/steering/phase-guidelines.md
-
-# Testing standards
-cat .kiro/steering/testing-standards.md
-✅ Everything You Asked For
-✅ Three-action checkpoint hook (git + log + context) ✅ Session resume hook ✅ Session start/end hooks ✅ Task completion hook ✅ Git sync hook ✅ Project standards steering file ✅ Session continuity steering file ✅ Phase guidelines steering file ✅ Testing standards steering file ✅ Complete specification (requirements, design, tasks) ✅ Zero context loss system
-
-Your comprehensive learning portal project is now fully specified and ready for implem
-
-
-##How to Complete a Task - Complete Guide
-
-Based on the steering files and hooks you now have, here's the complete workflow:
-
-📋 Step-by-Step Task Completion Process
-1. Find Your Next Task
-Open the tasks file:
-
-cat .kiro/specs/comprehensive-learning-portal/tasks.md
-Look for the first unchecked task: - [ ]
-
-Example: - [ ] 1.1.1 Initialize Maven project with Spring Boot 3.2+ and Java 21
-
-2. Understand the Task
-Read the task details:
-
-Task description
-Acceptance criteria
-Requirements references (e.g., _Requirements: 1.1, 1.2_)
-Check the requirements:
-
-# Search for the requirement
-grep -A 10 "Requirement 1.1" .kiro/specs/comprehensive-learning-portal/requirements.md
-Check the design:
-
-# Search for relevant design info
-grep -A 10 "Maven" .kiro/specs/comprehensive-learning-portal/design.md
-3. Implement the Task
-Do the actual work:
-
-Write code
-Create files
-Configure systems
-Follow project standards (see .kiro/steering/project-standards.md)
-Example for Task 1.1.1:
-
-# Create Maven project structure
-mkdir -p backend/src/main/java/com/learningportal
-mkdir -p backend/src/main/resources
-mkdir -p backend/src/test/java
-
-# Create pom.xml
-# (write your pom.xml with Spring Boot dependencies)
-4. Test Your Implementation
-Follow testing standards (see .kiro/steering/testing-standards.md):
-
-# For backend
-cd backend
-mvn test
-
-# For frontend
-cd frontend
-npm test
-Make sure:
-
-✅ Code compiles
-✅ Tests pass
-✅ No errors
-✅ Meets acceptance criteria
-5. Mark Task as Complete
-Use the task-complete hook:
-
-bash .kiro/hooks/task-complete.sh 1.1.1
-This will:
-
-✅ Mark the task as [x] in tasks.md
-✅ Update progress metrics
-✅ Log the completion
-✅ Show you the next task
-✅ Commit the change to git
-6. Run Checkpoint
-Save your progress:
-
-bash .kiro/hooks/session-checkpoint.sh
-This will:
-
-✅ Commit all changes to git
-✅ Push to remote
-✅ Log the conversation
-✅ Generate context summary
-🔄 Complete Workflow Example
-Here's a real example for completing Task 1.1.1:
-
-# 1. Start your session (if not already started)
-bash .kiro/hooks/session-start.sh
-
-# 2. Read the task
-cat .kiro/specs/comprehensive-learning-portal/tasks.md | grep -A 5 "1.1.1"
-
-# 3. Do the work
-# Create pom.xml, set up Spring Boot, etc.
-
-# 4. Test it
-cd backend
-mvn clean install
-# Verify it works
-
-# 5. Mark complete
-bash .kiro/hooks/task-complete.sh 1.1.1
-
-# 6. Run checkpoint
-bash .kiro/hooks/session-checkpoint.sh
-
-# 7. Move to next task (1.1.2)
-# Repeat the process
-📝 Task Completion Checklist
-Before marking a task complete, verify:
-
-[ ] Task implementation is complete
-[ ] Code follows project standards
-[ ] All tests pass
-[ ] Code is committed
-[ ] Documentation updated (if needed)
-[ ] No errors or warnings
-[ ] Acceptance criteria met
-🎯 Quick Reference Commands
-# Start session
-bash .kiro/hooks/session-start.sh
-
-# Complete a task
-bash .kiro/hooks/task-complete.sh <task-number>
-
-# Run checkpoint (do this often!)
-bash .kiro/hooks/session-checkpoint.sh
-
-# End session
-bash .kiro/hooks/session-end.sh
-
-# Resume if you forgot where you were
+### If Context Files Missing
+```bash
 bash .kiro/hooks/session-resume.sh
-💡 Pro Tips
-Checkpoint Frequently: Run session-checkpoint.sh every 30-60 minutes
-Test Before Marking Complete: Always test before running task-complete.sh
-Read Requirements: Always check requirements.md for context
-Follow Standards: Use the steering files as your guide
-One Task at a Time: Don't skip ahead or work on multiple tasks
-🚨 Common Mistakes to Avoid
-❌ Don't: Mark task complete without testing ❌ Don't: Skip running checkpoints ❌ Don't: Work on multiple tasks at once ❌ Don't: Forget to commit your code ❌ Don't: Ignore the acceptance criteria
+```
 
-✅ Do: Test thoroughly ✅ Do: Checkpoint regularly ✅ Do: Work sequentially ✅ Do: Commit after each task ✅ Do: Follow acceptance criteria
-
-📚 Where to Get Help
-Project Standards: .kiro/steering/project-standards.md
-Testing Standards: .kiro/steering/testing-standards.md
-Phase Guidelines: .kiro/steering/phase-guidelines.md
-Session Continuity: .kiro/steering/session-continuity.md
-Requirements: .kiro/specs/comprehensive-learning-portal/requirements.md
-Design: .kiro/specs/comprehensive-learning-portal/design.md
-Tasks: .kiro/specs/comprehensive-learning-portal/tasks.md
-You're all set! Start with Task 1.1.1 and work your way through. Good luck!
-
-bash .kiro/hooks/session-checkpoint.sh
-
-ALL COMMANDS - Quick Reference
-🚀 Starting a New Session
-1. Terminal Command
-bash .kiro/hooks/session-start.sh
-2. Kiro Command (Copy-Paste This)
-Please read .kiro/SESSION_INIT.md to load the full project context
-💾 Saving Your Work (CRITICAL!)
-Every 10-15 Minutes: Manual Save
-In Kiro: Select All (Cmd+A / Ctrl+A)
-Copy (Cmd+C / Ctrl+C)
-Switch to temporary.md
-Select All (Cmd+A / Ctrl+A)
-Paste (Cmd+V / Ctrl+V)
-Save (Cmd+S / Ctrl+S)
-Every 30 Minutes: Checkpoint
-bash .kiro/hooks/session-checkpoint.sh
-When Session Ends: Save Conversation
-bash .kiro/hooks/save-conversation.sh
-End of Day: End Session
-bash .kiro/hooks/session-end.sh
-🔧 Development Commands
-Build Everything
-cd backend
-mvn clean package
-Run Development Mode (2 Terminals)
-# Terminal 1 - Backend (port 2025)
-cd backend
-mvn spring-boot:run
-
-# Terminal 2 - Frontend (port 2026)
-cd frontend
-npm run dev
-Run Production Mode (Single JAR)
-cd backend
-mvn clean package
-java -jar target/learning-portal-backend-1.0.0-SNAPSHOT.jar
-📊 Status & Progress Commands
-View Current Phase
-cat .kiro/session-state/current-phase.json
-View Resume Context
-cat .kiro/session-state/resume-context.md
-View Next Tasks
-grep "\[ \]" .kiro/specs/comprehensive-learning-portal/tasks.md | head -5
-View Recent Git Activity
-git log --oneline -5
-View Conversation History
-tail -50 .kiro/session-logs/conversation-history.md
-✅ Task Management Commands
-Mark Task Complete
-bash .kiro/hooks/task-complete.sh 1.2.3
-(Replace 1.2.3 with actual task number)
-
-Resume Session (Load Context)
-bash .kiro/hooks/session-resume.sh
-🔄 Git Commands
-Quick Git Save
-bash .kiro/hooks/git-sync.sh "Your commit message"
-Check Git Status
-git status
-View Recent Commits
-git log --oneline -10
-Push to GitHub
-git push origin main
-🆘 Recovery Commands
-If Context Files Missing
-bash .kiro/hooks/session-resume.sh
-If Build Fails
+### If Build Fails
+```bash
 cd backend
 mvn clean compile
-If Need to Regenerate Context
-bash .kiro/hooks/session-checkpoint.sh
-🎯 Complete Daily Workflow
-Morning Start
-# 1. Terminal
-bash .kiro/hooks/session-start.sh
+```
 
-# 2. In Kiro (copy-paste)
-Please read .kiro/SESSION_INIT.md to load the full project context
-During Work (Every 10-15 min)
-Copy Kiro conversation to temporary.md and save
-During Work (Every 30 min)
-bash .kiro/hooks/session-checkpoint.sh
-After Completing Task
-bash .kiro/hooks/task-complete.sh 1.2.3
-bash .kiro/hooks/session-checkpoint.sh
-End of Day
-bash .kiro/hooks/save-conversation.sh
-bash .kiro/hooks/session-end.sh
-🔗 Useful Aliases (Optional Setup)
-Add to ~/.zshrc or ~/.bashrc:
+---
 
+## Useful Aliases
+
+Add to `~/.zshrc` or `~/.bashrc`:
+
+```bash
 # Navigation
-alias kiro='cd /path/to/interview-prep-attempt-100'
+alias kiro='cd /Users/syedrahman/Desktop/Career-and-Growth/KIRO/interview-prep-attempt-100'
 
 # Session Management
 alias kiro-start='bash .kiro/hooks/session-start.sh'
 alias kiro-end='bash .kiro/hooks/session-end.sh'
+alias kiro-resume='bash .kiro/hooks/session-resume.sh'
 alias save='bash .kiro/hooks/session-checkpoint.sh'
 alias save-conv='bash .kiro/hooks/save-conversation.sh'
+alias auto-update='bash .kiro/hooks/auto-update.sh'
+alias update-context='bash .kiro/hooks/update-context.sh'
 
 # Development
 alias backend='cd backend && mvn spring-boot:run'
@@ -340,193 +288,114 @@ alias build='cd backend && mvn clean package'
 # Status
 alias status='cat .kiro/session-state/current-phase.json'
 alias tasks='grep "\[ \]" .kiro/specs/comprehensive-learning-portal/tasks.md | head -10'
-Then reload: source ~/.zshrc or source ~/.bashrc
-
-📱 Set Timer Reminders
-Every 30 minutes, run:
-
-bash .kiro/hooks/session-checkpoint.sh
-Set this on your phone/computer timer!
-
-Save this file or print it out! 📌
-
-# End of session
-save-conv           # Saves temporary.md to session logs
-update-context      # Add semantic meaning
-save                # Checkpoint everything
-echo "" > temporary.md   # Clean for next session
-
-
-Your Questions About "Session End":
-When is "session end"?
-YES, exactly! "Session end" means:
-
-When you see "Session too long" - That's the main trigger
-When you're about to close Kiro - Even if no warning
-When you're taking a break - If stepping away for a while
-When you finish a major task - Good stopping point
-How to do the "Manual updates - Semantic context":
-Option 1: Use the new hook (EASIEST)
-
-update-context
-# or: bash .kiro/hooks/update-context.sh
-It will prompt you with 4 questions:
-
-What did you accomplish?
-What problem did you solve?
-What's the current status?
-What needs to be done next?
-Option 2: Manual (if you prefer) Open .kiro/session-state/context-summary.md and add at the bottom:
-
-## Session Update: 2025-11-17 22:00
-
-### What Was Accomplished
-[Describe what you did]
-
-### Problem Solved
-[What issue was fixed]
-
-### Current Status
-[What's working, what's not]
-
-### Next Steps
-[What to do next session]
-🎯 Complete End-of-Session Workflow:
-
-
-# 1. Copy this Kiro conversation to temporary.md
-#    (Select all, copy, paste into temporary.md, save)
-
-# 2. Save the conversation
-save-conv
-
-# 3. Add semantic context (answers 4 questions)
-update-context
-
-# 4. Run checkpoint (commits everything)
-save
-
-
- /Users/syedrahman/Desktop/Career-and-Growth/KIRO/interview-prep-attempt-100
-
+alias progress='cat .kiro/specs/comprehensive-learning-portal/PROGRESS.md'
 ```
-🎉 Perfect! Application is running!
 
-✅ You can now access:
-Frontend (React App)
-
-URL: http://localhost:2025
-This serves the React frontend with login/register pages
-API Documentation (Swagger)
-
-URL: http://localhost:2025/swagger-ui.html
-Interactive API documentation
-Health Check
-
-URL: http://localhost:2025/actuator/health
-Shows application health status
-API Endpoints
-
-POST http://localhost:2025/api/auth/register - Register new user
-POST http://localhost:2025/api/auth/login - Login
-GET http://localhost:2025/api/auth/me - Get current user (requires JWT)
-
-## update on documentation methodology, Nov, 22
-
-Perfect! Now let me create a final summary of what we've done:
-
-✅ Documentation Consolidation Complete!
-I've completely reorganized the documentation system. Here's what changed:
-
-🗑️ Deleted (30+ scattered files)
-All PHASE_1_*.md files
-All TASK_*.md files
-All UI_*.md files
-All SPEC_*.md files
-All status/progress/completion files
-✅ Created/Updated (Central files only)
-1. PROGRESS.md ⭐ NEW
-
-Your single source of truth for progress
-Real-time status dashboard
-Current session work
-Next steps clearly defined
-Test coverage metrics
-2. CHANGELOG.md ✅ UPDATED
-
-Added Version 1.0.3 entry
-Documented today's testing infrastructure work
-Complete history of all changes
-3. README.md ✅ UPDATED
-
-Added documentation philosophy section
-Explained the new system
-Quick commands for common tasks
-📁 New Documentation Structure
-.kiro/specs/comprehensive-learning-portal/
-├── requirements.md      # What to build
-├── design.md           # How to build it
-├── tasks.md            # Step-by-step plan
-├── CHANGELOG.md        # History of changes ⭐
-├── PROGRESS.md         # Current status ⭐ NEW
-└── README.md           # How to use this spec
-🎯 How to Use Going Forward
-Starting a session:
-
-Read PROGRESS.md - See where you left off
-Check CHANGELOG.md - Review recent changes
-Open tasks.md - Find your next task
-During work:
-
-Update PROGRESS.md after each task
-Mark tasks in tasks.md
-Run session-checkpoint.sh regularly
-After completing work:
-
-Update PROGRESS.md with accomplishments
-Update CHANGELOG.md for milestones
-Run session-end.sh
-💡 Key Benefits
-✅ No more confusion - One place for everything
-✅ Easy to resume - Just read PROGRESS.md
-✅ Clean workspace - No scattered files
-✅ Complete history - CHANGELOG has it all
-✅ Better context - Everything connected
-Your workspace is now clean and organized! All progress tracking happens in the central spec files. No more scattered documentation! 🎉
-
-
-
-
-# Session Management
-kiro-start      # Start a new session
-kiro-end        # End current session
-kiro-resume     # Resume/load context
-save            # Run checkpoint (git + logs + context)
-save-conv       # Save conversation from temporary.md
-auto-update     # Quick auto-update context ⭐ NEW
-update-context  # Interactive context update ⭐ NEW
-
-# Close Kiro first, then:
-rm -rf .kiro/.cache 2>/dev/null
-rm -rf .vscode/.kiro-cache 2>/dev/null
-
-
-
-
-# Quick auto-update (non-interactive)
-auto-update
-
-# Full interactive update (asks 4 questions)
-update-context
-
-# Typical workflow
-save-conv       # Save conversation
-update-context  # Add semantic meaning
-save            # Checkpoint everything
-
-
+**Reload aliases**:
+```bash
 source ~/.zshrc
+# or
+source ~/.bashrc
+```
 
-source ~/.zshrc    # Reload aliases
-auto-update        # Run auto-update
+---
 
+## Quick Reference Commands
+
+### Session Management
+```bash
+kiro-start      # Start session
+kiro-end        # End session
+kiro-resume     # Resume/load context
+save            # Checkpoint (git + logs + context)
+save-conv       # Save conversation
+auto-update     # Quick auto-update context
+update-context  # Interactive context update
+```
+
+### Development
+```bash
+backend         # Run backend dev server
+frontend        # Run frontend dev server
+build           # Build everything
+```
+
+### Status
+```bash
+status          # View current phase
+tasks           # View next 10 tasks
+progress        # View progress file
+```
+
+---
+
+## Documentation Structure
+
+### Central Files (Single Source of Truth)
+- `requirements.md` - What to build
+- `design.md` - How to build it
+- `tasks.md` - Step-by-step plan
+- `CHANGELOG.md` - History of changes
+- `PROGRESS.md` - Current status
+- `README.md` - How to use this spec
+
+### How to Use
+**Starting a session**:
+1. Read `PROGRESS.md` - See where you left off
+2. Check `CHANGELOG.md` - Review recent changes
+3. Open `tasks.md` - Find your next task
+
+**During work**:
+1. Update `PROGRESS.md` after each task
+2. Mark tasks in `tasks.md`
+3. Run `session-checkpoint.sh` regularly
+
+**After completing work**:
+1. Update `PROGRESS.md` with accomplishments
+2. Update `CHANGELOG.md` for milestones
+3. Run `session-end.sh`
+
+---
+
+## Timer Reminders
+
+**Set timer for every 30 minutes**:
+```bash
+bash .kiro/hooks/session-checkpoint.sh
+```
+
+Set this on your phone/computer timer! 📌
+
+---
+
+## Common Mistakes to Avoid
+
+❌ **Don't**:
+- Mark task complete without testing
+- Skip running checkpoints
+- Work on multiple tasks at once
+- Forget to commit your code
+- Ignore acceptance criteria
+
+✅ **Do**:
+- Test thoroughly
+- Checkpoint regularly (every 30 min)
+- Work sequentially
+- Commit after each task
+- Follow acceptance criteria
+
+---
+
+## Where to Get Help
+
+- **Project Standards**: `.kiro/steering/project-standards.md`
+- **Testing Standards**: `.kiro/steering/testing-standards.md`
+- **Phase Guidelines**: `.kiro/steering/phase-guidelines.md`
+- **Session Continuity**: `.kiro/steering/session-continuity.md`
+- **Requirements**: `.kiro/specs/comprehensive-learning-portal/requirements.md`
+- **Design**: `.kiro/specs/comprehensive-learning-portal/design.md`
+- **Tasks**: `.kiro/specs/comprehensive-learning-portal/tasks.md`
+
+---
+
+**Last Updated**: 2025-11-30

@@ -95,20 +95,39 @@ This specification defines the requirements for building the world's most compre
 
 **User Story:** As a learner viewing code solutions, I want tabbed interface to switch between different programming languages (Java, Python, JavaScript, C++, Go) for the same solution, so that I can learn the same concept in my preferred language similar to LeetCode and GeeksForGeeks.
 
-**Status**: Partially implemented - Pagination, breadcrumbs, table of contents, and mark complete are working. Only tabbed code interface is missing.
+**Status**: Integrated in code but not displaying - needs debugging and proper grouping logic.
 
 #### Acceptance Criteria
 
 1. THE Learning_Portal_System SHALL provide tabbed code interface for multi-language solutions with separate tabs for each language (Java, Python, JavaScript, C++, Go)
-2. WHEN a user views code solutions in topic content, THE Learning_Portal_System SHALL detect consecutive code blocks in different languages and group them into a tabbed interface
-3. WHEN a user clicks a language tab, THE Learning_Portal_System SHALL display the code for that language with syntax highlighting and smooth transition
+2. WHEN a user views code solutions in topic content, THE Learning_Portal_System SHALL detect code blocks in different languages and group them into a tabbed interface using Monaco Editor
+3. WHEN a user clicks a language tab, THE Learning_Portal_System SHALL display the code for that language with Monaco Editor syntax highlighting and smooth transition
 4. THE Learning_Portal_System SHALL highlight the active tab and maintain tab state as user scrolls through the page
-5. THE Learning_Portal_System SHALL support code blocks with language identifiers (```java, ```python, ```javascript, ```cpp, ```c)
-6. THE Learning_Portal_System SHALL display tab headers with language names (Java, Python, JavaScript, C++, C)
+5. THE Learning_Portal_System SHALL support code blocks with language identifiers (```java, ```python, ```javascript, ```cpp, ```c, ```go)
+6. THE Learning_Portal_System SHALL display tab headers with language names (Java, Python, JavaScript, C++, C, Go)
 7. THE Learning_Portal_System SHALL implement responsive design for code tabs supporting desktop, tablet, and mobile devices
 8. THE Learning_Portal_System SHALL maintain AWS-inspired professional design with smooth animations for tab transitions
 9. THE Learning_Portal_System SHALL preserve existing functionality including pagination (Previous/Next), breadcrumb navigation, table of contents anchor links, and mark as complete button
-10. THE Learning_Portal_System SHALL use the existing CodeTabs component (currently commented out in TopicDetailPage.tsx) to implement this functionality
+10. THE Learning_Portal_System SHALL use Monaco Editor within CodeTabs component for professional code display
+
+### Requirement 1.19: Table of Contents Navigation and Interactive Code Editor
+
+**User Story:** As a learner studying long-form content, I want clickable table of contents links that smoothly scroll to sections and an interactive code editor for practice, so that I can navigate efficiently and practice coding within the learning environment.
+
+**Status**: TOC links implemented but not functional. Interactive code editor exists but not integrated into topic pages.
+
+#### Acceptance Criteria
+
+1. WHEN a user clicks a table of contents link, THE Learning_Portal_System SHALL smoothly scroll to the corresponding section heading
+2. THE Learning_Portal_System SHALL generate unique IDs for all section headings (h2, h3) that match the TOC link format
+3. THE Learning_Portal_System SHALL highlight the target section briefly after navigation to provide visual feedback
+4. THE Learning_Portal_System SHALL support deep linking with URL hash fragments for sharing specific sections
+5. THE Learning_Portal_System SHALL provide interactive Monaco Code Editor within topic pages for hands-on practice
+6. THE Learning_Portal_System SHALL allow users to write, edit, and execute code in the interactive editor
+7. THE Learning_Portal_System SHALL support all 5 programming languages (Java, Python, JavaScript, C++, Go) in the interactive editor
+8. THE Learning_Portal_System SHALL display execution results including stdout, stderr, execution time, and memory usage
+9. THE Learning_Portal_System SHALL provide code templates and starter code for practice exercises
+10. THE Learning_Portal_System SHALL save user code locally to prevent loss during navigation
 
 ### Requirement 2: Java Complete Ecosystem Mastery (Phase 2)
 

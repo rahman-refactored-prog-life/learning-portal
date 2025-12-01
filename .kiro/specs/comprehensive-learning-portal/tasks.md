@@ -663,6 +663,29 @@ This applies to:
   - Create progress dashboard
   - _Requirements: 2.10, 13.1, 13.2_
 
+- [x] 2.1.6 Integrate CodeTabs component for multi-language solutions
+  - Import CodeTabs component into TopicDetailPage ✅
+  - Implement intelligent parsing of consecutive code blocks ✅
+  - Group code blocks by proximity (within 3 lines) ✅
+  - Replace code block groups with CodeTabs component ✅
+  - Test with Variables and Data Types content ✅
+  - Verify Monaco Editor integration ✅
+  - Ensure smooth tab transitions ✅
+  - _Requirements: 1.18.1-1.18.10_
+  - **Status**: COMPLETE - CodeTabs fully integrated with Monaco Editor
+
+- [ ] 2.1.7 Implement dynamic sidebar navigation
+  - Create API service methods for fetching modules and topics
+  - Update Sidebar component to use React state and effects
+  - Fetch modules and topics from backend on component mount
+  - Display real-time progress for each module
+  - Update topic completion status dynamically
+  - Support locked/unlocked states based on prerequisites
+  - Handle loading and error states
+  - Cache data to minimize API calls
+  - _Requirements: 10.2, 10.5_
+  - **Status**: TODO - Currently hardcoded, needs dynamic data fetching
+
 ### 2.2 Java Fundamentals Content (6 weeks - following Content_Methodology_v3_Framework)
 
 **Note**: Each topic requires 4-5 hours following the 10-layer framework with all 5 languages

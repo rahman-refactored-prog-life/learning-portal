@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -8,7 +8,7 @@ import progressService, { type TopicProgress } from '../services/progressService
 import { Button } from '../components/Button';
 import { Loading } from '../components/Loading';
 import { ErrorMessage } from '../components/ErrorMessage';
-// import { CodeTabs } from '../components/CodeTabs'; // TODO: Implement multi-language code tabs
+import { CodeTabs } from '../components/CodeTabs';
 import './TopicDetailPage.css';
 
 export const TopicDetailPage: React.FC = () => {
@@ -94,19 +94,82 @@ export const TopicDetailPage: React.FC = () => {
     }
   };
 
-  // TODO: Implement parseCodeBlocks for multi-language code tabs
-  // const parseCodeBlocks = (content: string) => {
-  //   const codeBlockRegex = /```(\w+)\n([\s\S]*?)```/g;
-  //   const matches = [...content.matchAll(codeBlockRegex)];
-  //   const solutions: { language: string; code: string }[] = [];
-  //   matches.forEach(match => {
-  //     solutions.push({
-  //       language: match[1],
-  //       code: match[2].trim()
-  //     });
-  //   });
-  //   return solutions;
-  // };
+  // Parse content to find consecutive code blocks for multi-language solutions
+  const { processedContent, codeBlockGroups } = useMemo(() => {
+    if (!topic?.content) {
+      return { processedContent: '', codeBlockGroups: [] };
+    }
+
+    const lines = topic.content.split('\n');
+    const groups: { language: string; code: string; startLine: number; endLine: number }[][] = [];
+    let currentGroup: { language: string; code: string; startLine: number; endLine: number }[] = [];
+    let inCodeBlock = false;
+    let currentLanguage = '';
+    let currentCode: string[] = [];
+    let codeBlockStart = -1;
+    let lastCodeBlockEnd = -1;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      if (line.startsWith('```')) {
+        if (!inCodeBlock) {
+          // Starting a code block
+          inCodeBlock = true;
+          codeBlockStart = i;
+          currentLanguage = line.substring(3).trim() || 'plaintext';
+          currentCode = [];
+          
+          // Check if this is consecutive (within 3 lines of previous block)
+          if (lastCodeBlockEnd >= 0 && i - lastCodeBlockEnd <= 3) {
+            // Part of current group
+          } else {
+            // Start new group
+            if (currentGroup.length > 0) {
+              groups.push([...currentGroup]);
+            }
+            currentGroup = [];
+          }
+        } else {
+          // Ending a code block
+          inCodeBlock = false;
+          currentGroup.push({
+            language: currentLanguage,
+            code: currentCode.join('\n'),
+            startLine: codeBlockStart,
+            endLine: i
+          });
+          lastCodeBlockEnd = i;
+        }
+      } else if (inCodeBlock) {
+        currentCode.push(line);
+      }
+    }
+    
+    // Add last group if exists
+    if (currentGroup.length > 0) {
+      groups.push(currentGroup);
+    }
+    
+    // Filter to only groups with multiple languages
+    const multiLangGroups = groups.filter(group => group.length > 1);
+    
+    // Create processed content with placeholders for code tabs
+    let processed = topic.content;
+    multiLangGroups.forEach((group, groupIndex) => {
+      // Replace the entire group with a placeholder
+      const firstBlock = group[0];
+      const lastBlock = group[group.length - 1];
+      const groupLines = lines.slice(firstBlock.startLine, lastBlock.endLine + 1);
+      const groupText = groupLines.join('\n');
+      processed = processed.replace(groupText, `\n\n__CODE_TABS_${groupIndex}__\n\n`);
+    });
+    
+    return { 
+      processedContent: processed, 
+      codeBlockGroups: multiLangGroups.map(g => g.map(({ language, code }) => ({ language, code })))
+    };
+  }, [topic?.content]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -180,61 +243,81 @@ export const TopicDetailPage: React.FC = () => {
       {/* Topic Content */}
       <div className="topic-content">
         {topic.content ? (
-          <ReactMarkdown
-            components={{
-              code({ className, children, ...props }: any) {
-                const match = /language-(\w+)/.exec(className || '');
-                const isInline = !match;
-                return !isInline && match ? (
-                  <SyntaxHighlighter
-                    style={vscDarkPlus as any}
-                    language={match[1]}
-                    PreTag="div"
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              },
-              a({ href, children, ...props }: any) {
-                // Handle anchor links for table of contents
-                if (href?.startsWith('#')) {
-                  return (
-                    <a
-                      href={href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const id = href.substring(1);
-                        const element = document.getElementById(id);
-                        if (element) {
-                          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      }}
-                      {...props}
-                    >
-                      {children}
-                    </a>
-                  );
-                }
-                return <a href={href} {...props}>{children}</a>;
-              },
-              h2({ children, ...props }: any) {
-                const text = String(children);
-                const id = text.toLowerCase().replace(/[^\w]+/g, '-');
-                return <h2 id={id} {...props}>{children}</h2>;
-              },
-              h3({ children, ...props }: any) {
-                const text = String(children);
-                const id = text.toLowerCase().replace(/[^\w]+/g, '-');
-                return <h3 id={id} {...props}>{children}</h3>;
-              },
-            }}
-          >
-            {topic.content}
-          </ReactMarkdown>
+          <>
+            {processedContent.split(/(__CODE_TABS_\d+__)/).map((part, index) => {
+              const match = part.match(/__CODE_TABS_(\d+)__/);
+              if (match) {
+                const groupIndex = parseInt(match[1]);
+                const solutions = codeBlockGroups[groupIndex];
+                return solutions ? (
+                  <CodeTabs 
+                    key={`code-tabs-${index}`} 
+                    solutions={solutions}
+                    title="Multi-Language Solution"
+                  />
+                ) : null;
+              }
+              
+              return (
+                <ReactMarkdown
+                  key={`markdown-${index}`}
+                  components={{
+                    code({ className, children, ...props }: any) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      const isInline = !match;
+                      return !isInline && match ? (
+                        <SyntaxHighlighter
+                          style={vscDarkPlus as any}
+                          language={match[1]}
+                          PreTag="div"
+                        >
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                    a({ href, children, ...props }: any) {
+                      // Handle anchor links for table of contents
+                      if (href?.startsWith('#')) {
+                        return (
+                          <a
+                            href={href}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const id = href.substring(1);
+                              const element = document.getElementById(id);
+                              if (element) {
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }
+                            }}
+                            {...props}
+                          >
+                            {children}
+                          </a>
+                        );
+                      }
+                      return <a href={href} {...props}>{children}</a>;
+                    },
+                    h2({ children, ...props }: any) {
+                      const text = String(children);
+                      const id = text.toLowerCase().replace(/[^\w\s]+/g, '').replace(/\s+/g, '-');
+                      return <h2 id={id} {...props}>{children}</h2>;
+                    },
+                    h3({ children, ...props }: any) {
+                      const text = String(children);
+                      const id = text.toLowerCase().replace(/[^\w\s]+/g, '').replace(/\s+/g, '-');
+                      return <h3 id={id} {...props}>{children}</h3>;
+                    },
+                  }}
+                >
+                  {part}
+                </ReactMarkdown>
+              );
+            })}
+          </>
         ) : (
           <div className="no-content">
             <p>Content coming soon...</p>

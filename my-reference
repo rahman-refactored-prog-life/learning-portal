@@ -331,13 +331,24 @@ progress        # View progress file
 
 ## Documentation Structure
 
-### Central Files (Single Source of Truth)
-- `requirements.md` - What to build
-- `design.md` - How to build it
-- `tasks.md` - Step-by-step plan
-- `CHANGELOG.md` - History of changes
-- `PROGRESS.md` - Current status
-- `README.md` - How to use this spec
+### Core Spec Files (Single Source of Truth)
+- `.kiro/specs/comprehensive-learning-portal/requirements.md` - WHAT to build
+- `.kiro/specs/comprehensive-learning-portal/design.md` - HOW to build
+- `.kiro/specs/comprehensive-learning-portal/tasks.md` - WHEN to build
+
+### Context & Session Management
+- `temporary.md` - Current session notes (active workspace)
+- `.kiro/session-state/context-summary.md` - Consolidated full context
+- `.kiro/session-state/resume-context.md` - Quick session overview
+- `.kiro/session-logs/` - Archived session history
+
+### Workflow Guides (All Auto-Loaded for Kiro)
+- `.kiro/steering/CONTEXT_MANAGEMENT_GUIDE.md` - How to manage context
+- `.kiro/steering/SPEC_DRIVEN_WORKFLOW.md` - Spec-driven development workflow
+- `.kiro/steering/SESSION_GUIDE.md` - Complete session guide
+- `.kiro/steering/KIRO_CHECKLIST.md` - Kiro's pre-flight checklist
+- `.kiro/steering/PROJECT_GUIDE.md` - Coding standards and testing
+- `.kiro/steering/PROJECT_STATUS.md` - Project progress tracking
 
 ### How to Use
 **Starting a session**:

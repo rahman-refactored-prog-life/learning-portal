@@ -7,10 +7,11 @@
 ## Table of Contents
 
 1. [Session Initialization](#session-initialization)
-2. [Hook Usage Guide](#hook-usage-guide)
-3. [Context Files](#context-files)
-4. [Session Workflow](#session-workflow)
-5. [Troubleshooting](#troubleshooting)
+2. [Spec-Driven Development](#spec-driven-development)
+3. [Hook Usage Guide](#hook-usage-guide)
+4. [Context Files](#context-files)
+5. [Session Workflow](#session-workflow)
+6. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -67,6 +68,97 @@ You should:
 - **Mention the SPECIFIC last thing that was accomplished** (from temporary.md or context-summary.md)
 - **Mention any CURRENT ISSUES or BLOCKERS** that need to be addressed
 - Ask what the user wants to work on next
+
+---
+
+# Spec-Driven Development
+
+## 🎯 CRITICAL RULE: Specs Are Single Source of Truth
+
+**BEFORE making ANY code changes, you MUST update the spec files.**
+
+### The 3 Spec Files:
+
+1. **`requirements.md`** - WHAT needs to be built
+   - User stories
+   - Acceptance criteria (EARS format)
+   - Functional requirements
+
+2. **`design.md`** - HOW it will be built
+   - Architecture
+   - Component interfaces
+   - Data models
+   - Correctness properties
+   - Design decisions
+
+3. **`tasks.md`** - WHEN it will be built
+   - Implementation tasks
+   - Task order and dependencies
+   - Progress tracking
+
+### Workflow for ANY Change:
+
+```
+User requests feature/change
+         ↓
+Update requirements.md (add acceptance criteria)
+         ↓
+Update design.md (add architecture/design)
+         ↓
+Update tasks.md (add implementation task)
+         ↓
+Implement the code
+         ↓
+Mark task complete in tasks.md
+         ↓
+Update specs if implementation reveals issues
+```
+
+### When to Update Specs:
+
+✅ **ALWAYS update specs when:**
+- User requests a new feature
+- Making architectural decisions
+- Changing component interfaces
+- Discovering issues during implementation
+- Modifying existing functionality
+- Adding new requirements
+
+❌ **NEVER:**
+- Write code without updating specs first
+- Skip spec updates "to save time"
+- Keep decisions only in temporary.md
+- Assume specs are "done" after initial creation
+
+### Spec File Locations:
+
+```
+.kiro/specs/comprehensive-learning-portal/
+├── requirements.md  ← User stories & acceptance criteria
+├── design.md        ← Architecture & design decisions
+└── tasks.md         ← Implementation tasks & progress
+```
+
+### Example:
+
+**Bad Workflow:**
+```
+User: "Add CodeTabs component"
+Kiro: *writes code immediately*
+❌ Result: No documentation, specs outdated
+```
+
+**Good Workflow:**
+```
+User: "Add CodeTabs component"
+Kiro:
+  1. Updates requirements.md (adds Requirement 1.18)
+  2. Updates design.md (adds CodeTabs architecture)
+  3. Updates tasks.md (adds Task 2.1.6)
+  4. Implements the code
+  5. Marks Task 2.1.6 complete
+✅ Result: Fully documented, specs accurate
+```
 
 ---
 
@@ -146,9 +238,28 @@ bash .kiro/hooks/session-checkpoint.sh
 
 ---
 
+## session-consolidate.sh (NEW!)
+
+**When to use**: At the end of every development session (BEFORE session-end)
+
+**What it does**:
+- Consolidates temporary.md → context-summary.md
+- Archives old context-summary.md
+- Clears temporary.md for next session
+- Ensures FULL context is preserved
+
+**Usage**:
+```bash
+bash .kiro/hooks/session-consolidate.sh
+```
+
+**Best Practice**: Run this at end of session to preserve all context
+
+---
+
 ## session-end.sh
 
-**When to use**: At the end of every development session
+**When to use**: At the end of every development session (AFTER consolidate)
 
 **What it does**:
 - Runs final checkpoint
@@ -343,10 +454,13 @@ bash .kiro/hooks/git-sync.sh "Quick save: working on feature X"
 # 2. Run final checkpoint
 bash .kiro/hooks/session-checkpoint.sh
 
-# 3. End session
+# 3. Consolidate session notes (NEW!)
+bash .kiro/hooks/session-consolidate.sh
+
+# 4. End session
 bash .kiro/hooks/session-end.sh
 
-# 4. Review session log (optional)
+# 5. Review session log (optional)
 cat .kiro/session-logs/conversation-history.md
 ```
 

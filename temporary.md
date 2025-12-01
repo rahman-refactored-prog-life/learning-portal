@@ -11,8 +11,13 @@
 2. **Template Header** - Removed from content file
 3. **Context Management** - Created new consolidation system
 
+### ✅ JUST FIXED:
+1. **TOC Anchor Links** - Fixed ID generation to match TOC link format
+   - Updated h2/h3 ID generation logic
+   - Now converts `&` to `--`, keeps numbers, matches TOC format exactly
+   - Frontend rebuilt and deployed
+
 ### ❌ Still Broken (Need to Fix):
-1. **TOC Anchor Links** - Clicking does nothing (ID generation mismatch)
 2. **CodeTabs Not Displaying** - Code blocks showing individually, not grouped
 3. **Interactive Monaco Editor** - Not integrated for practice coding
 
@@ -42,11 +47,33 @@
 
 ## Next Steps:
 
-1. Fix TOC anchor links (ID generation)
+1. **CURRENT**: Fix TOC anchor links (ID generation)
+   - Issue: TOC links use `#1-concept-overview--motivation` format
+   - Generated IDs use different format (removes numbers, single hyphens)
+   - Solution: Update ID generation to match TOC link format exactly
+   
 2. Fix CodeTabs display (grouping logic)
 3. Add interactive Monaco Editor for practice
 4. Update spec documents (requirements.md, design.md, tasks.md)
 5. Test all fixes in browser
+
+---
+
+## Working on: TOC Anchor Links Fix
+
+### Root Cause Analysis:
+- **TOC Link Format**: `#1-concept-overview--motivation` (keeps numbers, double hyphens for `&`)
+- **Current ID Generation**: `text.toLowerCase().replace(/[^\w\s]+/g, '').replace(/\s+/g, '-')`
+  - Removes all non-word characters (including `&`, `.`, etc.)
+  - Results in: `1-concept-overview-motivation` (single hyphen)
+- **Mismatch**: `#1-concept-overview--motivation` ≠ `1-concept-overview-motivation`
+
+### Solution:
+Update ID generation to match TOC format:
+- Keep numbers
+- Convert `&` to double hyphen `--`
+- Convert spaces to single hyphen `-`
+- Remove other special characters
 
 ---
 

@@ -303,12 +303,26 @@ export const TopicDetailPage: React.FC = () => {
                     },
                     h2({ children, ...props }: any) {
                       const text = String(children);
-                      const id = text.toLowerCase().replace(/[^\w\s]+/g, '').replace(/\s+/g, '-');
+                      // Match TOC link format: keep numbers, convert & to --, spaces to -, remove other special chars
+                      const id = text
+                        .toLowerCase()
+                        .replace(/\s*&\s*/g, '--')  // Convert " & " to "--"
+                        .replace(/[^\w\s-]+/g, '')  // Remove special chars except word chars, spaces, and hyphens
+                        .replace(/\s+/g, '-')       // Convert spaces to single hyphen
+                        .replace(/--+/g, '--')      // Normalize multiple hyphens from & to double hyphen
+                        .replace(/-+/g, (match) => match.length > 1 ? '--' : '-'); // Keep double hyphens, single otherwise
                       return <h2 id={id} {...props}>{children}</h2>;
                     },
                     h3({ children, ...props }: any) {
                       const text = String(children);
-                      const id = text.toLowerCase().replace(/[^\w\s]+/g, '').replace(/\s+/g, '-');
+                      // Match TOC link format: keep numbers, convert & to --, spaces to -, remove other special chars
+                      const id = text
+                        .toLowerCase()
+                        .replace(/\s*&\s*/g, '--')  // Convert " & " to "--"
+                        .replace(/[^\w\s-]+/g, '')  // Remove special chars except word chars, spaces, and hyphens
+                        .replace(/\s+/g, '-')       // Convert spaces to single hyphen
+                        .replace(/--+/g, '--')      // Normalize multiple hyphens from & to double hyphen
+                        .replace(/-+/g, (match) => match.length > 1 ? '--' : '-'); // Keep double hyphens, single otherwise
                       return <h3 id={id} {...props}>{children}</h3>;
                     },
                   }}

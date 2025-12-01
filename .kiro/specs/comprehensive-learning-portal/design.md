@@ -2498,3 +2498,115 @@ jobs:
 - **Topic Coverage**: 100% (all planned topics)
 
 This comprehensive design document provides the complete technical blueprint for implementing the world's most comprehensive FAANG preparation platform across all 9 phases.
+
+
+---
+
+## Multi-Language Code Solution Tabs Component
+
+### Overview
+
+The CodeTabs component provides a tabbed interface for displaying code solutions in multiple programming languages (Java, Python, JavaScript, C++, C), similar to LeetCode and GeeksForGeeks. This component enhances the learning experience by allowing users to view the same solution in their preferred language.
+
+### Component Design
+
+**Component Name**: `CodeTabs`  
+**Location**: `frontend/src/components/CodeTabs.tsx`  
+**Purpose**: Display multi-language code solutions with tab-based navigation
+
+### Interface
+
+```typescript
+interface CodeTabsProps {
+  solutions: {
+    language: string;  // 'java', 'python', 'javascript', 'cpp', 'c'
+    code: string;      // The actual code
+  }[];
+  defaultLanguage?: string;  // Optional default tab
+}
+```
+
+### Visual Design
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ [Java] [Python] [JavaScript] [C++] [C]                  │ ← Tab Headers
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  public int reverse(int x) {                            │
+│      int result = 0;                                    │
+│      while (x != 0) {                                   │
+│          int digit = x % 10;                            │
+│          x /= 10;                                       │
+│          // Check overflow                              │
+│          if (result > Integer.MAX_VALUE / 10) {         │
+│              return 0;                                  │
+│          }                                              │
+│          result = result * 10 + digit;                  │
+│      }                                                  │
+│      return result;                                     │
+│  }                                                      │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Behavior
+
+1. **Tab Selection**: Click tab to switch languages
+2. **Active State**: Active tab highlighted with accent color
+3. **Syntax Highlighting**: Code displayed with language-specific syntax highlighting
+4. **Smooth Transitions**: Fade animation when switching tabs (200ms)
+5. **Keyboard Navigation**: Arrow keys to switch tabs, Tab key to focus code
+6. **Responsive**: Tabs stack on mobile devices
+
+### Integration with Content
+
+The component automatically detects consecutive code blocks in markdown content:
+
+```markdown
+**Java**:
+```java
+public int reverse(int x) { ... }
+```
+
+**Python**:
+```python
+def reverse(x: int) -> int:
+    ...
+```
+
+**JavaScript**:
+```javascript
+function reverse(x) { ... }
+```
+```
+
+These consecutive code blocks are grouped into a single CodeTabs component.
+
+### Styling
+
+- **Tab Headers**: AWS-inspired design with subtle borders
+- **Active Tab**: Accent color (#0073bb) with bottom border
+- **Inactive Tabs**: Gray text with hover effect
+- **Code Block**: Dark theme (VS Code Dark+) with syntax highlighting
+- **Transitions**: Smooth fade (200ms ease-in-out)
+
+### Accessibility
+
+- **ARIA Labels**: `role="tablist"`, `role="tab"`, `role="tabpanel"`
+- **Keyboard Navigation**: Arrow keys, Tab, Enter
+- **Screen Reader**: Announces active tab and code language
+- **Focus Indicators**: Clear focus outline on tabs
+
+### Performance
+
+- **Lazy Rendering**: Only render active tab content
+- **Memoization**: Use React.memo to prevent unnecessary re-renders
+- **Code Splitting**: Syntax highlighter loaded on demand
+
+### Dependencies
+
+- `react-syntax-highlighter`: For syntax highlighting
+- `@types/react-syntax-highlighter`: TypeScript types
+
+---

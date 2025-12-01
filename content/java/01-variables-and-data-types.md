@@ -12,8 +12,8 @@
 ## Table of Contents
 
 1. [Concept Overview & Motivation](#1-concept-overview--motivation)
-2. [What Is [Topic]? (Simple to Comprehensive Definition)](#2-what-is-topic-simple-to-comprehensive-definition)
-3. [How Does [Topic] Work? (Progressive Learning Path)](#3-how-does-topic-work-progressive-learning-path)
+2. [What Is Variables and Data Types? (Simple to Comprehensive Definition)](#2-what-is-variables-and-data-types-simple-to-comprehensive-definition)
+3. [How Does Variables and Data Types Work? (Progressive Learning Path)](#3-how-does-variables-and-data-types-work-progressive-learning-path)
 4. [Code Implementation (Multi-Language)](#4-code-implementation-multi-language)
 5. [Practice & Assessment](#5-practice--assessment)
 6. [Common Mistakes, Pitfalls & Anti-Patterns](#6-common-mistakes-pitfalls--anti-patterns)

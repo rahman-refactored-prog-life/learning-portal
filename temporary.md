@@ -16,8 +16,12 @@
    - **Issue 1**: ID generation mismatch - FIXED (converts `&` to `--`, keeps numbers)
    - **Issue 2**: TOC had `[Topic]` placeholder - FIXED (replaced with actual topic name)
    - **Issue 3**: TOC links didn't match headings - FIXED (updated all TOC links)
-   - Content file updated, backend rebuilt, database reloaded
-   - All 10 TOC links now work correctly
+   - Content file updated, backend rebuilt with new JAR
+   - Application restarted to reload content from updated file
+   - Database cleared and content reloaded
+   - All 10 TOC links should now work correctly
+
+**Please test in NEW private window** (old window may have cached content)
 
 ### ❌ Still Broken (Need to Fix):
 2. **CodeTabs Not Displaying** - Code blocks showing individually, not grouped
